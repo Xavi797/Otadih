@@ -2,7 +2,9 @@ package hidato;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.lang.Math;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 
 
 public class controladorTauler {
-
+	
     private static int[][] tauler;
     private static int[] numDonats, posInicial;
 
@@ -20,8 +22,8 @@ public class controladorTauler {
 
         int ordre = -1;
 
-        while (ordre != 10) {
-            System.out.println("Dona'm ordres:0 =>Predefinit 1 => Genera, 2 => Soluciona, 6 => Crea, 10 => Surt");
+        while (ordre != 3) {
+            System.out.println("Dona'm ordres:0 =>Predefinit 1 => Genera, 2 => Soluciona, 3 => Surt");
             ordre = in.nextInt();
 
             switch (ordre) {
@@ -35,69 +37,19 @@ public class controladorTauler {
                     int numInicials = in.nextInt();
 
                     generaTauler(costat, numInicials);
-                    escriuTauler(tauler);
+                    escriuTaluer();
                     break;
 
                 case 2:
                     System.out.println("Solucio");
                     soluciona(posInicial[0], posInicial[1], 1, 0);
-                    escriuTauler(tauler);
+                    escriuTaluer();
                     break;
 
-                case 6:
-		    System.out.println("Creacio d'Hidato: indica la dimensió del tauler")
-		    int costat = in.nextInt();
-		    crea(costat);
-		    escriuTauler(tauler);
-		    
-                case 10:
+                case 3:
                     break;
             }
         }
-    }
-    
-    public static void crea(int costat) {
-	int[][] taulerCreat = new int[costat][costat];
-	int variable = 0;
-	int seguir = 0;
-	int escriure = 0;
-	
-	System.out.println("Primera vegada omplint, acces sequencial");
-	System.out.println("Escriu el valor de cada posicio");
-	for (int posx = 0; posx < costat; ++posx) {
-	    for (int posy = 0; posy < costat; ++posy) {
-		taulerCreat[posx][posy] = in.nextInt();
-	    }
-	}
-	
-	System.out.println("Estat actual:");
-	escriuTauler(taulerCreat);
-	
-	System.out.println("Canviar alguna cela? 1:SI / 0:NO");
-	seguir = in.NextInt();
-	while (seguir == 1) {
-	
-	    System.out.println("Entrar coordenades de la posicio desitjada:");
-	    int x = in.NextInt();
-	    int y = in.NextInt();
-	    System.out.println("La posicio es: " + x + "," + y);
-	    
-	    System.out.println("Entrar valor desitjat:");
-	    taulerCreat[x][y] = in.nextInt();
-	    
-	    System.out.println("Esriure? 1:SI / 0:NO");
-	    if (escriure == 1 ) {
-		escriuTauler(taulerCreat);
-		escriure = 0;
-	    }
-	    
-	    System.out.println("Seguir? 1:SI / 0:NO");
-	    seguir = in.NextInt();
-	}
-	
-	tauler = taulerCreat;
-	System.out.println("Resultat final:");
-	escriuTauler(tauler);
     }
 
 
@@ -131,9 +83,8 @@ public class controladorTauler {
         tauler[fila][col] = numRetorn;
         return false;
     }
-    
 
-    public static void escriuTauler(int[][] tauler) {     // S'ha de refer escriure per quan tinguem les classes cel·la i tauler
+    public static void escriuTaluer() {     // S'ha de refer escriure per quan tinguem les classes cel·la i tauler
         for (int[] row : tauler) {
             for (int c : row) {
                 if (c == -1)
@@ -148,41 +99,86 @@ public class controladorTauler {
     public static void generaTauler(int costat, int numInicials) { // S'haura d'optimitzar, a més s'ha d'afegir el nivell dificultat
 
         int numMaxim = costat*costat;
+        Coord coordenadaAux = new Coord();
         int[][] taulerGenerat = new int[costat][costat];
         Random rand = new Random();
+        List<Integer> conjuntPropers = new ArrayList<>(numInicials);
         List<Integer> conjuntGenerat = new ArrayList<>(numInicials);
+        List<Coord> conjuntGeneratPos = new ArrayList<>(numInicials);
         conjuntGenerat.add(1);
         conjuntGenerat.add(numMaxim);
 
         int posx = rand.nextInt(costat);
         int posy = rand.nextInt(costat);
+        coordenadaAux.x = posx;
+        coordenadaAux.y = posy;
+        conjuntGeneratPos.add(coordenadaAux);
         taulerGenerat[posx][posy] = 1;
-        posInicial = new int[]{posx, posy};
+        posInicial = new int[]{posx, posy}; //posicio del 1
 
         posx = rand.nextInt(costat);
         posy = rand.nextInt(costat);
+        
 
-
-        while (taulerGenerat[posx][posy] != 0) {
+        while (taulerGenerat[posx][posy] != 0) { //Posicio del numero maxim
                 posx = rand.nextInt(costat);
                 posy = rand.nextInt(costat);
             }
         taulerGenerat[posx][posy] = numMaxim;
+        coordenadaAux.x = posx;
+        coordenadaAux.y = posy;
+        conjuntGeneratPos.add(coordenadaAux);
 
-
+        
         for (int i=0; i<numInicials-2; ++i) {
+        	int numRandom;
+        	/*
             int numRandom = rand.nextInt(numMaxim -1) + 1;
             while (conjuntGenerat.contains(numRandom)) {
                 numRandom = rand.nextInt(numMaxim -1) + 1;
-            }
-            posx = rand.nextInt(costat);
-            posy = rand.nextInt(costat);
-            while (taulerGenerat[posx][posy] != 0) {
-                posx = rand.nextInt(costat);
+            }*/
+            //Ara mirarem si el numero generat random es a prop de cualsevol dels ya posats
+            int dist[][] = new int [costat][costat];
+            int vis[][] = new int [costat][costat];
+	
+            //fin pruebas
+            boolean correcte;
+            int numComp;
+            do{
+            	numRandom = rand.nextInt(numMaxim -1) + 1;
+                while (conjuntGenerat.contains(numRandom)) {
+                    numRandom = rand.nextInt(numMaxim -1) + 1;
+                }
+            	correcte = true;
+            	posx = rand.nextInt(costat);
                 posy = rand.nextInt(costat);
-            }
+                if(taulerGenerat[posx][posy] != 0) correcte = false;
+                else{
+                	init(dist,vis);
+                	bfs(posx,posy,dist,taulerGenerat,vis);
+                	
+                	for(int j = 0; j < conjuntGenerat.size(); ++j){
+                		int numAux = conjuntGenerat.get(j);
+                		Coord coordAux2 = conjuntGeneratPos.get(j);
+                		if(numRandom > numAux) numComp = numRandom - numAux;
+                    	else numComp = numAux - numRandom;
+                    	if(numComp < dist[coordAux2.x][coordAux2.y]){
+                    		correcte = false;
+                    		System.out.println("jhokaaa?");
+                    		//para que conjunt propers?
+                    	}
+                    }
+                }
+
+            }while(!correcte);
+            
+            coordenadaAux.x = posx;
+            coordenadaAux.y = posy;
+            conjuntGeneratPos.add(coordenadaAux);
+            
             taulerGenerat[posx][posy] = numRandom;
             conjuntGenerat.add(numRandom);
+            
         }
 
         Collections.sort(conjuntGenerat);
@@ -191,5 +187,67 @@ public class controladorTauler {
             numDonats[i] = conjuntGenerat.get(i);
         tauler = taulerGenerat;
     }
+    
+    public static void init(int[][] dist,int[][] vis){
+    	for(int it = 0; it < dist.length; ++it){
+        	for(int it2 = 0; it2 < dist[0].length; ++it2){
+        		dist[it][it2] = -1;
+        		vis[it][it2] = 0;
+        	}
+        }
+    	
+    }
+    
+    //devolver mejor vector con las distancias de todos?
+
+	public static void bfs(int c1, int c2, int[][] dist, int [][] taulerGen, int [][] taulerVis){ //Coordenadas del nuevo numero
+
+    	
+        Queue<Coord> q = new LinkedList<>();
+        Coord aux = new Coord();
+        aux.x = c1;
+        aux.y = c2;
+        q.add(aux);
+        boolean trobat = false;
+     
+        while(!trobat && !q.isEmpty()){
+            Coord p = q.poll();
+     /* no para mai
+            if(taulerGen[p.x][p.y] == num){
+                d = dist[p.x][p.y];
+                trobat = true;
+            }*/ if(taulerGen[p.x][p.y] >= 0 && taulerVis[p.x][p.y] == 0){
+            	taulerVis[p.x][p.y] = 1;
+            	bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+            														//diagonales tambien
+            	bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+            	bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+            }
+        }
+        
+       
+    	
+    	
+    }
+    // ARREGLAR CON PARAMETROS CORRECTOS
+    public static void bfs_aux(int i, int j, int d ,Queue<Coord> q, int [][] taulerGen, int[][] dist){
+    	Coord aux2 = new Coord();
+    	aux2.x = i;
+    	aux2.y = j;
+    	
+    	if(i >= 0 && i < taulerGen.length && j >= 0 && j < taulerGen[0].length){
+            if(taulerGen[i][j] >= 0){
+            	q.add(aux2);
+                dist[i][j] = d+1;
+            }
+        }
+    	
+    }
+    
 
 }
