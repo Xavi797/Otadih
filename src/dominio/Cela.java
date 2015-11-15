@@ -18,7 +18,7 @@ public class Cela implements Serializable{
   private int valor = 0;
 
   /**
-   * Constructor bàsic.
+   * Constructor bàsic. Les variables tipus i valor estan inicialitzades a 0.
    */
   public Cela() { }
   
