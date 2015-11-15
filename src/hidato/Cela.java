@@ -1,18 +1,17 @@
-package hidato;
+﻿package hidato;
 
-public class Cela 
-{
-  //////////Dades//////////
+import java.io.Serializable;
+
+public class Cela implements Serializable{
+  //DADES
   /*Definim una cela de diferents maneres:
 	una cela forat: tipus = -1 / valor = -1
 	una cela buida: tipus = 0  / valor = valor actual de la cela (comença a 0)
 	una cela  fixe: tipus = valor inicial i inalterable
 				   / valor = valor inicial i inalterable
   */
-  private int tipus;
-  private int valor;
-  /////////////////////////
-
+  private int tipus = 0;
+  private int valor = 0;
 
   //Constructor
   public Cela() { }
