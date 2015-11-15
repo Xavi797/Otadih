@@ -16,5 +16,5 @@ public class Partida {
     private int idPartida;// buscar com fer unica
     private int temps; //provisional.buscar funcio de clock
     private int numChekcs;
-    private boolean solve;
+    private boolean solve;//prueba
 }
