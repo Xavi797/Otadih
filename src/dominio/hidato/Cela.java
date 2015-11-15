@@ -1,4 +1,7 @@
-﻿package hidato;
+package hidato;
+
+﻿
+package hidato;
 
 import java.io.Serializable;
 
