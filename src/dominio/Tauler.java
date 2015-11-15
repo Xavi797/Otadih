@@ -51,7 +51,7 @@ public class Tauler implements Serializable {
    * Getter encarregat d'obtenir una cel·la determinada del tauler.
    * @param i Indica la fila a accedir
    * @param j Indica la columna a accedir
-   * @return Retorna un objecte de tipus Cela
+   * @return Retorna un int que conté el valor de la cel·la
    */
   public int getCela (int i, int j) {
     return taulerJoc[i][j].getValor();
