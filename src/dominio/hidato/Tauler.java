@@ -2,15 +2,24 @@ package hidato;
 
 import java.io.Serializable;
 
+/**
+ * Classe encarregada de contenir diferents Cel·les per tal de formar un tauler de joc.
+ * 
+ * @author jaume
+ */
 public class Tauler implements Serializable {
-  //DADES
+    
   private Cela[][] taulerJoc;
 
-  //FUNCIONS/OPERACIONS
-  //Constructor
+  /**
+   * Constructor bàsic.
+   */
   public Tauler() { }
 
-  //Constructor. Les Celes tenen tipus (i per tant, valor) igual a 0
+  /**
+   * Constructor. El tauler té cel·les inicialitzades amb tipus i valor igual a 0.
+   * @param tamany Indica la mida que tindrà el tauler. És a dir, tamany x tamany
+   */
   public Tauler (int tamany) {
     taulerJoc = new Cela[tamany][tamany];
     for (int i = 0; i < taulerJoc.length; ++i) {
@@ -20,20 +29,40 @@ public class Tauler implements Serializable {
     }
   }
 
-  public int sizeTauler() { //mirar como size con array
+  /**
+   * sizeTauler() retorna la mida del tauler.
+   * @return Valor (int) que indica la mida del tauler
+   */
+  public int sizeTauler() {
     return taulerJoc.length;
   }
 
-  //Set Cela d'una posicio del taulerJoc
+  /**
+   * Setter encarregat de canviar el valor d'una cel·la dterminada del tauler.
+   * @param i Indica la fila a accedir
+   * @param j Indica la columna a accedir
+   * @param valor Indica el valor que volem que prengui la cel·la
+   */
   public void setCela (int i, int j, int valor) {
     taulerJoc[i][j].setValor(valor);
   }
   
+  /**
+   * Getter encarregat d'obtenir una cel·la determinada del tauler.
+   * @param i Indica la fila a accedir
+   * @param j Indica la columna a accedir
+   * @return Retorna un int que conté el valor de la cel·la
+   */
   public int getCela (int i, int j) {
     return taulerJoc[i][j].getValor();
   }
 
+  /**
+   * getTauler() retorna el propi tauler.
+   * @return Retorna el tauler (i les seves cel·les) sobre el que s'ha fet la crida a la funció
+   */
   public Cela[][] getTauler() {
     return taulerJoc;
   }
 }
+
