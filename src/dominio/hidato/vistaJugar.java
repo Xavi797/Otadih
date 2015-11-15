@@ -97,14 +97,15 @@ public class vistaJugar extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new vistaJugar().setVisible(true);
-                int [][] matriu = {{-1,2,0},{0,1,0},{6,0,1}}; 
+                int [][] matriu = {{-1,2,0,-1},{0,1,0,-1},{6,0,1,-1},{2,0,1,-1}}; 
                 createBoard (matriu);
             }
         public void createBoard (int[][] matriu)
         {
             int width  = 40;
             int height = 40;
-            int x, y   = 15;
+            int x   = 15;
+            int y   = 15;
             int files  = matriu.length;
             int columnes = matriu[0].length;
             JTextField[][] tauler = new JTextField[files][columnes];
@@ -121,10 +122,11 @@ public class vistaJugar extends javax.swing.JFrame {
                         tauler[i][j].setText(Integer.toString(matriu[i][j]));
                         tauler[i][j].setBackground(Color.GRAY);
                     }
-                    
+                    //System.out.print(matriu[i][j]);
+                   
                     tauler[i][j].setBounds(x, y, width, height);
                     jPanel1.add(tauler[i][j]);
-                    x =+55;
+                    x +=55;
                 }
                 y += 55;
             }  
