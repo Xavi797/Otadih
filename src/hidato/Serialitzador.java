@@ -13,8 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- *
- * @author usuario
+ * Classe encarregada del guardat i càrrega de fitxers. 
+ * @author jaume
  */
 public class Serialitzador {
   
@@ -22,14 +22,28 @@ public class Serialitzador {
     private ObjectOutputStream escriptorOb;
     private ObjectInputStream lectorOb;
 
+    /**
+     * Getter encarregat d'obtenir logerror.
+     * @return Retorna un String que conté el error produit
+     */
     public String getLogerror() {
         return logerror;
     }
 
+    /**
+     * Setter encarregat de modificar el paràmetre logerror.
+     * @param logerror És un String que conté l'error produït (en cas necessari)
+     */
     public void setLogerror(String logerror) {
         this.logerror = logerror;
     }
     
+    /**
+     * Funció encarregada de guardar objectes com a fitxers en diferents localitzacions.
+     * @param obj Objecte a guardar
+     * @param name Path (que també conté el nom del fitxer a crear) on es guardarà el objecte
+     * @return Retorna un valor booleà que indica si s'ha efectuat correctament el procés de guardat
+     */
     public boolean SerialitzarObjecte (Object obj, String name) {
         try {
             escriptorOb = new ObjectOutputStream(new FileOutputStream(name));
@@ -42,6 +56,11 @@ public class Serialitzador {
         }
     }
     
+    /**
+     * Funció encarregada de carregar objectes desde fitxers.
+     * @param archiu Path (que també conté el nom) del fitxer a carregar
+     * @return Retorna un objecte que conté les dades carregades
+     */
     public Object DeserialitzarObjecte (String archiu) {
         try{
             File f = new File(archiu);
@@ -55,5 +74,3 @@ public class Serialitzador {
         }
     }
 }
-
-
