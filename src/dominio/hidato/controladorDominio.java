@@ -13,10 +13,15 @@ package hidato;
  */
 public class controladorDominio {
     
-    controladorTauler controlTauler; 
+    controladorTauler controlTauler;
+    
+    public controladorDominio () {
+        controladorTauler = new controladorTauler();
+    }
     
     public Tauler generaTauler(int costat, int numInicials) {
-        return controlTauler.generaTauler(costat, numInicials);
+       Tauler tauler = controlTauler.generaTauler(costat, numInicials);
+       return 
     }
     
     public Tauler soluciona() {
