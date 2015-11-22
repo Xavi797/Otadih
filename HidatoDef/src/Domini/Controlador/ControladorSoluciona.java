@@ -6,6 +6,9 @@
 package Domini.Controlador;
 
 import Domini.Clases.Tauler;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -26,10 +29,35 @@ public class ControladorSoluciona {
                 this.cT = cT;
                 solucio = cT.getSolucio();
                 solucio = cT.getTauler().clonar();
-                
-                this.numDonats = cT.getNumDonats();
-                this.posInicial = cT.getPosInicial();
-	    	if(soluciona_aux(posInicial[0], posInicial[1], 1, 0)){
+            List<Integer> conjuntGenerats = new ArrayList<Integer> ();
+           
+            posInicial = new int[2];
+            int max = 0;
+                //this.numDonats = cT.getNumDonats();
+            
+            for (int i = 0; i < solucio.sizeTauler(); ++i) {
+                for (int j = 0; j < solucio.sizeTauler(); ++j) {
+                    if (solucio.getTipus(i,j) >= 1) {
+                        int aux = solucio.getCela(i,j);
+                        if (aux == 1) posInicial = new int[] {i,j};
+                        conjuntGenerats.add(aux);
+                        ++max;
+                    }
+                }
+            }
+            Collections.sort(conjuntGenerats);
+            
+            numDonats = new int [max];
+            
+            for (int i = 0; i < max; ++i) {
+                numDonats[i] = conjuntGenerats.get(i);
+            }
+            
+            cT.setPosInicial(posInicial);
+            cT.setNumDonats(numDonats);
+            
+                //this.posInicial = cT.getPosInicial();
+                if(soluciona_aux(posInicial[0], posInicial[1], 1, 0)) {
                     cT.escriuTauler(solucio);
                     return true;
                 }

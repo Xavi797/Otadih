@@ -18,10 +18,6 @@ public class ControladorTaula {
 	/*Controla totes les operacions de la taula: Soluciona tauler, genera etc..
         */
     
-            /*
-            public ControladorTaula(){
-                tauler = new Tauler();
-            }*/
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
                                         
@@ -38,7 +34,10 @@ public class ControladorTaula {
 	    private int maxCas; /* numero de la casilla mas grande */
             
            
-            
+            public ControladorTaula(){
+                tauler = new Tauler();
+                solucion = new Tauler();
+            }
              /**
               * Escriu el tauler que se li pasa per parametre a consola. El punt '.' es un forat,
               * '_' una casella emplenable i altrament el numero de la casella

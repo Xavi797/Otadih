@@ -1,10 +1,7 @@
 package Domini.Clases;
 
-import Domini.Controlador.ControladorCrea;
-import Domini.Controlador.ControladorJuga;
-import Domini.Controlador.ControladorSoluciona;
-import Domini.Controlador.ControladorTaula;
 import Persistencia.Serialitzador;
+import Domini.Controlador.*;
 import Vistes.vistaJugar;
 import java.util.Scanner;
 
@@ -68,20 +65,22 @@ public class Main {
                 case 3:
                     System.out.println("Escriu el nom del fitxer a guardar:");
                     nom = in.next();
-                    s.SerialitzarObjecte(controlador.getTauler(), nom);
+                    s.SerialitzarObjecte(controlador.getTauler(), nom, "Tauler");
                     System.out.println("Guardat correctament");
                     break;
                 case 4:
-		    System.out.println("Escriu el nom del fitxer a carregar:");
+                    System.out.println("Escriu el nom del fitxer a carregar:");
                     nom = in.next();
-                    Tauler tauler = (Tauler) s.DeserialitzarObjecte(nom);
+                    Tauler tauler = (Tauler) s.DeserialitzarObjecte(nom, "Tauler");
                     controlador.setTauler(tauler);
                     System.out.println("Carregat correctamet");
                     break;
                 case 5: 
                     cJ.juga(controlador);
+                    break;
                 case 6: 
                     cS.soluciona(controlador);
+                    break;
                 case 7: break;
             }
         }

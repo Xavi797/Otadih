@@ -61,6 +61,10 @@ public class Tauler extends Tauler_Compartit implements Serializable {
   public int getCela (int i, int j) {
     return taulerJoc[i][j].getValor();
   }
+  
+  public int getTipus (int i, int j) {
+    return taulerJoc[i][j].getTipus();
+  }
 
   /**
    * getTauler() retorna el propi tauler.
