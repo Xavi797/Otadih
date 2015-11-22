@@ -1,12 +1,13 @@
 package Domini.Clases;
 
-import Domini.Tauler_Compartit;
+
+import Domini.Clases_compartides.Tauler_Compartit;
 import java.io.Serializable;
 
 /**
  * Classe encarregada de contenir diferents Cel�les per tal de formar un tauler de joc.
- * 
  * @author jaume
+ * 
  */
 public class Tauler extends Tauler_Compartit implements Serializable {
     

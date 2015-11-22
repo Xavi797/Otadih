@@ -2,7 +2,7 @@ package Domini.Clases;
 
 
 
-import Domini.Cela_Compartida;
+import Domini.Clases_compartides.Cela_Compartida;
 import java.io.Serializable;
 
 /**

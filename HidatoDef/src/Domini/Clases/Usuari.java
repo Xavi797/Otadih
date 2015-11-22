@@ -5,7 +5,7 @@
  */
 package Domini.Clases;
 
-import Domini.UsuariCompartit;
+import Domini.Clases_compartides.UsuariCompartit;
 
 /**
  *
