@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Domini;
+package Domini.Controlador;
 
+import Domini.Clases.Tauler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,6 @@
-package Domini;
+package Domini.Clases;
 
+import Domini.Tauler_Compartit;
 import java.io.Serializable;
 
 /**

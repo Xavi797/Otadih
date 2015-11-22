@@ -1,5 +1,9 @@
-package Domini;
+package Domini.Clases;
 
+import Domini.Controlador.ControladorCrea;
+import Domini.Controlador.ControladorJuga;
+import Domini.Controlador.ControladorSoluciona;
+import Domini.Controlador.ControladorTaula;
 import Persistencia.Serialitzador;
 import Vistes.vistaJugar;
 import java.util.Scanner;

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Domini.Drivers;
+package Domini.Controlador.Drivers;
 
 import Persistencia.Serialitzador;
-import Domini.Tauler;
+import Domini.Clases.Tauler;
 
 /**
  *

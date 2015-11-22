@@ -1,5 +1,7 @@
-package Domini;
+package Domini.Controlador;
 
+import Domini.Clases.Coord;
+import Domini.Clases.Tauler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

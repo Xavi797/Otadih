@@ -1,4 +1,4 @@
-package Domini.Drivers;
+package Domini.Controlador.Drivers;
 
 import Vistes.vistaJugar;
 
