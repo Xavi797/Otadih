@@ -1,0 +1,20 @@
+Abre una consola en el mismo directorio que esta este manual y ejecuta:(#indica comando consola no se ha de copiar)
+Compila y ejecuta programa principal
+
+#javac Domini/*.java Persistencia/*.java Vistes/*.java Domini/Drivers/*.java
+
+#java Domini/Main
+
+Para eliminar los .class ejecuta: 
+
+#rm Domini/*.class Persistencia/*.class Vistes/*.class Domini/Drivers/*.class
+
+Per executar els drivers:
+
+#java Domini/Drivers/DriverCela
+
+#java Domini/Drivers/DriverSerialitzador
+
+#java Domini/Drivers/DriverTauler  
+
+#java Domini/Drivers/DriverVistaJugar
