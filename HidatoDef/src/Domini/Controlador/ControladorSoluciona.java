@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
+ * @author Carlos
  */
 public class ControladorSoluciona {
     
