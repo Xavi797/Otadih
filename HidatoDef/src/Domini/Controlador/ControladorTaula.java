@@ -19,6 +19,7 @@ public class ControladorTaula {
         */
     
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
+            private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
                                         
                                                         
@@ -524,6 +525,14 @@ public class ControladorTaula {
               */
             public void setTauler(Tauler t){
                 tauler = t.clonar(); 
+            }
+            
+            public Tauler getPartida(){
+                return tauler_partida;
+            }
+            
+            public void setPartida(Tauler t){
+                tauler_partida = t.clonar(); 
             }
             
             public int[] getNumDonats(){

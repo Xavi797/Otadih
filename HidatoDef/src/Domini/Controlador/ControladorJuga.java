@@ -34,6 +34,15 @@ public class ControladorJuga {
                     cT.escriuTauler(t);
                     System.out.println("Vols continuar jugant(1) o sortir?(0)");
                     continua = in.nextInt();
+                    System.out.println("Vols sapiguer si una casella es ben colocada? 1(si), 0(no)");
+                    int ajuda = in.nextInt();
+                    if(ajuda == 1){
+                        System.out.println("Indica la cela que vols consultar si es correcte (i, j): ");
+                        int iaux = in.nextInt();
+                        int jaux = in.nextInt();
+                        if(celaCorrecta(iaux,jaux,t)) System.out.println("Esta be!!!");
+                        else System.out.println("Esta malament :( !!!");
+                    }
                     if(continua == 1){
                         System.out.println("Indica la cela que vols escriure (i, j): ");
                         int i = in.nextInt();
@@ -58,21 +67,30 @@ public class ControladorJuga {
                     else 
                         System.out.println("SOLUCIÓ ERRONEA");
                 }
+                else{
+                    System.out.println("Vols guardar la partida?(1)si, 0(no)");
+                }
             }
     
 
-            public boolean acabat (Tauler t){
+            private boolean acabat (Tauler t){
                   for (int i = 0; i < t.sizeTauler(); ++i)
                       for (int j = 0; j < t.sizeTauler(); ++j)
                            if (t.getCela(i, j) == 0) return false;
                   return true;
              }
               
-            public boolean bensolucionat(Tauler t){
+            private boolean bensolucionat(Tauler t){
                   for (int i = 0; i < t.sizeTauler(); ++i)
                       for (int j = 0; j < t.sizeTauler(); ++j)
                            if (t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
                   return true;
+            }
+            
+            private boolean celaCorrecta(int i, int j, Tauler t){
+                if(i < 0 || j <0 || i >= t.sizeTauler() || j >= t.sizeTauler()) return false;
+                if (t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
+                return true;
             }
               
 }
