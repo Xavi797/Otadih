@@ -33,6 +33,7 @@ public class ControladorTaula {
 	    private int n; /* anchura del tablero */
 	    private int m; /* altura del tablero */
 	    private int maxCas; /* numero de la casilla mas grande */
+            private int min; /* Minim de caselles posbiles a posar en el tauler
             
            
             public ControladorTaula(){
@@ -64,10 +65,10 @@ public class ControladorTaula {
               * @param altura cont l'alçada del tauler
               * PRE: --
               */
-	    public void BuscarSolucion(int anchura, int altura) {
+	    public void BuscarSolucion(int anchura, int altura, Tauler t) {
 	        n = anchura;
 	        m = altura;
-	        tablero = tauler.clonar();
+	        tablero = t.clonar();
 	        solucion = null;
 	        nSols = nRest = maxCas = 0;
 	        usado = new boolean[altura*anchura];
@@ -319,15 +320,21 @@ public class ControladorTaula {
 	         posInicial = new int[]{posInicialProvisional.x, posInicialProvisional.y};
 	         //TREURE NUMEROS fins NUMINICIALS SI ES POT O FINS QUE TROBEN MES DE 1 SOLUCIO*/
 	         
-	         quita_nums2(numInicials, num_posar, numMaxim,taulerGeneratAux);
-	         
+	         //quita_nums2(numInicials, num_posar, numMaxim,taulerGeneratAux);
+                 Tauler t = taulerGeneratAux.clonar();
+                 min = numMaxim;
+	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0)){
+                    t = taulerGeneratAux.clonar();
+                    System.out.println("que esta pasando: "+ min);
+                    quita_nums(min,num_posar,numMaxim,t,0,0);
+                }
 	         Collections.sort(conjuntGenerat);
                  /*
 	         numDonats = new int[conjuntGenerat.size()];
 	         for (int i = 0; i < numDonats.length; i++)
 	             numDonats[i] = conjuntGenerat.get(i);
                  */
-	         tauler = taulerGeneratAux;
+	         tauler = t;
                  escriuTauler(tauler);
 	         
 	    }
@@ -368,7 +375,7 @@ public class ControladorTaula {
                             taulerGenerat.setCela(posx, posy, 0);
 	    		
                             tauler = taulerGenerat;
-                            BuscarSolucion(tam, tam);
+                            BuscarSolucion(tam, tam, taulerGenerat);
                             if(nSols > 1){
                                     taulerGenerat.setCela(posx, posy, numRetorn);
                                     ++intents;
@@ -394,6 +401,39 @@ public class ControladorTaula {
              /* POST: Tauler valid amb les caselles buides corresponents
             */
 	    
+            private boolean quita_nums(int num_inicials, int num_posats, int numMaxim, Tauler taulerGenerat,int i, int j){
+                int tam = taulerGenerat.sizeTauler();
+                BuscarSolucion(tam, tam, taulerGenerat);
+                //System.out.println("estoy aqui???: "+i +" quien sabeeeeee:j:  " +j);
+                if(nSols > 1 || nSols == 0){
+                    return false;   
+                }
+                else if(num_inicials == num_posats){
+                    tauler = taulerGenerat;
+                    return true;
+                }
+                else if(min > num_posats)
+                    min = num_posats;
+                
+                while(i<tam){
+                    while(j<tam){
+                        int aux = taulerGenerat.getCela(i, j);
+                        if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim){
+                            taulerGenerat.setCela(i, j, 0);
+                            --num_posats;
+                        }
+                        
+                        if(quita_nums(num_inicials,num_posats,numMaxim,taulerGenerat,i,j+1)) return true;
+                        taulerGenerat.setCela(i, j, aux);
+                        if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim)++num_posats;
+                        ++j;
+                    }
+                    j = 0;
+                    ++i;
+                }
+                return false;
+            }
+            
              /**
               * Veis_accesibles mira els veis a que pot accedir una casella(i,j)
               * 

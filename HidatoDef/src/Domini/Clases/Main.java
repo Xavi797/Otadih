@@ -49,6 +49,7 @@ public class Main {
                     cC.crea(controlador,costat);
                     break;
                 case 1:
+                    //si 5 <8>, si 6<13>, 7<16> mirar porque petan, no deberia
                     System.out.println("Indica el Tamany del tauler(un costat nomes)");
                     int l = in.nextInt();
                     System.out.println("Indica el numero de Numeros per defecte que vol al tauler\n"
