@@ -1,6 +1,6 @@
 package Domini.Clases;
 
-import Persistencia.Serialitzador;
+import Persistencia.*;
 import Domini.Controlador.*;
 import Vistes.vistaJugar;
 import java.util.Scanner;
@@ -27,8 +27,9 @@ public class Main {
         // TODO code application logic here
         Scanner in = new Scanner(System.in);
         //Obtenim un objecte de la classe serialitzadora
-        Serialitzador s = new Serialitzador();
+        SerialitzadorPartides sP = new SerialitzadorPartides();
         String nom = "";
+        String user = "";
         
         int ordre = -10;
         
@@ -69,12 +70,16 @@ public class Main {
                 case 3:
                     System.out.println("Escriu el nom del fitxer a guardar:");
                     nom = in.next();
-                    s.serialitzarObjecte(controlador.getTauler(), nom, "Tauler");
+                    System.out.println("Escriu el teu nom:");
+                    user = in.next();
+                    sP.serialitzarObjecte(controlador.getTauler(), nom, user);
                     break;
                 case 4:
                     System.out.println("Escriu el nom del fitxer a carregar:");
                     nom = in.next();
-                    Tauler tauler = (Tauler) s.deserialitzarObjecte(nom, "Tauler");
+                    System.out.println("Escriu el teu nom:");
+                    user = in.next();
+                    Tauler tauler = (Tauler) sP.deserialitzarObjecte(nom, user);
                     controlador.setTauler(tauler);
                     break;
                 case 5: 
@@ -86,7 +91,9 @@ public class Main {
                 case 7: 
                     System.out.println("Escriu el nom del fitxer a destruir:");
                     nom = in.next();
-                    boolean dest = s.destrueixObjecte(nom, "Tauler");
+                    System.out.println("Escriu el nom del fitxer a carregar:");
+                    user = in.next();
+                    boolean dest = sP.destrueixObjecte(nom, user);
                     if (dest) System.out.println("Objecte destruit");
                     else System.out.println("Objecte no destruit");
                     break;

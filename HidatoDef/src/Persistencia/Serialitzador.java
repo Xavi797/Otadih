@@ -14,14 +14,14 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 /**
- * Classe encarregada del guardat i carrega de fitxers. 
+ * Classe 'mare' encarregada del guardat i carrega de fitxers.
  * @author jaume
  */
-public class Serialitzador {
+public abstract class Serialitzador {
   
-    private String logerror;
-    private ObjectOutputStream escriptorOb;
-    private ObjectInputStream lectorOb;
+    protected String logerror;
+    protected ObjectOutputStream escriptorOb;
+    protected ObjectInputStream lectorOb;
     
     Scanner in = new Scanner(System.in);
 
@@ -43,12 +43,41 @@ public class Serialitzador {
     
     /**
      * Funcio encarregada de destruir fitxers de la BD
-     * @param name Nom del objecte a destruir
-     * @param tipus Tipus del objecte a destruir
-     * @return Retorna true en cas de que el objecte es destrueixi correctament, false en cas contrari 
+     * @param name Nom del fitxer a destruir
+     * @param user Nom del usuari que esta destruint el fitxer
+     * @return Retorna true en cas de que el fitxer es destrueixi correctament, false en cas contrari 
      */
-    public boolean destrueixObjecte(String name, String tipus) {
-        try{
+    public abstract boolean destrueixObjecte(String name, String user);
+    
+    /**
+     * Funcio encaregada de comprovar l'existencia del fitxer amb nom 'name'
+     * @param name Nom del fitxer
+     * @param user Nom del usuari que esta fent la comprovacio
+     * @return Retorna true en cas de que el nom del objecte a guardar ja existeixi, false en cas contrari
+     */
+    public abstract boolean existenciaObjecte(String name, String user);
+    
+    /**
+     * Funcio encarregada de guardar objectes com a fitxers en diferents localitzacions.
+     * @param obj Objecte a guardar
+     * @param name Nom del objecte a guardar
+     * @param user Nom del usuari que esta guardant el objecte
+     * @return Retorna un valor boolea que indica si s'ha efectuat correctament el proces de guardat
+     */
+    public abstract boolean serialitzarObjecte (Object obj, String name, String user);
+    
+    /**
+     * Funcio encarregada de carregar objectes desde els fitxers.
+     * @param name Nom del fitxer a carregar
+     * @param user Nom del usuari que esta carregant el fitxer
+     * @return Retorna un objecte de tipus generic que conte les dades carregades, esta buit en cas de error
+     */
+    public abstract Object deserialitzarObjecte (String name, String user);
+    
+    
+    
+    /////////// NO FER CAS
+    /*try{
             String objectiu = "";
             if ("Tauler".equals(tipus)) {
                 objectiu = "Dades/Taulers/" + name + ".taul";
@@ -81,17 +110,48 @@ public class Serialitzador {
             this.logerror = ex.getMessage();
             System.out.println("Error al destruir el objecte");
             return false;
-    	}
-    }
+    	}*/
     
-    /**
-     * Funcio encaregada de comprovar l'existencia del fitxer de nom i tipus donats
-     * @param name Nom del objecte a guardar
-     * @param tipus Tipus del objecte a guardar
-     * @return Retorna true en cas de que el nom del objecte a guardar ja existeixi, false en cas contrari
-     */
-    public boolean existenciaObjecte(String name, String tipus) {
-        
+    
+        /*try{
+            String direccio = "";
+            if ("Tauler".equals(tipus)) {
+                direccio = "Dades/Taulers/" + name + ".taul";
+            }
+            else if ("Usuari".equals(tipus)) {
+                direccio = "Dades/Usuaris/" + name + ".usur";
+            }
+            else if ("Partida".equals(tipus)) {
+                direccio = "Dades/Partides/" + name + ".part";
+            }
+            else if ("Ranking".equals(tipus)) {
+                direccio = "Dades/Rankings/" + name + ".rank";
+            }
+            else if ("Estadistica".equals(tipus)) {
+                direccio = "Dades/Estadistiques/" + name + ".stat";
+            }
+            //Ampliable per futurs carregats diferents
+            
+            if (existenciaObjecte(name, tipus)) {
+                File f = new File(direccio);
+                lectorOb = new ObjectInputStream(new FileInputStream(f));
+                Object obj;
+                obj = lectorOb.readObject();
+                return obj;
+            }
+            else {
+                System.out.println("El fitxer demanat no existeix");
+                return new Object();    //Si hi ha error retorna un objecte buit i treu un missatge per pantalla
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            this.logerror = ex.getMessage();
+            System.out.println("Error al carregar");
+            return new Object();        //Si hi ha error retorna un objecte buit i treu un missatge per pantalla
+        }
+    }*/
+    
+    
+    /*
         String directori = "";
         if ("Tauler".equals(tipus)) {
             directori = "Dades/Taulers/";
@@ -125,17 +185,10 @@ public class Serialitzador {
             }
         }
         return false;
-    }
+    }*/
     
-    /**
-     * Funcio encarregada de guardar objectes com a fitxers en diferents localitzacions.
-     * @param obj Objecte a guardar
-     * @param name Nom del objecte a guardar
-     * @param tipus Defineix el tipus d'objecte que s'esta guardant
-     * @return Retorna un valor boolea que indica si s'ha efectuat correctament el proces de guardat
-     */
-    public boolean serialitzarObjecte (Object obj, String name, String tipus) {
-        
+    
+       /*
         int ordre = 0;
         while (existenciaObjecte(name, tipus) && ordre == 0) {
             System.out.println("El fitxer '"+name+"' ja exiseix. Vols sobreescriure'l?" );
@@ -177,49 +230,5 @@ public class Serialitzador {
             System.out.println("Error al guardar");
             return false;
         }
-    }
-    
-    /**
-     * Funcio encarregada de carregar objectes desde els fitxers.
-     * @param name Nom del objecte a carregar
-     * @param tipus Defineix el tipus d'objecte que s'esta carregant
-     * @return Retorna un objecte que conte les dades carregades
-     */
-    public Object deserialitzarObjecte (String name, String tipus) {
-        try{
-            String direccio = "";
-            if ("Tauler".equals(tipus)) {
-                direccio = "Dades/Taulers/" + name + ".taul";
-            }
-            else if ("Usuari".equals(tipus)) {
-                direccio = "Dades/Usuaris/" + name + ".usur";
-            }
-            else if ("Partida".equals(tipus)) {
-                direccio = "Dades/Partides/" + name + ".part";
-            }
-            else if ("Ranking".equals(tipus)) {
-                direccio = "Dades/Rankings/" + name + ".rank";
-            }
-            else if ("Estadistica".equals(tipus)) {
-                direccio = "Dades/Estadistiques/" + name + ".stat";
-            }
-            //Ampliable per futurs carregats diferents
-            
-            if (existenciaObjecte(name, tipus)) {
-                File f = new File(direccio);
-                lectorOb = new ObjectInputStream(new FileInputStream(f));
-                Object obj;
-                obj = lectorOb.readObject();
-                return obj;
-            }
-            else {
-                System.out.println("El fitxer demanat no existeix");
-                return new Object();    //Si hi ha error retorna un objecte buit i treu un missatge per pantalla
-            }
-        } catch (IOException | ClassNotFoundException ex) {
-            this.logerror = ex.getMessage();
-            System.out.println("Error al carregar");
-            return new Object();        //Si hi ha error retorna un objecte buit i treu un missatge per pantalla
-        }
-    }
+    }*/
 }

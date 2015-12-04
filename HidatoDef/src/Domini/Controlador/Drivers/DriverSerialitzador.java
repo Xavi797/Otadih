@@ -5,7 +5,7 @@
  */
 package Domini.Controlador.Drivers;
 
-import Persistencia.Serialitzador;
+import Persistencia.*;
 import Domini.Clases.Tauler;
 
 /**
@@ -14,14 +14,14 @@ import Domini.Clases.Tauler;
  */
 public class DriverSerialitzador {
     public static void main (String[] args) {
-        Serialitzador s = new Serialitzador();
+        SerialitzadorTaulers sT = new SerialitzadorTaulers();
         Tauler t = new Tauler(1);
         
         //Creem dos taulers diferents i els guardem
         t = new Tauler(3); //Tauler 3x3
-        s.serialitzarObjecte(t.getTauler(), "tauler3x3", "Tauler");
+        sT.serialitzarObjecte(t.getTauler(), "tauler3x3", null);
         t = new Tauler(5); //Tauler 5x5
-        s.serialitzarObjecte(t.getTauler(), "tauler5x5", "Tauler");
+        sT.serialitzarObjecte(t.getTauler(), "tauler5x5", null);
         
         int cas = -1;
         while (cas != 0) {
@@ -31,10 +31,10 @@ public class DriverSerialitzador {
                 case 0:
                     break;
                 case 1:
-                    t = (Tauler) s.deserialitzarObjecte("tauler3x3", "Tauler");
+                    t = (Tauler) sT.deserialitzarObjecte("tauler3x3", null);
                     break;
                 case 2:
-                    t = (Tauler) s.deserialitzarObjecte("tauler5x5", "Tauler");
+                    t = (Tauler) sT.deserialitzarObjecte("tauler5x5", null);
                     break;
                 case 3:
                     int size = t.sizeTauler();
