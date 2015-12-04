@@ -20,13 +20,16 @@ import java.util.Scanner;
  */
 public class ControladorJuga {
     ControladorTaula cT;
+    List<Integer> conjuntPosibles;
     public void juga(ControladorTaula cT){
         this.cT = cT;
+        conjuntPosibles = new ArrayList<Integer>();
         juga_aux();
     }
     
     private void juga_aux() {
                 Scanner in = new Scanner(System.in);
+                
                 int continua = 1;
                 Tauler t = cT.getTauler().clonar();
                 while(!acabat(t) && continua == 1) {
@@ -47,6 +50,9 @@ public class ControladorJuga {
                         System.out.println("Indica la cela que vols escriure (i, j): ");
                         int i = in.nextInt();
                         int j = in.nextInt();
+                        //llamar a fastCheck y a deepchek con 2 for por cada numero para saber cuales son validos. en la posicion (i,j)
+                       
+                        
                         System.out.println("Indica el valor: ");
                         int val = in.nextInt();
                         if (i < 0 || j < 0 || i > t.sizeTauler()-1 || j > t.sizeTauler()-1) {
@@ -91,6 +97,16 @@ public class ControladorJuga {
                 if(i < 0 || j <0 || i >= t.sizeTauler() || j >= t.sizeTauler()) return false;
                 if (t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
                 return true;
+            }
+            
+            private void posibles(int i, int j, Tauler t){   
+                 conjuntPosibles.clear();
+                 int max = 100; //obtener max del tablero
+                 for (int aux = 0; aux < max; ++aux){
+                      //call a fastcheck y deepcheck con Tauler(i,j).setcela
+                 }
+                      
+                          
             }
               
 }
