@@ -32,6 +32,7 @@ public class ControladorJuga {
                 
                 int continua = 1;
                 Tauler t = cT.getTauler().clonar();
+                cT.setTablero(t);
                 while(!acabat(t) && continua == 1) {
                     System.out.println("Estat actual del tauler:");
                     cT.escriuTauler(t);
@@ -50,23 +51,33 @@ public class ControladorJuga {
                         System.out.println("Indica la cela que vols escriure (i, j): ");
                         int i = in.nextInt();
                         int j = in.nextInt();
-                        //llamar a fastCheck y a deepchek con 2 for por cada numero para saber cuales son validos. en la posicion (i,j)
-                       
+                        //llamar a fastCheck y a deepchek con 1 for por cada numero para saber cuales son validos. en la posicion (i,j)
                         
-                        System.out.println("Indica el valor: ");
-                        int val = in.nextInt();
-                        if (i < 0 || j < 0 || i > t.sizeTauler()-1 || j > t.sizeTauler()-1) {
+                        
+                        
+                        if (i < 0 || j < 0 || i > t.sizeTauler()-1 || j > t.sizeTauler()-1 || !t.ModificaCela(i, j, 0)) {
                             System.out.println("Coordenades no valides, torna a començar el proces");
                         }
-                        else if (val < 0 || val > t.sizeTauler()*t.sizeTauler()) {
-                            System.out.println("Valor no valid, torna a començar el proces");
-                        }
-                        else {
-                            if(t.ModificaCela(i, j, val)) System.out.println("Cela modificada correctament");
-                            else System.out.println("Incorrecte!!!");
+                        else{
+                            posibles(i,j,t);
+                            System.out.println("Posibles numeros a posar en aquesta casella: ");
+
+                            for (int auxCont = 0; auxCont < conjuntPosibles.size(); ++auxCont){
+                                System.out.printf(" " + conjuntPosibles.get(auxCont));
+                            }
+                            System.out.println("Indica el valor: ");
+                            int val = in.nextInt();
+                            if (!conjuntPosibles.contains(val)) {
+                                System.out.println("Valor no valid, torna a començar el proces");
+                            }
+                            else {
+                                if(t.ModificaCela(i, j, val)) System.out.println("Cela modificada correctament");
+                                else System.out.println("Incorrecte!!!");
+                            }
                         }
                     }
                 }
+                cT.setPartida(t);
                 if(continua == 1){
                     if (bensolucionat(t))
                         System.out.println("SOLUCIONAT CORRECTAMENT!");
@@ -95,14 +106,17 @@ public class ControladorJuga {
             
             private boolean celaCorrecta(int i, int j, Tauler t){
                 if(i < 0 || j <0 || i >= t.sizeTauler() || j >= t.sizeTauler()) return false;
-                if (t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
+                if(t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
                 return true;
             }
             
             private void posibles(int i, int j, Tauler t){   
                  conjuntPosibles.clear();
-                 int max = 100; //obtener max del tablero
-                 for (int aux = 0; aux < max; ++aux){
+                 int max = cT.getMaxCas(); //obtener max del tablero
+                 for (int aux = 2; aux < max; ++aux){
+                     t.ModificaCela(i, j, aux);
+                     if(cT.fastCheck(i, j) && cT.deepCheck()) conjuntPosibles.add(aux);
+                     
                       //call a fastcheck y deepcheck con Tauler(i,j).setcela
                  }
                       

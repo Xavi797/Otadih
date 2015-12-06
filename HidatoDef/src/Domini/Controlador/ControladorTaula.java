@@ -21,9 +21,10 @@ public class ControladorTaula {
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
             private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
-                                        
-                                                        
-
+            
+            private long startTime;
+            private final long timeout = 2000;                                   
+            private long elapsed;
 	    
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -33,6 +34,7 @@ public class ControladorTaula {
 	    private int n; /* anchura del tablero */
 	    private int m; /* altura del tablero */
 	    private int maxCas; /* numero de la casilla mas grande */
+
             private int min; /* Minim de caselles posbiles a posar en el tauler
             
            
@@ -155,7 +157,7 @@ public class ControladorTaula {
             * @param i posicio x en la taula
             * @param j posicio y en la taula
             /* PRE: Pos(i,j) es valida */
-	    private boolean fastCheck(int i, int j) {
+	    public boolean fastCheck(int i, int j) {
 
 	        for (int k = Math.max(0, i - 1); k <= Math.min(n - 1, i + 1); ++k) {
 	            for (int s = Math.max(0, j - 1); s <= Math.min(m - 1, j + 1); ++s) {
@@ -208,7 +210,7 @@ public class ControladorTaula {
               * 
               * PRE: --
               */
-	    private boolean deepCheck() {
+	    public boolean deepCheck() {
 	        int dist[][] = new int[n][m];
 
 	        int ant = 0;
@@ -323,10 +325,11 @@ public class ControladorTaula {
 	         //quita_nums2(numInicials, num_posar, numMaxim,taulerGeneratAux);
                  Tauler t = taulerGeneratAux.clonar();
                  min = numMaxim;
-	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0)){
+                 startTime = System.currentTimeMillis();
+	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0,true)){
                     t = taulerGeneratAux.clonar();
-                    System.out.println("que esta pasando: "+ min);
-                    quita_nums(min,num_posar,numMaxim,t,0,0);
+                    System.out.println("que esta pasando: " + min);
+                    quita_nums(min,num_posar,numMaxim,t,0,0,false);
                 }
 	         Collections.sort(conjuntGenerat);
                  /*
@@ -401,10 +404,14 @@ public class ControladorTaula {
              /* POST: Tauler valid amb les caselles buides corresponents
             */
 	    
-            private boolean quita_nums(int num_inicials, int num_posats, int numMaxim, Tauler taulerGenerat,int i, int j){
+            private boolean quita_nums(int num_inicials, int num_posats, int numMaxim, Tauler taulerGenerat,int i, int j, boolean primera_it){
                 int tam = taulerGenerat.sizeTauler();
+                if(primera_it){
+                    elapsed = System.currentTimeMillis()-startTime;
+                    if (elapsed>timeout) return false;
+                }
                 BuscarSolucion(tam, tam, taulerGenerat);
-                //System.out.println("estoy aqui???: "+i +" quien sabeeeeee:j:  " +j);
+                
                 if(nSols > 1 || nSols == 0){
                     return false;   
                 }
@@ -417,15 +424,16 @@ public class ControladorTaula {
                 
                 while(i<tam){
                     while(j<tam){
+                        
                         int aux = taulerGenerat.getCela(i, j);
-                        if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim){
+                        if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim && taulerGenerat.getCela(i, j)> 0){
                             taulerGenerat.setCela(i, j, 0);
                             --num_posats;
                         }
                         
-                        if(quita_nums(num_inicials,num_posats,numMaxim,taulerGenerat,i,j+1)) return true;
+                        if(quita_nums(num_inicials,num_posats,numMaxim,taulerGenerat,i,j+1,primera_it)) return true;
+                        if(taulerGenerat.getCela(i, j)== 0 )++num_posats;
                         taulerGenerat.setCela(i, j, aux);
-                        if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim)++num_posats;
                         ++j;
                     }
                     j = 0;
@@ -567,6 +575,14 @@ public class ControladorTaula {
                 tauler = t.clonar(); 
             }
             
+            public Tauler getTablero(){
+		return tablero;
+	    }
+            
+            public void setTablero(Tauler t){
+                tablero = t; //cambiar esto tardara mucho si copio todo el rato
+            }
+            
             public Tauler getPartida(){
                 return tauler_partida;
             }
@@ -591,6 +607,14 @@ public class ControladorTaula {
                 this.posInicial = posInicial;
             }
             
+            
+            public int getMaxCas() {
+                return maxCas;
+            }
+
+            public void setMaxCas(int maxCas) {
+                this.maxCas = maxCas;
+            }
              /**
               * Transforma una tauler en una matriu de ints per a el controlador
               * @param t  l'hi passa un tauler t
