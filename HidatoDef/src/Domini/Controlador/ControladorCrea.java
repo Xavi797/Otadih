@@ -16,14 +16,37 @@ import java.util.Scanner;
  */
 public class ControladorCrea {
  /** @author Carlos */
-     ControladorTaula cT;
+    ControladorTaula cT;
     private int[] numDonats, posInicial;
+
+    public int[] getNumDonats() {
+        return numDonats;
+    }
+
+    public void setNumDonats(int[] numDonats) {
+        this.numDonats = numDonats;
+    }
+
+    public int[] getPosInicial() {
+        return posInicial;
+    }
+
+    public void setPosInicial(int[] posInicial) {
+        this.posInicial = posInicial;
+    }
+
+    public Tauler getTaulerCreat() {
+        return taulerCreat;
+    }
+
+    public void setTaulerCreat(Tauler taulerCreat) {
+        this.taulerCreat = taulerCreat;
+    }
+    private Tauler taulerCreat;
     
-    public void crea(ControladorTaula cT,int costat){
-        this.numDonats = cT.getNumDonats();
-        this.posInicial = cT.getPosInicial();
-        this.cT = cT;
-        crea_aux(costat);
+    public void crea(){
+        cT = new ControladorTaula();
+        crea_aux();
     }
     
      /**
@@ -31,11 +54,13 @@ public class ControladorCrea {
               * @param costat Tamany del tauler
               * PRE: -- 
               */
-    private void crea_aux(int costat) {
+    private void crea_aux() {
 		Scanner in = new Scanner(System.in);
-	    	Tauler taulerCreat = new Tauler(costat);
+                System.out.println("Indica el Tamany del tauler(un costat nomes) ");
+                int costat = in.nextInt();
+                
+	    	taulerCreat = new Tauler(costat);
                 List<Integer> conjuntGenerat = new ArrayList<Integer>();
-	        int variable = 0;
 	        int seguir = 0;
 	        int escriure = 0;
 	         
@@ -86,9 +111,6 @@ public class ControladorCrea {
 	         for (int i = 0; i < numDonats.length; i++)
 	             numDonats[i] = conjuntGenerat.get(i);
                 
-                cT.setNumDonats(numDonats);
-                cT.setPosInicial(posInicial);
-	        cT.setTauler(taulerCreat);
 	        System.out.println("Resultat final:");
 	        cT.escriuTauler(taulerCreat);
 	        }

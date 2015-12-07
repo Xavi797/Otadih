@@ -19,23 +19,31 @@ import java.util.Scanner;
  * @author Carlos
  */
 public class ControladorJuga {
-    ControladorTaula cT;
-    List<Integer> conjuntPosibles;
-    public void juga(ControladorTaula cT){
-        this.cT = cT;
+    private ControladorTaula cT;
+    private List<Integer> conjuntPosibles;
+    private List<Integer> conjuntUsats;
+    private Tauler tauler_partida;
+    private Tauler sol;
+    
+    
+    public void juga(Tauler t, Tauler sol){
+        cT = new ControladorTaula();
         conjuntPosibles = new ArrayList<Integer>();
-        juga_aux();
+        conjuntUsats = new ArrayList<Integer>();
+        this.sol = sol;
+        juga_aux(t);
     }
     
-    private void juga_aux() {
+    private void juga_aux(Tauler t1) {
                 Scanner in = new Scanner(System.in);
                 
                 int continua = 1;
-                Tauler t = cT.getTauler().clonar();
-                cT.setTablero(t);
-                while(!acabat(t) && continua == 1) {
+                tauler_partida = t1.clonar();
+
+                iniciaUsados(tauler_partida);
+                while(!acabat(tauler_partida) && continua == 1) {
                     System.out.println("Estat actual del tauler:");
-                    cT.escriuTauler(t);
+                    cT.escriuTauler(tauler_partida);
                     System.out.println("Vols continuar jugant(1) o sortir?(0)");
                     continua = in.nextInt();
                     System.out.println("Vols sapiguer si una casella es ben colocada? 1(si), 0(no)");
@@ -44,22 +52,19 @@ public class ControladorJuga {
                         System.out.println("Indica la cela que vols consultar si es correcte (i, j): ");
                         int iaux = in.nextInt();
                         int jaux = in.nextInt();
-                        if(celaCorrecta(iaux,jaux,t)) System.out.println("Esta be!!!");
+                        if(celaCorrecta(iaux,jaux,tauler_partida)) System.out.println("Esta be!!!");
                         else System.out.println("Esta malament :( !!!");
                     }
                     if(continua == 1){
                         System.out.println("Indica la cela que vols escriure (i, j): ");
                         int i = in.nextInt();
                         int j = in.nextInt();
-                        //llamar a fastCheck y a deepchek con 1 for por cada numero para saber cuales son validos. en la posicion (i,j)
                         
-                        
-                        
-                        if (i < 0 || j < 0 || i > t.sizeTauler()-1 || j > t.sizeTauler()-1 || !t.ModificaCela(i, j, 0)) {
+                        if (i < 0 || j < 0 || i > tauler_partida.sizeTauler()-1 || j > tauler_partida.sizeTauler()-1 || !tauler_partida.ModificaCela(i, j, 0)) {
                             System.out.println("Coordenades no valides, torna a començar el proces");
                         }
                         else{
-                            posibles(i,j,t);
+                            posibles(i,j,tauler_partida);
                             System.out.println("Posibles numeros a posar en aquesta casella: ");
 
                             for (int auxCont = 0; auxCont < conjuntPosibles.size(); ++auxCont){
@@ -71,15 +76,19 @@ public class ControladorJuga {
                                 System.out.println("Valor no valid, torna a començar el proces");
                             }
                             else {
-                                if(t.ModificaCela(i, j, val)) System.out.println("Cela modificada correctament");
+                                int aux_val = tauler_partida.getCela(i, j);
+                                if(tauler_partida.ModificaCela(i, j, val)){
+                                    System.out.println("Cela modificada correctament");
+                                    conjuntUsats.add(val);
+                                    conjuntUsats.remove(aux_val);
+                                }
                                 else System.out.println("Incorrecte!!!");
                             }
                         }
                     }
                 }
-                cT.setPartida(t);
                 if(continua == 1){
-                    if (bensolucionat(t))
+                    if (bensolucionat(tauler_partida))
                         System.out.println("SOLUCIONAT CORRECTAMENT!");
                     else 
                         System.out.println("SOLUCIÓ ERRONEA");
@@ -100,27 +109,34 @@ public class ControladorJuga {
             private boolean bensolucionat(Tauler t){
                   for (int i = 0; i < t.sizeTauler(); ++i)
                       for (int j = 0; j < t.sizeTauler(); ++j)
-                           if (t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
+                           if (t.getCela(i, j) != sol.getCela(i, j)) return false;
                   return true;
             }
             
             private boolean celaCorrecta(int i, int j, Tauler t){
                 if(i < 0 || j <0 || i >= t.sizeTauler() || j >= t.sizeTauler()) return false;
-                if(t.getCela(i, j) != cT.getSolucio().getCela(i, j)) return false;
+                if(t.getCela(i, j) != sol.getCela(i, j)) return false;
                 return true;
             }
             
             private void posibles(int i, int j, Tauler t){   
                  conjuntPosibles.clear();
-                 int max = cT.getMaxCas(); //obtener max del tablero
-                 for (int aux = 2; aux < max; ++aux){
-                     t.ModificaCela(i, j, aux);
-                     if(cT.fastCheck(i, j) && cT.deepCheck()) conjuntPosibles.add(aux);
-                     
-                      //call a fastcheck y deepcheck con Tauler(i,j).setcela
-                 }
-                      
+                 ControladorGenera cGen = new ControladorGenera();
+                 cGen.BuscaPosibles(i,j,t,conjuntPosibles,conjuntUsats);
+                 t.ModificaCela(i, j, 0);
                           
+            }
+            private void iniciaUsados(Tauler t){
+                for(int i = 0; i < t.sizeTauler(); ++i){
+                    for(int j = 0; j < t.sizeTauler(); ++j){
+                        int aux = t.getCela(i, j);
+                        if(aux > 0) conjuntUsats.add(aux);
+                    }
+                }
+            }
+
+            public Tauler getTauler_partida() {
+                return tauler_partida;
             }
               
 }

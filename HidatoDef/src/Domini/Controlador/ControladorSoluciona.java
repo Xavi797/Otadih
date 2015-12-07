@@ -18,6 +18,30 @@ public class ControladorSoluciona {
     
     ControladorTaula cT;
     Tauler solucio;
+
+    public Tauler getSolucio() {
+        return solucio;
+    }
+
+    public void setSolucio(Tauler solucio) {
+        this.solucio = solucio;
+    }
+
+    public int[] getNumDonats() {
+        return numDonats;
+    }
+
+    public void setNumDonats(int[] numDonats) {
+        this.numDonats = numDonats;
+    }
+
+    public int[] getPosInicial() {
+        return posInicial;
+    }
+
+    public void setPosInicial(int[] posInicial) {
+        this.posInicial = posInicial;
+    }
     private int[] numDonats, posInicial;
          /**
               * Funcio publica encarregadar de cridar a la funcio soluciona_aux per resoldre l'hidato
@@ -25,43 +49,38 @@ public class ControladorSoluciona {
               * @param cT Li passa el controlador taula per tenir el mateix tauler
               * @return Retorna un bolea si te solucio
               */
-	    public boolean soluciona(ControladorTaula cT){
-                this.cT = cT;
-                solucio = cT.getSolucio();
-                solucio = cT.getTauler().clonar();
-            List<Integer> conjuntGenerats = new ArrayList<Integer> ();
+	    public boolean soluciona(Tauler t){
+                cT = new ControladorTaula();
+                solucio = t.clonar();
+                List<Integer> conjuntGenerats = new ArrayList<Integer> ();
            
-            posInicial = new int[2];
-            int max = 0;
+                posInicial = new int[2];
+                int max = 0;
                 //this.numDonats = cT.getNumDonats();
-            
-            for (int i = 0; i < solucio.sizeTauler(); ++i) {
-                for (int j = 0; j < solucio.sizeTauler(); ++j) {
-                    if (solucio.getTipus(i,j) >= 1) {
-                        int aux = solucio.getCela(i,j);
-                        if (aux == 1) posInicial = new int[] {i,j};
-                        conjuntGenerats.add(aux);
-                        ++max;
+                for (int i = 0; i < solucio.sizeTauler(); ++i) {
+                    for (int j = 0; j < solucio.sizeTauler(); ++j) {
+                        if (solucio.getTipus(i,j) >= 1) {
+                            int aux = solucio.getCela(i,j);
+                            if (aux == 1) posInicial = new int[] {i,j};
+                            conjuntGenerats.add(aux);
+                            ++max;
+                        }
                     }
                 }
-            }
-            Collections.sort(conjuntGenerats);
-            
-            numDonats = new int [max];
-            
-            for (int i = 0; i < max; ++i) {
-                numDonats[i] = conjuntGenerats.get(i);
-            }
-            
-            cT.setPosInicial(posInicial);
-            cT.setNumDonats(numDonats);
-            
-                //this.posInicial = cT.getPosInicial();
-                if(soluciona_aux(posInicial[0], posInicial[1], 1, 0)) {
-                    cT.escriuTauler(solucio);
-                    return true;
+                Collections.sort(conjuntGenerats);
+
+                numDonats = new int [max];
+
+                for (int i = 0; i < max; ++i) {
+                    numDonats[i] = conjuntGenerats.get(i);
                 }
-                return false;
+
+                    //this.posInicial = cT.getPosInicial();
+                    if(soluciona_aux(posInicial[0], posInicial[1], 1, 0)) {
+                        cT.escriuTauler(solucio);
+                        return true;
+                    }
+                    return false;
 	    }
              /* POST: Troba la solucio, s'hi te, i la guarda a solucion */
 

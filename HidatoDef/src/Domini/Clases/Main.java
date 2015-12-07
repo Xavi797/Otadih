@@ -19,10 +19,8 @@ public class Main {
     public static void main(String args[]) {
 
         /* Create and display the form */
-        final ControladorTaula controlador = new ControladorTaula();
-        ControladorJuga cJ = new ControladorJuga();
-        ControladorCrea cC = new ControladorCrea();
-        ControladorSoluciona cS = new ControladorSoluciona();
+        final ControladorDomini controlador = new ControladorDomini();
+        final ControladorTaula controTaula = new ControladorTaula();
         //Menu
         // TODO code application logic here
         Scanner in = new Scanner(System.in);
@@ -45,9 +43,8 @@ public class Main {
                 case -1:
                     break;
                 case 0:
-                    System.out.println("Indica el Tamany del tauler(un costat nomes) ");
-                    int costat = in.nextInt();
-                    cC.crea(controlador,costat);
+                    
+                    controlador.creaTauler();
                     break;
                 case 1:
                     //si 5 <8>, si 6<13>, 7<16> mirar porque petan, no deberia
@@ -62,7 +59,7 @@ public class Main {
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             new vistaJugar().setVisible(true); 
-                            int[][] matriu = controlador.transformar(controlador.getTauler());
+                            int[][] matriu = controTaula.transformar(controlador.getTauler());
                             vistaJugar.createBoard(matriu);
                         }
                     }); 
@@ -83,10 +80,10 @@ public class Main {
                     controlador.setTauler(tauler);
                     break;
                 case 5: 
-                    cJ.juga(controlador);
+                    controlador.juga();
                     break;
                 case 6: 
-                    cS.soluciona(controlador);
+                    controlador.soluciona();
                     break;
                 case 7: 
                     System.out.println("Escriu el nom del fitxer a destruir:");
