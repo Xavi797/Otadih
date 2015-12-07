@@ -6,130 +6,47 @@
 package Persistencia;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * Classe encarregada del guardat i carregat especific de partides
  * @author jaume.guell
  */
 public class SerialitzadorPartides extends Serialitzador {
-    private String direccio = "Dades/Partides/";
+    private final String direccio = "Dades/Partides/";
     
     /**
-     * Funcio encaregada de comprovar l'existencia del fitxer amb nom 'name'
-     * @param name Nom del fitxer
-     * @param user Nom del usuari que esta fent la comprovacio
-     * @return Retorna true en cas de que el nom del fitxer a guardar ja existeixi, false en cas contrari
-     */
-    @Override
-    public boolean existenciaObjecte(String name, String user) {
-        
-        String dirAux = direccio + "/" + user + "/";
-        name = name + ".part";
-        
-        File f = new File(dirAux);
-        File[] list = f.listFiles();
-        if (list != null) {
-            for (File fil : list) {
-                if (fil.getName().equals(name)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Funcio encarregada de destruir fitxers de la BD
+     * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.
      * @param name Nom del fitxer a destruir
-     * @param user Nom del usuari que esta destruint la partida 
-     * @return Retorna true en cas de que el fitxer es destrueixi correctament, false en cas contrari 
+     * @param user Nom del usuari que esta realitzant la operacio
+     * @return True en cas de que el fitxer es destrueixi correctament, false en cas contrari
      */
-    @Override
-    public boolean destrueixObjecte(String name, String user) {
-        
-        String objectiu = direccio + "/" + user + "/" + name + ".part";
-          
-        if (existenciaObjecte(name, user)) {
-            File f = new File(objectiu);
-            f.delete();
-            return true;
-        }
-        else {
-            System.out.println("El fitxer demanat no existeix");
-            return false;
-        }
+    public boolean destruirPartida(String name, String user) {
+        String dirAux = direccio + user + "/";
+        return super.destruirObjecte(name, dirAux);
     }
     
     /**
-     * Funcio encarregada de guardar objectes com a fitxers en diferents localitzacions.
-     * @param obj Objecte a guardar
-     * @param name Nom del objecte a guardar
-     * @param user Nom del usuari que esta guardant la partida
-     * @return Retorna un valor boolea que indica si s'ha efectuat correctament el proces de guardat
+     * Funcio encarregada de guardar objectes a la BD. Utilitza funcions de la superclasse.
+     * @param obj Objecte que sera guardat a la BD
+     * @param name Nom del objecte
+     * @param user Nom del usuari que esta realitzant la operacio
+     * @return  True en cas de que el objecte es guardi correctament, false en cas contrari
      */
-    @Override
-    public boolean serialitzarObjecte (Object obj, String name, String user) {
-        
-        int ordre = 0;
-        while (existenciaObjecte(name, user) && ordre == 0) {
-            System.out.println("El fitxer '"+name+"' ja exiseix. Vols sobreescriure'l?" );
-            System.out.println("0 --> NO, canviar el nom // 1 --> SI, sobreescriure");
-            
-            ordre = in.nextInt();
-            
-            if (ordre == 0) {
-                System.out.println("Escriu el nou nom:");
-                name = in.next();
-            }
-        }
-        
-        String dirAux = direccio + user;
-        File  f = new File(dirAux);
+    public boolean guardarPartida(Object obj, String name, String user) {
+        String dirAux = direccio + user + "/";
+        File f = new File(dirAux);
         f.mkdir();  //Creacio nou folder, si ja existia no fa res
-        
-        dirAux = dirAux + "/" + name + ".part";
-        try {
-            escriptorOb = new ObjectOutputStream(new FileOutputStream(dirAux));
-            escriptorOb.writeObject(obj);
-            escriptorOb.close();
-            return true;
-        } catch (Exception ex) {
-            this.logerror = ex.getMessage();
-            System.out.println("Error al guardar");
-            return false;
-        }
+        return super.serialitzarObjecte(obj, name, direccio);
     }
     
     /**
-     * Funcio encarregada de carregar taulers desde els fitxers.
+     * Funcio encarregada de carergar objectes de la BD. Utilitza funcions de la superclasse.
      * @param name Nom del fitxer a carregar
-     * @param user Nom del usuari que esta carregant la partida
-     * @return Retorna un objecte de tipus generic que conte les dades carregades, esta buit en cas de error
+     * @param user Nom del usuari que esta realitzant la operacio
+     * @return Objecte de tipus generic amb la informacio demanada, Objecte de tipus generic buit en cas de error
      */
-    @Override
-    public Object deserialitzarObjecte (String name, String user) {
-
-        if (!existenciaObjecte(name, user)) {
-            System.out.println("El fitxer demanat no existeix");
-            return new Object();    //Si hi ha error retorna un objecte buit
-        }
-        String dirAux = direccio + user + "/" + name + ".part";
-        try{     
-            File f = new File(dirAux);
-            lectorOb = new ObjectInputStream(new FileInputStream(f));
-            Object obj;
-            obj = lectorOb.readObject();
-            return obj;
-            
-        } catch (IOException | ClassNotFoundException ex) {
-            this.logerror = ex.getMessage();
-            System.out.println("Error al carregar");
-            return new Object();    //Si hi ha error retorna un objecte buit 
-        }
+    public Object carregarPartida(String name, String user) {
+        String dirAux = direccio + user + "/";
+        return super.deserialitzarObjecte(name, dirAux);
     }
 }

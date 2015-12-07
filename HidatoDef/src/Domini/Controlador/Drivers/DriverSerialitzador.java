@@ -19,9 +19,9 @@ public class DriverSerialitzador {
         
         //Creem dos taulers diferents i els guardem
         t = new Tauler(3); //Tauler 3x3
-        sT.serialitzarObjecte(t.getTauler(), "tauler3x3", null);
+        sT.guardar(t.getTauler(), "tauler3x3");
         t = new Tauler(5); //Tauler 5x5
-        sT.serialitzarObjecte(t.getTauler(), "tauler5x5", null);
+        sT.guardar(t.getTauler(), "tauler5x5");
         
         int cas = -1;
         while (cas != 0) {
@@ -31,10 +31,10 @@ public class DriverSerialitzador {
                 case 0:
                     break;
                 case 1:
-                    t = (Tauler) sT.deserialitzarObjecte("tauler3x3", null);
+                    t = (Tauler) sT.carregar("tauler3x3");
                     break;
                 case 2:
-                    t = (Tauler) sT.deserialitzarObjecte("tauler5x5", null);
+                    t = (Tauler) sT.carregar("tauler5x5");
                     break;
                 case 3:
                     int size = t.sizeTauler();
