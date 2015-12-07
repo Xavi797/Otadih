@@ -72,14 +72,14 @@ public class Main {
                     nom = in.next();
                     System.out.println("Escriu el teu nom:");
                     user = in.next();
-                    sP.serialitzarObjecte(controlador.getTauler(), nom, user);
+                    sP.guardarPartida(controlador.getTauler(), nom, user);
                     break;
                 case 4:
                     System.out.println("Escriu el nom del fitxer a carregar:");
                     nom = in.next();
                     System.out.println("Escriu el teu nom:");
                     user = in.next();
-                    Tauler tauler = (Tauler) sP.deserialitzarObjecte(nom, user);
+                    Tauler tauler = (Tauler) sP.carregarPartida(nom, user);
                     controlador.setTauler(tauler);
                     break;
                 case 5: 
@@ -93,7 +93,7 @@ public class Main {
                     nom = in.next();
                     System.out.println("Escriu el nom del fitxer a carregar:");
                     user = in.next();
-                    boolean dest = sP.destrueixObjecte(nom, user);
+                    boolean dest = sP.destruirPartida(nom, user);
                     if (dest) System.out.println("Objecte destruit");
                     else System.out.println("Objecte no destruit");
                     break;
