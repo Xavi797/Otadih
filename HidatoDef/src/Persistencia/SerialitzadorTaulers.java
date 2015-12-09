@@ -10,7 +10,7 @@ package Persistencia;
  * @author jaume.guell
  */
 public class SerialitzadorTaulers extends Serialitzador {
-    private final String direccio = "Dades/Taulers/";
+    private final String direccio = "Dades/Taulers/";    /* Conte el path de la carpeta on es guardaran els taulers */
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.

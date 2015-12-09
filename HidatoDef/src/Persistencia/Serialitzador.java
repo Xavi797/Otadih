@@ -19,7 +19,7 @@ import java.util.Scanner;
  */
 public class Serialitzador {
   
-    private String logerror;
+    private String logerror;    /* String encarregat de capturar els missatges de error */
     Scanner in = new Scanner(System.in);
 
     /**

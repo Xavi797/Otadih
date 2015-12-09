@@ -10,7 +10,7 @@ package Persistencia;
  * @author jaume.guell
  */
 public class SerialitzadorRankings extends Serialitzador {
-    private final String direccio = "Dades/Rankings/";
+    private final String direccio = "Dades/Rankings/";   /* Conte el path de la carpeta on es guardaran els rankings */
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.

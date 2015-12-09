@@ -11,6 +11,7 @@ package Domini.Clases;
  */
 public class Partida {
     private Usuari user;
+    private Rankings ranking;
    // private Hidato hidato;
     private static int ultimId = 1;
     private int idPartida;// buscar com fer unica

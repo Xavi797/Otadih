@@ -10,7 +10,7 @@ package Persistencia;
  * @author jaume.guell
  */
 public class SerialitzadorEstadistiques extends Serialitzador {
-    private final String direccio = "/Dades/Estadistiques/";
+    private final String direccio = "/Dades/Estadistiques/";    /* Conte el path de la carpeta on es guardaran les estadistiques */
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.

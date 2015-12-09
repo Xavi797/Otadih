@@ -10,7 +10,7 @@ package Persistencia;
  * @author jaume.guell
  */
 public class SerialitzadorUsuaris extends Serialitzador {
-    private final String direccio = "Dades/Usuaris/";
+    private final String direccio = "Dades/Usuaris/";    /* Conte el path de la carpeta on es guardaran els usuaris */
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.
