@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
+import Domini.Clases.Coord;
 /**
  *
  * @author Carlos
@@ -46,16 +47,17 @@ public class ControladorJuga {
                     cT.escriuTauler(tauler_partida);
                     System.out.println("Vols continuar jugant(1) o sortir?(0)");
                     continua = in.nextInt();
-                    System.out.println("Vols sapiguer si una casella es ben colocada? 1(si), 0(no)");
-                    int ajuda = in.nextInt();
-                    if(ajuda == 1){
-                        System.out.println("Indica la cela que vols consultar si es correcte (i, j): ");
-                        int iaux = in.nextInt();
-                        int jaux = in.nextInt();
-                        if(celaCorrecta(iaux,jaux,tauler_partida)) System.out.println("Esta be!!!");
-                        else System.out.println("Esta malament :( !!!");
-                    }
+                    
                     if(continua == 1){
+                        System.out.println("Vols sapiguer si una casella es ben colocada? 1(si), 0(no)");
+                        int ajuda = in.nextInt();
+                        if(ajuda == 1){
+                            System.out.println("Indica la cela que vols consultar si es correcte (i, j): ");
+                            int iaux = in.nextInt();
+                            int jaux = in.nextInt();
+                            if(celaCorrecta(iaux,jaux,tauler_partida)) System.out.println("Esta be!!!");
+                            else System.out.println("Esta malament :( !!!");
+                        }
                         System.out.println("Indica la cela que vols escriure (i, j): ");
                         int i = in.nextInt();
                         int j = in.nextInt();
@@ -69,7 +71,9 @@ public class ControladorJuga {
 
                             for (int auxCont = 0; auxCont < conjuntPosibles.size(); ++auxCont){
                                 System.out.printf(" " + conjuntPosibles.get(auxCont));
+                                
                             }
+                            System.out.println();
                             System.out.println("Indica el valor: ");
                             int val = in.nextInt();
                             if (!conjuntPosibles.contains(val)) {
@@ -80,7 +84,8 @@ public class ControladorJuga {
                                 if(tauler_partida.ModificaCela(i, j, val)){
                                     System.out.println("Cela modificada correctament");
                                     conjuntUsats.add(val);
-                                    conjuntUsats.remove(aux_val);
+                                    for(int auxUsats = 0; auxUsats < conjuntUsats.size(); ++auxUsats)
+                                        if(conjuntUsats.get(auxUsats) == aux_val) conjuntUsats.remove(auxUsats);
                                 }
                                 else System.out.println("Incorrecte!!!");
                             }
@@ -121,8 +126,21 @@ public class ControladorJuga {
             
             private void posibles(int i, int j, Tauler t){   
                  conjuntPosibles.clear();
+                 int tam = t.sizeTauler(); 
+                 int dist[][] = new int [tam][tam];
+                 int vis[][] = new int [tam][tam];
                  ControladorGenera cGen = new ControladorGenera();
-                 cGen.BuscaPosibles(i,j,t,conjuntPosibles,conjuntUsats);
+                 //cGen.BuscaPosibles(i,j,t,conjuntPosibles,conjuntUsats);
+                 init(dist,vis);
+                 bfs(i,j,dist,t,vis);
+                  for (int aux = 2; aux < cGen.getMaxCas(); ++aux){
+                    if(!conjuntUsats.contains(aux)){
+                        t.ModificaCela(i, j, aux);
+                        if(propers(i,j,t) && dfs_posibles(dist,aux,t))
+                            conjuntPosibles.add(aux);
+                    }
+                      //call a fastcheck y deepcheck con Tauler(i,j).setcela
+                 }                 
                  t.ModificaCela(i, j, 0);
                           
             }
@@ -138,5 +156,87 @@ public class ControladorJuga {
             public Tauler getTauler_partida() {
                 return tauler_partida;
             }
-              
-}
+            
+            
+            
+        public boolean dfs_posibles(int dist[][], int x, Tauler t){
+             for(int auxi = 0; auxi < dist.length; ++auxi)
+                for(int auxj = 0; auxj < dist[0].length; ++auxj){
+                    int dis_max = t.getCela(auxi, auxj) - x;
+                    if(dis_max < 0)dis_max = dis_max *(-1);
+                    //if(t.getCela(auxi, auxj) - dis_max < 0 && )
+             }
+                      return true;  
+        }
+        public boolean propers(int i, int j, Tauler t){
+            boolean post,ant;
+            post = ant = false;
+            int veins_lliures = 0;
+            int[] direccioVertical = new int[]{-1,-1,-1,0,0,1,1,1};
+	    int[] direccioHoritzontal = new int[]{-1,0,1,-1,1,-1,0,1};
+
+                for (int aux = 0; aux < direccioVertical.length; ++aux){
+                    int val = t.getCela(i + direccioHoritzontal[aux], j + direccioVertical[aux]);
+                    if(val == 0) ++veins_lliures;
+                    if(val == (t.getCela(i, j)-1)) ant = true;
+                    else if(val == (t.getCela(i, j)+1)) post = true;
+                }
+                if(veins_lliures == 0 && (!post || !ant)) return false;
+                else if(veins_lliures == 1 &&(!post && !ant)) return false;
+                else return true;
+        }
+            
+        public void init(int[][] dist,int[][] vis){
+            for(int it = 0; it < dist.length; ++it){
+                for(int it2 = 0; it2 < dist[0].length; ++it2){
+                    dist[it][it2] = -1;
+                    vis[it][it2] = 0;
+                }
+            }
+        }
+            
+        public void bfs(int c1, int c2, int[][] dist, Tauler taulerGen, int [][] taulerVis){ //Coordenadas del nuevo numero
+ 
+
+            Queue<Coord> q = new LinkedList<>();
+            Coord aux = new Coord();
+            aux.x = c1;
+            aux.y = c2;
+            q.add(aux);
+            boolean trobat = false;
+
+            while(!trobat && !q.isEmpty()){
+                Coord p = q.poll();
+         /* no para mai
+                if(taulerGen[p.x][p.y] == num){
+                    d = dist[p.x][p.y];
+                    trobat = true;
+                }*/ if(taulerGen.getCela(p.x, p.y) >= 0 && taulerVis[p.x][p.y] == 0){
+                    taulerVis[p.x][p.y] = 1;
+                    bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+                                                                        //diagonales tambien
+                    bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+                }
+            } 
+        }
+
+        public void bfs_aux(int i, int j, int d ,Queue<Coord> q, Tauler taulerGen, int[][] dist){
+            Coord aux2 = new Coord();
+            aux2.x = i;
+            aux2.y = j;
+
+            if(i >= 0 && i < taulerGen.sizeTauler() && j >= 0 && j < taulerGen.sizeTauler()){
+                if(taulerGen.getCela(i, j) >= 0){
+                    q.add(aux2);
+                    dist[i][j] = d+1;
+                }
+            }
+
+        }
+    }
