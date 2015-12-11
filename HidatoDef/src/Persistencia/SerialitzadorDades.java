@@ -6,37 +6,45 @@
 package Persistencia;
 
 /**
- * Classe encarregada del guardat i carregat especific de usuaris
+ * Classe encarregada del guardat i carregat especific de estadistiques
  * @author jaume.guell
  */
-public class SerialitzadorUsuaris extends Serialitzador {
-    private final String direccio = "Dades/Usuaris/";    /* Conte el path de la carpeta on es guardaran els usuaris */
+public class SerialitzadorDades extends Serialitzador {
+
+    // Les direccions a passar son:
+    //      /Dades/Rankings/
+    //      /Dades/Estadistiques/
+    //      /Dades/Taulers/
+    //      /Dades/Usuaris/
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.
      * @param name Nom del fitxer a destruir
+     * @param dir Path del directori on hi ha el fitxer
      * @return True en cas de que el fitxer es destrueixi correctament, false en cas contrari
      */
-    public boolean destruir(String name) {
-        return super.destruirObjecte(name, direccio);
+    public boolean destruir(String name, String dir) {
+        return super.destruirObjecte(name, dir);
     }
     
     /**
      * Funcio encarregada de guardar objectes a la BD. Utilitza funcions de la superclasse.
      * @param obj Objecte que sera guardat a la BD
      * @param name Nom del objecte
+     * @param dir Path del directori on es guardara el objecte
      * @return  True en cas de que el objecte es guardi correctament, false en cas contrari
      */
-    public boolean guardar(Object obj, String name) {
-        return super.serialitzarObjecte(obj, name, direccio);
+    public boolean guardar(Object obj, String name, String dir) {
+        return super.serialitzarObjecte(obj, name, dir);
     }
     
     /**
      * Funcio encarregada de carergar objectes de la BD. Utilitza funcions de la superclasse.
      * @param name Nom del fitxer a carregar
+     * @param dir Path del directori on hi ha el fitxer a carregar
      * @return Objecte de tipus generic amb la informacio demanada, Objecte de tipus generic buit en cas de error
      */
-    public Object carregar(String name) {
-        return super.deserialitzarObjecte(name, direccio);
+    public Object carregar(String name, String dir) {
+        return super.deserialitzarObjecte(name, dir);
     }
 }

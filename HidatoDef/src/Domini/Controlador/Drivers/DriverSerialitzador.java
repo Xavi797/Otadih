@@ -10,7 +10,7 @@ import Domini.Clases.Tauler;
 
 /**
  *
- * @author jaume
+ * @author jaume.guell
  */
 public class DriverSerialitzador {
     public static void main (String[] args) {
