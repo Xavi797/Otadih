@@ -18,7 +18,8 @@ public class ControladorSoluciona {
     
     ControladorTaula cT;
     Tauler solucio;
-
+    private int[] numDonats, posInicial;
+    
     public Tauler getSolucio() {
         return solucio;
     }
@@ -42,7 +43,7 @@ public class ControladorSoluciona {
     public void setPosInicial(int[] posInicial) {
         this.posInicial = posInicial;
     }
-    private int[] numDonats, posInicial;
+
          /**
               * Funcio publica encarregadar de cridar a la funcio soluciona_aux per resoldre l'hidato
               * PRE: -- 

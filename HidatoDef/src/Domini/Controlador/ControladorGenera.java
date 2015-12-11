@@ -48,6 +48,14 @@ public class ControladorGenera {
                 this.tauler = tauler;
             }
 
+            public Tauler getTauler_partida() {
+                return tauler_partida;
+            }
+
+            public void setTauler_partida(Tauler tauler_partida) {
+                this.tauler_partida = tauler_partida;
+            }
+
             public Tauler getSolucion() {
                 return solucion;
             }
@@ -78,7 +86,7 @@ public class ControladorGenera {
               * @param altura cont l'alçada del tauler
               * PRE: --
               */
-	    public void BuscarSolucion(Tauler t) {
+	    public void BuscaSolucions(Tauler t) {
 	        inicialitzacio(t);
 	        backtrack();
 	    }
@@ -408,7 +416,7 @@ public class ControladorGenera {
                             taulerGenerat.setCela(posx, posy, 0);
 	    		
                             tauler = taulerGenerat;
-                            BuscarSolucion(taulerGenerat);
+                            BuscaSolucions(taulerGenerat);
                             if(nSols > 1){
                                     taulerGenerat.setCela(posx, posy, numRetorn);
                                     ++intents;
@@ -440,7 +448,7 @@ public class ControladorGenera {
                     elapsed = System.currentTimeMillis()-startTime;
                     if (elapsed>timeout) return false;
                 }
-                BuscarSolucion(taulerGenerat);
+                BuscaSolucions(taulerGenerat);
                 
                 if(nSols > 1 || nSols == 0){
                     return false;   
