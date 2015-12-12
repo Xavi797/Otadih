@@ -26,7 +26,7 @@ public class ControladorGenera {
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
             private long startTime;
-            private final long timeout = 2000;                                   
+            private final long timeout = 8000;                                   
             private long elapsed;
 	    
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
@@ -39,6 +39,7 @@ public class ControladorGenera {
 	    private int maxCas; /* numero de la casilla mas grande */
 
             private int min; /* Minim de caselles posbiles a posar en el tauler */
+            private Scanner in = new Scanner(System.in);
     
             public Tauler getTauler() {
                 return tauler;
@@ -114,20 +115,6 @@ public class ControladorGenera {
 	            }
 	        }
             }
-	    
-            public void BuscaPosibles(int i, int j,Tauler t, List<Integer> conjuntPosibles, List<Integer> conjuntUsats){
-                
-                inicialitzacio(t);
-                
-                
-                 for (int aux = 2; aux < maxCas; ++aux){
-                    if(!conjuntUsats.contains(aux)){
-                        t.ModificaCela(i, j, aux);
-                        if(fastCheck(i, j) && deepCheck()) conjuntPosibles.add(aux);
-                    }
-                      //call a fastcheck y deepcheck con Tauler(i,j).setcela
-                 }
-            }
             
              /**
               * La idea es que en cada crida a bactraking, seleccionem la casella que te menys veins
@@ -173,11 +160,11 @@ public class ControladorGenera {
 	            for (int k = 1; (nSols < 2) && (k < maxCas - 1); ++k) {
 	                if(!usado[k]) {
 	                    usado[k] = true;
-	                    tablero.setCela(minI, minJ, k+1);
+	                    tablero.setCelaNoforat(minI, minJ, k+1);
 
 	                    if (fastCheck(minI, minJ) && deepCheck()) backtrack();
 
-	                    tablero.setCela(minI, minJ, 0);
+	                    tablero.setCelaNoforat(minI, minJ, 0);
 	                    usado[k] = false;
 	                }
 	            }
@@ -305,7 +292,7 @@ public class ControladorGenera {
               */
 	    
 	    public void generaTauler(int costat, int numInicials, int forats) {
-	    	 int numMaxim = costat*costat - forats;
+	    	 int numMaxim;
 	    	 Coord posInicialProvisional = new Coord();
 	         Coord coordenadaAux = new Coord();
 	         List<Coord> conjuntGeneratPos = new ArrayList<Coord>();
@@ -317,6 +304,18 @@ public class ControladorGenera {
 	         int veins[][] = new int [costat][costat];
 	         int num_posar = 0;
 
+                 
+                 
+                 System.out.println("Vols posar manualment forats(1) o escollir topologia?(2) "
+                         + "o sense forats(0)");
+                 int op_forats = in.nextInt();
+                 
+                 if(op_forats == 2){
+                     escollir_topo(taulerGenerat);
+                     
+                 }
+                 
+                 numMaxim = cTaul.getMaxPossible(taulerGenerat);
 	         //FER FORATS
 	         boolean tauler_correcte = false;
 	         while(!tauler_correcte){
@@ -341,7 +340,7 @@ public class ControladorGenera {
 		         boolean pathing = true;
 		         
 		         while(pathing){
-		        	 taulerGeneratAux.setCela(coordenadaAux.x, coordenadaAux.y, num_posar);
+		        	 taulerGeneratAux.setCelaNoforat(coordenadaAux.x, coordenadaAux.y, num_posar);
 		        	 conjuntGenerat.add(num_posar);
 		        	 if(veins_accesibles(coordenadaAux.x,coordenadaAux.y,taulerGeneratAux) || num_posar == numMaxim) pathing = false;
 		        	 else{
@@ -413,12 +412,12 @@ public class ControladorGenera {
                         
 	    		if(taulerGenerat.getCela(posx, posy) != 1 && taulerGenerat.getCela(posx, posy) != -1 && taulerGenerat.getCela(posx, posy) != numMaxim){
                             int numRetorn = taulerGenerat.getCela(posx, posy);
-                            taulerGenerat.setCela(posx, posy, 0);
+                            taulerGenerat.setCelaNoforat(posx, posy, 0);
 	    		
                             tauler = taulerGenerat;
                             BuscaSolucions(taulerGenerat);
                             if(nSols > 1){
-                                    taulerGenerat.setCela(posx, posy, numRetorn);
+                                    taulerGenerat.setCelaNoforat(posx, posy, numRetorn);
                                     ++intents;
                                     conjuntGeneratPos.add(auxCoord);
                             }
@@ -465,13 +464,13 @@ public class ControladorGenera {
                         
                         int aux = taulerGenerat.getCela(i, j);
                         if(taulerGenerat.getCela(i, j)!= 1 && taulerGenerat.getCela(i, j)!= numMaxim && taulerGenerat.getCela(i, j)> 0){
-                            taulerGenerat.setCela(i, j, 0);
+                            taulerGenerat.setCelaNoforat(i, j, 0);
                             --num_posats;
                         }
                         
                         if(quita_nums(num_inicials,num_posats,numMaxim,taulerGenerat,i,j+1,primera_it)) return true;
                         if(taulerGenerat.getCela(i, j)== 0 )++num_posats;
-                        taulerGenerat.setCela(i, j, aux);
+                        taulerGenerat.setCelaNoforat(i, j, aux);
                         ++j;
                     }
                     j = 0;
@@ -586,9 +585,43 @@ public class ControladorGenera {
              /* POST: Retorna matriu de veis.
             */
 	    
-             /**
-              * getSolucio, Retorna el tauler solucionat solucion
-              * @return Retorna el tauler solucionat
-              * PRE: --
-              */
+             public void escollir_topo(Tauler t){
+                 System.out.println("1: Topologia piramide\n"
+                         + "2: Creu\n"
+                         + "3: Trival\n"
+                         + "4: Cercle");
+                 int op_top = in.nextInt();
+                 if(op_top == 1) topPira(t);
+                 else if(op_top == 2) topCreu(t);
+                 
+                 
+                 
+             }
+             
+             public void topPira(Tauler t){
+                 int tam = t.sizeTauler();
+                 for(int j = 0; j <= tam/2; ++j)
+                    for(int i = j+1; i < tam-j-1; ++i){
+                        t.setCela(i, j, -1);
+                    }  
+             }
+             
+             
+             public void topCreu(Tauler t){
+                 int tam = t.sizeTauler();
+                 int i = tam/2;
+                 for(int j = 0; tam/2 >= j; ++j)
+                     t.setCela(i, j, -1);
+                 for(int j = tam-1; j > tam/2; --j)
+                     t.setCela(i, j, -1);
+                 int j = 0;
+             }
+             
+             public void topTrival(Tauler t){
+                 int tam = t.sizeTauler();
+                 for(int i = 1; i <= tam-1; ++i)
+                    for(int j = 0; j< i; ++j)
+                        t.setCela(i, j, -1);
+                    
+             }
 }

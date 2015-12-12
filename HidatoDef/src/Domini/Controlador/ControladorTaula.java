@@ -76,6 +76,14 @@ public class ControladorTaula {
                   return max;
               }
               
+              public int getMaxPossible(Tauler t){
+                  int max = 0;
+                  for(int i = 0; i < t.sizeTauler(); ++i)
+                      for(int j = 0; j < t.sizeTauler(); ++j)
+                           if(t.getCela(i, j) != -1) max++;
+                  return max;
+              }
+              
           
 	    
               

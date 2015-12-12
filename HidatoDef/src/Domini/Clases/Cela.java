@@ -42,7 +42,13 @@ public class Cela extends Cela_Compartida implements Serializable {
   public void setValor (int valor) {
       tipus = valor;
       this.valor = valor;
-      //return true;
+  }
+  
+  public void SetValorNoForat(int valor) {
+      if(tipus != -1){
+        tipus = valor;
+        this.valor = valor;
+      }
   }
   
   public boolean modificaValor(int valor){

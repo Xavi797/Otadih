@@ -132,14 +132,16 @@ public class ControladorJuga {
                  int vis[][] = new int [tam][tam];
 
                  init(dist,vis);
-                 bfs(i,j,dist,t,vis);
+                 
+                 /*
                  for(int ax = 0; ax < tam; ++ax){
                       for(int ay = 0; ay < tam; ++ay)
                           System.out.print(" " + dist[ax][ay]);
                       System.out.println();
-                 }
+                 }*/
                   for (int aux = 2; aux < maxTauler; ++aux){
                         t.ModificaCela(i, j, aux);
+                        bfs(i,j,dist,t,vis);
                         if(propers(i,j,t) && dfs_posibles(dist,aux,t))
                             conjuntPosibles.add(aux);
                  }                 
@@ -216,29 +218,30 @@ public class ControladorJuga {
             dist[c1][c2] = 0;
             while(!trobat && !q.isEmpty()){
                 Coord p = q.poll();
-
-                if(taulerGen.getCela(p.x, p.y) >= 0 && taulerVis[p.x][p.y] == 0){
+                int num_act = taulerGen.getCela(p.x, p.y);
+                if(num_act == 0 && taulerVis[p.x][p.y] == 0){
                     taulerVis[p.x][p.y] = 1;
-                    bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
                                                                         //diagonales tambien
-                    bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
-                    bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
+                    bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis,num_act);
                 }
             } 
         }
 
-        public void bfs_aux(int i, int j, int d ,Queue<Coord> q, Tauler taulerGen, int[][] dist, int [][] taulerVis){
+        public void bfs_aux(int i, int j, int d ,Queue<Coord> q, Tauler taulerGen, int[][] dist, int [][] taulerVis, int num_act){
             Coord aux2 = new Coord();
             aux2.x = i;
             aux2.y = j;
 
             if(i >= 0 && i < taulerGen.sizeTauler() && j >= 0 && j < taulerGen.sizeTauler()){
-                if(taulerGen.getCela(i, j) >= 0  && taulerVis[i][j] == 0){
+                int num = taulerGen.getCela(i, j);
+                if((num == 0 || num == num_act + 1 || num == num_act - 1)  && taulerVis[i][j] == 0){
                     q.add(aux2);
                     if(dist[i][j] == -1)dist[i][j] = d+1;
                 }

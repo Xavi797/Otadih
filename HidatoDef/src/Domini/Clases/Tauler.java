@@ -49,6 +49,10 @@ public class Tauler extends Tauler_Compartit implements Serializable {
     taulerJoc[i][j].setValor(valor);
   }
   
+  public void setCelaNoforat(int i, int j, int valor){
+    taulerJoc[i][j].SetValorNoForat(valor);
+  }
+  
    public boolean ModificaCela (int i, int j, int valor) {
         return taulerJoc[i][j].modificaValor(valor);
   }
