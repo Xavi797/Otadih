@@ -5,14 +5,23 @@
  */
 package Domini.Controlador.Drivers;
 
-import Persistencia.*;
-import Domini.Clases.Tauler;
+import Persistencia.SerialitzadorDades;
+import Persistencia.SerialitzadorPartides;
 
 /**
  *
  * @author jaume.guell
  */
-public class DriverSerialitzador {/*
+public class DriverSerialitzador {
+    
+    public static void main (String[] args) {
+        SerialitzadorDades sDades = new SerialitzadorDades();
+        SerialitzadorPartides sPartides = new SerialitzadorPartides();
+        
+        
+    }
+}
+/*
     public static void main (String[] args) {
         SerialitzadorTaulers sT = new SerialitzadorTaulers();
         Tauler t = new Tauler(1);
@@ -44,4 +53,3 @@ public class DriverSerialitzador {/*
         }
         
     }*/
-}

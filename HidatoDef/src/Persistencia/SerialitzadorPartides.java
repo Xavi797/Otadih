@@ -15,7 +15,7 @@ public class SerialitzadorPartides extends Serialitzador {
     private final String direccio = "Dades/Partides/";   /* Conte el path de la carpeta on es guardaran les partides */
     
     /**
-     * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.
+     * Funcio encarregada de destruir fitxers de la BD, utilitza funcions de la superclasse.
      * @param name Nom del fitxer a destruir
      * @param user Nom del usuari que esta realitzant la operacio
      * @return True en cas de que el fitxer es destrueixi correctament, false en cas contrari
@@ -26,7 +26,25 @@ public class SerialitzadorPartides extends Serialitzador {
     }
     
     /**
-     * Funcio encarregada de guardar objectes a la BD. Utilitza funcions de la superclasse.
+     * Funcio encarregada de destruir totes les partides del usuari amb nom name.
+     * @param user Nom del usuari del que es destruiran totes les seves partides
+     */
+    public void destruirTotesPartides(String user) {
+        String dirAux = direccio + user + "/";
+        
+        File f = new File(dirAux);
+        File[] list = f.listFiles();
+        while (list != null) {
+            for (File fil : list) {
+                if (fil.isDirectory() == false) fil.delete();
+            }
+        }
+        
+        f.delete(); //Elimina carpeta
+    }
+    
+    /**
+     * Funcio encarregada de guardar objectes a la BD, utilitza funcions de la superclasse.
      * @param obj Objecte que sera guardat a la BD
      * @param name Nom del objecte
      * @param user Nom del usuari que esta realitzant la operacio
@@ -40,7 +58,7 @@ public class SerialitzadorPartides extends Serialitzador {
     }
     
     /**
-     * Funcio encarregada de carergar objectes de la BD. Utilitza funcions de la superclasse.
+     * Funcio encarregada de carergar objectes de la BD, utilitza funcions de la superclasse.
      * @param name Nom del fitxer a carregar
      * @param user Nom del usuari que esta realitzant la operacio
      * @return Objecte de tipus generic amb la informacio demanada, Objecte de tipus generic buit en cas de error
