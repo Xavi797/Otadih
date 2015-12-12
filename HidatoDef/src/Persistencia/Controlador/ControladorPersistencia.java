@@ -48,6 +48,15 @@ public class ControladorPersistencia {
     }
     
     /**
+     * Funcio encarregada de fer la crida per comprovar si ja existeix un Usuari amb nom name.
+     * @param name Nom del que es vol comprovar la seva existencia
+     * @return Cert en cas de que ja existeixi, false en cas contrari
+     */
+    public boolean comprovaUser(String name) {
+        return SDades.existeixObjecte(name, "/Dades/Usuaris/");
+    }
+    
+    /**
      * Funcio encarregada de fer la crida per guardar un Ranking.
      * @param rank Ranking en questio
      * @param name Nom del ranking
@@ -163,6 +172,14 @@ public class ControladorPersistencia {
      */
     public boolean destrueixPartida(String name, String user) {
         return SPartides.destruirPartida(name, user);
+    }
+    
+    /**
+     * Funcio encarregada de fer la crida per destruir totes les partides de un Usuari.
+     * @param user Nom del usuari
+     */
+    public void destrueixTotesPartides(String user) {
+        SPartides.destruirTotesPartides(user);
     }
     
 }

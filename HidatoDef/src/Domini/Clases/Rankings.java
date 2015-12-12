@@ -5,10 +5,9 @@
  */
 package Domini.Clases;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
@@ -20,36 +19,37 @@ public class Rankings {
         private String user;
         private int puntuacio;
     }
+    
     private int nivellDificultat;   /* Indica el nivell de dificultat de la partida i per tant ranking a utilitzar */
-    private List<UsuariPuntuacio> taulaRanking = new ArrayList<UsuariPuntuacio>(); /* Llista que conte el ranking de una determinada dificultat */
+    private List<UsuariPuntuacio> taulaRanking; /* Llista que conte el ranking de una determinada dificultat */
     
     /**
-     * 
-     * @return 
+     * Funcio encarregada de obtenir el nivell de dificiultat de el Ranking.
+     * @return Int que es correspon amb el nivell de dificultat de el ranking
      */
     public int getNivellDificultat() {
         return nivellDificultat;
     }
 
     /**
-     * 
-     * @param nivellDificultat 
+     * Funcio encarregada de definir el nivell de dificultat del Ranking.
+     * @param nivellDificultat Int corresponent al nivell de dificultat del ranking
      */
     public void setNivellDificultat(int nivellDificultat) {
         this.nivellDificultat = nivellDificultat;
     }
 
     /**
-     * 
-     * @return 
+     * Funcio encarregada d'obtenir la llista de UsuariPuntuacio
+     * @return Llista que conte els UsuariPuntuacio ordenats per puntuacio
      */
     public List<UsuariPuntuacio> getTaulaRanking() {
         return taulaRanking;
     }
 
     /**
-     * 
-     * @param taulaRanking 
+     * Funcio encarregada de definir la llista de UsuariPuntuacio
+     * @param taulaRanking Llista de UsuariPuntuacio ordenats per puntuacio
      */
     public void setTaulaRanking(List<UsuariPuntuacio> taulaRanking) {
         this.taulaRanking = taulaRanking;
@@ -61,21 +61,42 @@ public class Rankings {
      */
     public void afegeix(UsuariPuntuacio up) {
         taulaRanking.add(up);
+        ordenar();
+        retallar();
     }
     
     /**
      * Funcio encarregada d'ordenar una llista de UsuariPuntuacio, si la llista te mida mes gran que 10 elimina els ultims.
      */
     public void ordenar() {
-       /* taulaRanking.sort(UsuariPuntuacio, new Comparator<UsuariPuntuacio>() {
-            @Override
-            public int compare(UsuariPuntuacio up1, UsuariPuntuacio up2) {
-                return up2.puntuacio.compareTo(up1.puntuacio);
+        ListIterator<UsuariPuntuacio> it = taulaRanking.listIterator(taulaRanking.size()-1);
+        while (it.hasPrevious()) {
+            UsuariPuntuacio up1 = it.previous();
+            UsuariPuntuacio up2 = it.next();
+            //it no ha canviat de posicio
+            
+            if (up1.puntuacio < up2.puntuacio) {
+                //Canviem els dos up
+                int previ = it.previousIndex();
+                it.previous();
+                int actual = it.nextIndex();
+                //it ha disminuit una posicio cap al inici de la llista
+                
+                Collections.swap(taulaRanking, previ, actual);
             }
-        });
-        //Eliminem els ultims elements fins a quedarnos amb els 10 primers
+            else {
+                //Avancem el punter una posicio endavant
+                it.previous();
+            }
+        }
+    }
+    
+    /**
+     * Funcio encarregada de mantenir la llista amb 10 posicions, es queda amb les 10 primeres.
+     */
+    public void retallar() {
         while (taulaRanking.size() > 10) {
-            taulaRanking.remove(taulaRanking.size() - 1);
-        }*/
+            taulaRanking.remove(taulaRanking.size()-1);
+        }
     }
 }
