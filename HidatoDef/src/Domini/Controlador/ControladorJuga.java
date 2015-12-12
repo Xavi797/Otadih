@@ -25,13 +25,14 @@ public class ControladorJuga {
     private List<Integer> conjuntUsats;
     private Tauler tauler_partida;
     private Tauler sol;
-    
+    private int maxTauler;
     
     public void juga(Tauler t, Tauler sol){
         cT = new ControladorTaula();
         conjuntPosibles = new ArrayList<Integer>();
         conjuntUsats = new ArrayList<Integer>();
         this.sol = sol;
+        maxTauler = cT.getMax(t);
         juga_aux(t);
     }
     
@@ -129,17 +130,18 @@ public class ControladorJuga {
                  int tam = t.sizeTauler(); 
                  int dist[][] = new int [tam][tam];
                  int vis[][] = new int [tam][tam];
-                 ControladorGenera cGen = new ControladorGenera();
-                 //cGen.BuscaPosibles(i,j,t,conjuntPosibles,conjuntUsats);
+
                  init(dist,vis);
                  bfs(i,j,dist,t,vis);
-                  for (int aux = 2; aux < cGen.getMaxCas(); ++aux){
-                    if(!conjuntUsats.contains(aux)){
+                 for(int ax = 0; ax < tam; ++ax){
+                      for(int ay = 0; ay < tam; ++ay)
+                          System.out.print(" " + dist[ax][ay]);
+                      System.out.println();
+                 }
+                  for (int aux = 2; aux < maxTauler; ++aux){
                         t.ModificaCela(i, j, aux);
                         if(propers(i,j,t) && dfs_posibles(dist,aux,t))
                             conjuntPosibles.add(aux);
-                    }
-                      //call a fastcheck y deepcheck con Tauler(i,j).setcela
                  }                 
                  t.ModificaCela(i, j, 0);
                           
@@ -162,13 +164,17 @@ public class ControladorJuga {
         public boolean dfs_posibles(int dist[][], int x, Tauler t){
              for(int auxi = 0; auxi < dist.length; ++auxi)
                 for(int auxj = 0; auxj < dist[0].length; ++auxj){
-                    int dis_max = t.getCela(auxi, auxj) - x;
-                    if(dis_max < 0)dis_max = dis_max *(-1);
-                    //if(t.getCela(auxi, auxj) - dis_max < 0 && )
+                    int num = t.getCela(auxi, auxj);
+                    if(num > 0){
+                        int dis_max = num - x;
+                        if(dis_max < 0)dis_max = dis_max *-1;
+                        if(dis_max < dist[auxi][auxj]) return false;
+                    }
              }
                       return true;  
         }
         public boolean propers(int i, int j, Tauler t){
+            int tam = t.sizeTauler();
             boolean post,ant;
             post = ant = false;
             int veins_lliures = 0;
@@ -176,10 +182,13 @@ public class ControladorJuga {
 	    int[] direccioHoritzontal = new int[]{-1,0,1,-1,1,-1,0,1};
 
                 for (int aux = 0; aux < direccioVertical.length; ++aux){
-                    int val = t.getCela(i + direccioHoritzontal[aux], j + direccioVertical[aux]);
-                    if(val == 0) ++veins_lliures;
-                    if(val == (t.getCela(i, j)-1)) ant = true;
-                    else if(val == (t.getCela(i, j)+1)) post = true;
+                    if(i + direccioHoritzontal[aux] >= 0 && i + direccioHoritzontal[aux] < tam 
+                      && j + direccioVertical[aux] >= 0 && j + direccioVertical[aux] < tam ){
+                        int val = t.getCela(i + direccioHoritzontal[aux], j + direccioVertical[aux]);
+                        if(val == 0) ++veins_lliures;
+                        if(val == (t.getCela(i, j)-1)) ant = true;
+                        else if(val == (t.getCela(i, j)+1)) post = true;
+                    }
                 }
                 if(veins_lliures == 0 && (!post || !ant)) return false;
                 else if(veins_lliures == 1 &&(!post && !ant)) return false;
@@ -204,37 +213,34 @@ public class ControladorJuga {
             aux.y = c2;
             q.add(aux);
             boolean trobat = false;
-
+            dist[c1][c2] = 0;
             while(!trobat && !q.isEmpty()){
                 Coord p = q.poll();
-         /* no para mai
-                if(taulerGen[p.x][p.y] == num){
-                    d = dist[p.x][p.y];
-                    trobat = true;
-                }*/ if(taulerGen.getCela(p.x, p.y) >= 0 && taulerVis[p.x][p.y] == 0){
+
+                if(taulerGen.getCela(p.x, p.y) >= 0 && taulerVis[p.x][p.y] == 0){
                     taulerVis[p.x][p.y] = 1;
-                    bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x-1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x+1,p.y,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
                                                                         //diagonales tambien
-                    bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist);
-                    bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist);
+                    bfs_aux(p.x-1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x+1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x-1,p.y+1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
+                    bfs_aux(p.x+1,p.y-1,dist[p.x][p.y],q,taulerGen,dist,taulerVis);
                 }
             } 
         }
 
-        public void bfs_aux(int i, int j, int d ,Queue<Coord> q, Tauler taulerGen, int[][] dist){
+        public void bfs_aux(int i, int j, int d ,Queue<Coord> q, Tauler taulerGen, int[][] dist, int [][] taulerVis){
             Coord aux2 = new Coord();
             aux2.x = i;
             aux2.y = j;
 
             if(i >= 0 && i < taulerGen.sizeTauler() && j >= 0 && j < taulerGen.sizeTauler()){
-                if(taulerGen.getCela(i, j) >= 0){
+                if(taulerGen.getCela(i, j) >= 0  && taulerVis[i][j] == 0){
                     q.add(aux2);
-                    dist[i][j] = d+1;
+                    if(dist[i][j] == -1)dist[i][j] = d+1;
                 }
             }
 

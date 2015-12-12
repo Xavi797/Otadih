@@ -66,7 +66,15 @@ public class ControladorTaula {
 	    			Matriu[i][j] = t.getCela(i, j);
 	    	return Matriu;
 	    			
-	    }
+	      }
+              
+              public int getMax (Tauler t){
+                  int max = 0;
+                  for(int i = 0; i < t.sizeTauler(); ++i)
+                      for(int j = 0; j < t.sizeTauler(); ++j)
+                           if(max < t.getCela(i, j)) max = t.getCela(i, j);
+                  return max;
+              }
               
           
 	    

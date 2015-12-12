@@ -12,7 +12,7 @@ import Domini.Clases.Tauler;
  *
  * @author jaume.guell
  */
-public class DriverSerialitzador {
+public class DriverSerialitzador {/*
     public static void main (String[] args) {
         SerialitzadorTaulers sT = new SerialitzadorTaulers();
         Tauler t = new Tauler(1);
@@ -43,5 +43,5 @@ public class DriverSerialitzador {
             }
         }
         
-    }
+    }*/
 }
