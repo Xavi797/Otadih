@@ -5,19 +5,21 @@
  */
 package Domini.Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jaume.guell
  */
-public class Estadistiques {
-    private int nPartides;
-    private int nPartidesGuanyades;
-    private int percentatgeGuanyades;
+public class Estadistiques implements Serializable {
+    private double nPartides;
+    private double nPartidesGuanyades;
+    private double percentatgeGuanyades;
     
-    private int puntuacioMaxima;
-    private int puntuacioMitja;
+    private double puntuacioMaxima;
+    private double puntuacioMitja;
     
-    private int totalPuntuacio; /* Aquest parametre no es mostra a la vista */
+    private double totalPuntuacio; /* Aquest parametre no es mostra a la vista */
     
     /**
      * Constructor basic, inicialitza tots els parametres a 0.
@@ -32,11 +34,30 @@ public class Estadistiques {
     }
     
     /**
+     * Constructor inicialitzador, nomes utilitza nPartides, nPartidesGuanyades, puntuacioMaxima i totalPuntuacio
+     * @param np Nombre de partides totals
+     * @param npg Nombre de partides guanyades
+     * @param pm Puntuacio maxima aconseguida
+     * @param tp Punts totals aconseguits
+     */
+    public Estadistiques(int np, int npg, int pm, int tp) {
+        nPartides = np;
+        nPartidesGuanyades = npg;
+        if (nPartides != 0) percentatgeGuanyades = (nPartidesGuanyades / nPartides) * 100;
+        else nPartidesGuanyades = 0;
+        
+        puntuacioMaxima = pm;
+        totalPuntuacio = tp;
+        if (nPartides != 0) puntuacioMitja = (totalPuntuacio / nPartides) * 100;
+        else puntuacioMitja = 0;
+    }
+    
+    /**
      * Funcio encarregada de afegir una nova partida iniciada i recalcular els parametres necessaris.
      */
     public void afegeixPartida() {
         nPartides += 1;
-        if (nPartidesGuanyades != 0) percentatgeGuanyades = nPartides / nPartidesGuanyades;
+        if (nPartides != 0) percentatgeGuanyades = (nPartidesGuanyades / nPartides) * 100;
         else nPartidesGuanyades = 0;
     }
     
@@ -48,7 +69,7 @@ public class Estadistiques {
         if (guanyada) {
             nPartidesGuanyades += 1;
         }
-        if (nPartidesGuanyades != 0) percentatgeGuanyades = nPartides / nPartidesGuanyades;
+        if (nPartides != 0) percentatgeGuanyades = (nPartidesGuanyades / nPartides) * 100;
         else percentatgeGuanyades = 0;
     }
     
@@ -61,14 +82,15 @@ public class Estadistiques {
             puntuacioMaxima = punts;
         }
         totalPuntuacio += punts;
-        puntuacioMitja = totalPuntuacio / nPartides;
+        if (nPartides != 0) puntuacioMitja = totalPuntuacio / nPartides;
+        else puntuacioMitja = 0;
     }
 
     /**
      * Funcio encarregada de obtenir el nombre de partides jugades.
      * @return Retorna el nombre de partides
      */
-    public int getnPartides() {
+    public double getnPartides() {
         return nPartides;
     }
 
@@ -84,7 +106,7 @@ public class Estadistiques {
      * Funcio encarregada de obtenir el nombre de partides guanyades.
      * @return Retorna el nombre de partides guanyades
      */
-    public int getnPartidesGuanyades() {
+    public double getnPartidesGuanyades() {
         return nPartidesGuanyades;
     }
     
@@ -100,7 +122,7 @@ public class Estadistiques {
      * Funcio encarregada de obtenir el percentatge de partides guanyades.
      * @return Retorna el percentatge de partides guanyades
      */
-    public int getPercentatgeGuanyades() {
+    public double getPercentatgeGuanyades() {
         return percentatgeGuanyades;
     }
 
@@ -116,7 +138,7 @@ public class Estadistiques {
      * Funcio encarregada de obtenir la puntuacio maxima.
      * @return Retorna la puntuacio maxima
      */
-    public int getPuntuacioMaxima() {
+    public double getPuntuacioMaxima() {
         return puntuacioMaxima;
     }
 
@@ -132,7 +154,7 @@ public class Estadistiques {
      * Funcio encarregada de obtenir la puntuacio mitja.
      * @return Retorna la puntuacio mitja
      */
-    public int getPuntuacioMitja() {
+    public double getPuntuacioMitja() {
         return puntuacioMitja;
     }
 
@@ -148,7 +170,7 @@ public class Estadistiques {
      * Funcio encarregada de obtenir la puntuacio acumulada en totes les partides.
      * @return Retorna la puntuacio total acumulada entre totes les partides
      */
-    public int getTotalPuntuacio() {
+    public double getTotalPuntuacio() {
         return totalPuntuacio;
     }
 

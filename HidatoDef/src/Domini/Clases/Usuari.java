@@ -6,12 +6,13 @@
 package Domini.Clases;
 
 import Domini.Clases_compartides.UsuariCompartit;
+import java.io.Serializable;
 
 /**
  *
  * @author xavi
  */
-public class Usuari extends UsuariCompartit{
+public class Usuari extends UsuariCompartit implements Serializable {
     
     private String nom; 
     private String password;
