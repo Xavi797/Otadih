@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 package Vistes;
+import Domini.Controlador.ControladorDomini;
 
 /**
  *
@@ -14,9 +17,13 @@ public class VistaInici extends VistaGenerica {
     /**
      * Creates new form VistaInici
      */
+    ControladorDomini controladorDomini;
+    ControladorVistes controladorVistes;
     
-    public VistaInici() {
+    public VistaInici(ControladorDomini contDomini , ControladorVistes contVistes) {
         initComponents();
+        controladorDomini = contDomini;
+        controladorVistes = contVistes;
     }
 
     /**
@@ -28,6 +35,8 @@ public class VistaInici extends VistaGenerica {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         botoLogIn = new javax.swing.JButton();
         botoRegistrar = new javax.swing.JButton();
         usuariLogIn = new javax.swing.JTextField();
@@ -35,6 +44,13 @@ public class VistaInici extends VistaGenerica {
         usuariRegistrar = new javax.swing.JTextField();
         contrasenyaRegistrar = new javax.swing.JTextField();
         paraulaClau = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+
+        jScrollPane1.setViewportView(jTextPane1);
 
         botoLogIn.setText("Log In");
         botoLogIn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -42,10 +58,19 @@ public class VistaInici extends VistaGenerica {
                 botoLogInMouseClicked(evt);
             }
         });
+        botoLogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoLogInActionPerformed(evt);
+            }
+        });
 
         botoRegistrar.setText("Registrar-se");
+        botoRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoRegistrarActionPerformed(evt);
+            }
+        });
 
-        usuariLogIn.setText("Usuari");
         usuariLogIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 usuariLogInMouseClicked(evt);
@@ -57,9 +82,12 @@ public class VistaInici extends VistaGenerica {
             }
         });
 
-        contrasenyaLogIn.setText("Contrasenya");
+        contrasenyaLogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contrasenyaLogInActionPerformed(evt);
+            }
+        });
 
-        usuariRegistrar.setText("Usuari");
         usuariRegistrar.setVisible(false);
         usuariRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -67,51 +95,89 @@ public class VistaInici extends VistaGenerica {
             }
         });
 
-        contrasenyaRegistrar.setText("Contrasenya");
         contrasenyaRegistrar.setVisible(false);
+        contrasenyaRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contrasenyaRegistrarActionPerformed(evt);
+            }
+        });
 
-        paraulaClau.setText("Paraula clau");
         paraulaClau.setVisible(false);
+
+        jLabel1.setText("Usuari");
+
+        jLabel2.setText("Contrasenya");
+
+        jLabel3.setText("Usuari");
+
+        jLabel4.setText("Contrasenya");
+
+        jLabel5.setText("Paraula clau");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(362, 362, 362)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botoLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botoRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(usuariRegistrar)
-                    .addComponent(contrasenyaRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                    .addComponent(paraulaClau)
-                    .addComponent(usuariLogIn)
-                    .addComponent(contrasenyaLogIn))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(paraulaClau, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(contrasenyaRegistrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)))
+                    .addComponent(botoLogIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botoRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addComponent(usuariRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(usuariLogIn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))))
                 .addGap(312, 312, 312))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(104, 104, 104)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usuariLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botoLogIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(usuariLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usuariRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contrasenyaRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paraulaClau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botoRegistrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(usuariRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contrasenyaRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paraulaClau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void usuariLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariLogInActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_usuariLogInActionPerformed
 
     private void usuariRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuariRegistrarMouseExited
@@ -126,12 +192,45 @@ public class VistaInici extends VistaGenerica {
         usuariLogIn.setVisible(true);
     }//GEN-LAST:event_botoLogInMouseClicked
 
+    private void contrasenyaRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasenyaRegistrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contrasenyaRegistrarActionPerformed
+
+    private void contrasenyaLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasenyaLogInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contrasenyaLogInActionPerformed
+
+    private void botoLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoLogInActionPerformed
+        String nomUserLogIn = usuariLogIn.getText();
+        String passUserLogIn= contrasenyaLogIn.getText();
+        controladorDomini.logInUsuari(nomUserLogIn, passUserLogIn);
+        controladorVistes.mostraVista("Menu");
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_botoLogInActionPerformed
+
+    private void botoRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoRegistrarActionPerformed
+        String nomUserRegister = usuariLogIn.getText();
+        String passUserRegister= contrasenyaLogIn.getText();
+        String paraulaCLau = paraulaClau.getText();
+        controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraulaCLau);
+        controladorVistes.mostraVista("Menu");
+        this.setVisible(false);
+    }//GEN-LAST:event_botoRegistrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botoLogIn;
     private javax.swing.JButton botoRegistrar;
     private javax.swing.JTextField contrasenyaLogIn;
     private javax.swing.JTextField contrasenyaRegistrar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextField paraulaClau;
     private javax.swing.JTextField usuariLogIn;
     private javax.swing.JTextField usuariRegistrar;

@@ -4,6 +4,7 @@ import Persistencia.*;
 import Domini.Controlador.*;
 import Vistes.vistaJugar;
 import java.util.Scanner;
+import Vistes.ControladorVistes;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -58,9 +59,7 @@ public class Main {
                 case 2:
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
-                            new vistaJugar().setVisible(true); 
-                            int[][] matriu = controTaula.transformar(controlador.getTauler());
-                            vistaJugar.createBoard(matriu);
+                            new ControladorVistes(controlador).setVisible(true);
                         }
                     }); 
                     break;

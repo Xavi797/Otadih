@@ -23,27 +23,29 @@ public class ControladorVistes extends javax.swing.JFrame{
     
     public ControladorVistes(ControladorDomini contDom) {
         controladorDomini = contDom;
+        initVistes();
     }
     
     public void initVistes() {
         //this.vistaMenu = new VistaMenu().setVisible(false);
-        this.vistaInici = new VistaInici();
+        vistaInici = new VistaInici(controladorDomini, this);
+        vistaMenu  = new VistaMenu(controladorDomini, this);
         this.add(this.vistaInici);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                initVistes();
-                vistaInici.setVisible(true);
+        
+        vistaInici.setVisible(true);
                 
-                //int[][] matriu = controTaula.transformar(controlador.getTauler());
-            //vistaJugar.createBoard(matriu);
-            }
-        });
+
+           
     }
     
-    public void vistaDesti(String desti) {
+    public void mostraVista(String desti) {
         switch(desti) {
             case "Inici": 
                 this.vistaInici.setVisible(true); 
+                break;
+            case "Menu":
+                vistaMenu.setVisible(true);
+                break;
         }
     }
     

@@ -14,6 +14,7 @@ public class VistaGenerica extends javax.swing.JPanel {
     /**
      * Creates new form VistaGenerica
      */
+    
     public VistaGenerica() {
         initComponents();
     }

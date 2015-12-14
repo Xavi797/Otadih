@@ -7,7 +7,7 @@ package Vistes;
 
 import Vistes.ControladorVistes;
 import Vistes.VistaGenerica;
-
+import Domini.Controlador.ControladorDomini;
 /**
  *
  * @author xavi
@@ -15,12 +15,14 @@ import Vistes.VistaGenerica;
 public class VistaMenu extends VistaGenerica {
     
     ControladorVistes controladorVistes;
+    ControladorDomini controladorDomini;
     /**
      * Creates new form VistaMenu
      */
-    public VistaMenu(ControladorVistes contr) {
+    public VistaMenu(ControladorDomini contDomini, ControladorVistes contrVistes) {
         initComponents();
-        this.controladorVistes = contr;
+        this.controladorVistes = contrVistes;
+        controladorDomini = contDomini;
         
     }
 
@@ -96,7 +98,7 @@ public class VistaMenu extends VistaGenerica {
 
     private void BotoLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoLogOutActionPerformed
         this.setVisible(false);
-        this.controladorVistes.vistaDesti("Inici");
+        controladorVistes.mostraVista("Inici");
         
     }//GEN-LAST:event_BotoLogOutActionPerformed
 
