@@ -5,11 +5,13 @@
  */
 package Domini.Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jaume.guell
  */
-public class Partida {
+public class Partida implements Serializable {
     private Usuari user;
     private Rankings ranking;
    // private Hidato hidato;

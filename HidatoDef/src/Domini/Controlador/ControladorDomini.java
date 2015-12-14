@@ -5,7 +5,8 @@
  */
 package Domini.Controlador;
 
-import Domini.Clases.Tauler;
+import Domini.Clases.*;
+import Persistencia.Controlador.ControladorPersistencia;
 
 /**
  *
@@ -14,10 +15,11 @@ import Domini.Clases.Tauler;
 public class ControladorDomini {
            /*Controla totes les operacions de la taula: Soluciona tauler, genera etc..
         */
-            private ControladorJuga cJuga;
-            private ControladorCrea cCrea;
-            private ControladorSoluciona cSol;
-            private ControladorGenera cGen;
+            private final ControladorJuga cJuga;
+            private final ControladorCrea cCrea;
+            private final ControladorSoluciona cSol;
+            private final ControladorGenera cGen;
+            private final ControladorPersistencia cPers;
             
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
             private Tauler tauler_partida;
@@ -46,6 +48,7 @@ public class ControladorDomini {
                 cCrea = new ControladorCrea();
                 cSol = new ControladorSoluciona();
                 cGen = new ControladorGenera();
+                cPers = new ControladorPersistencia();
             }
             
             /**
@@ -98,14 +101,58 @@ public class ControladorDomini {
             }
             
             /**
+             * Registra un nou usuari a la base de dades.
+             * @param user Nom de usuari
+             * @param pass Password de el usuari
+             * @param codi Codi de recuperacio
+             * @return True si sha creat correctament el usuari
+             */
+            public boolean registrarUsuari(String user,String pass, String codi){
+                if(cPers.comprovaUser(user)) return false;
+                else{
+                    Usuari userF = new Usuari(user,pass,codi);
+                    return cPers.guardaUser(userF, pass);
+                }
+            }
+            
+            /**
+             * Funcio encarregada de comprovar si la relacio user-password existeix
+             * @param user Nom del usuari
+             * @param pass Contrassenya del usuari
+             * @return Retorna true si el usuari existeix i te el password corresponent, false en cas contrari
+             */
+            public boolean logInUsuari(String user,String pass){
+                Usuari userF = (Usuari) cPers.carregaUser(user);
+                if (userF == null) return false;
+                return userF.getPassword().equals(pass);
+                
+            }
+            
+            /**
+             * Funcio encarregada de recuperar el password de un usuari donat el seu codi de recuperacio.
+             * @param user Nom del usuari
+             * @param codi Codi de recuperacio
+             * @return String que conte el password recuperat en cas de exit, string amb valor null en cas contrari
+             */
+            public String restauraPassword(String user, String codi) {
+                Usuari userF = (Usuari) cPers.carregaUser(user);
+                if (userF == null) return null;
+                if (userF.getCodi().equals(codi)) {
+                    String resposta = userF.getPassword();
+                    return resposta;
+                }
+                return null;
+            }
+            
+            /**
               * getSolucio, Retorna el tauler solucionat solucion
               * @return Retorna el tauler solucionat
               * PRE: --
               */
-	    
 	    public Tauler getSolucio(){
 			return solucion;
 	    }
+            
              /**
               * getSolucio, Retorna el tauler per omplir
               * @return Retorna el tauler

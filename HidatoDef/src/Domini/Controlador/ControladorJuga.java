@@ -100,7 +100,8 @@ public class ControladorJuga {
                             if (!conjuntPropers.contains(val)) {
                                 System.out.println("Valor no valid, torna a començar el proces");
                             }
-                            else {
+                            
+                            else if(bencolocat(i,j,val,tauler_partida)) {
                                 int aux_val = tauler_partida.getCela(i, j);
                                 if(tauler_partida.ModificaCela(i, j, val)){
                                     System.out.println("Cela modificada correctament");
@@ -109,6 +110,10 @@ public class ControladorJuga {
                                         if(conjuntUsats.get(auxUsats) == aux_val) conjuntUsats.remove(auxUsats);
                                 }
                                 else System.out.println("Incorrecte!!!");
+                            }
+                            else{
+                                System.out.println("El numero que has posat no es adjacent al seu seguent"
+                                        + "i/o anterior");
                             }
                         }
                     }
@@ -373,9 +378,35 @@ public class ControladorJuga {
                 num = conjuntUsats.get(i);
                 post = num +1;
                 ant = num -1;
-                if(post < maxTauler && !conjuntUsats.contains(post)) conjuntPropers.add(post);
-                if(ant > 1 && !conjuntUsats.contains(post)) conjuntPropers.add(ant);
+                if(post < maxTauler && !conjuntUsats.contains(post) && !conjuntPropers.contains(post)) conjuntPropers.add(post);
+                if(ant > 1 && !conjuntUsats.contains(ant) && !conjuntPropers.contains(ant)) conjuntPropers.add(ant);
             }
+            Collections.sort(conjuntPropers);
         }
         
+        public boolean bencolocat(int i, int j, int val, Tauler t){
+            int[] direccioVertical = new int[]{-1,-1,-1,0,0,1,1,1};
+	    int[] direccioHoritzontal = new int[]{-1,0,1,-1,1,-1,0,1};
+            if(conjuntUsats.contains(val+1)){
+                boolean aux2 = false;
+                for (int auxi = 0; auxi < direccioVertical.length; ++auxi)
+                    if(i+ direccioVertical[auxi] >=  0 && i+ direccioVertical[auxi] < t.sizeTauler()
+                        && j + direccioHoritzontal[auxi] > 0 && j + direccioHoritzontal[auxi] < t.sizeTauler())
+                            if(t.getCela(i+ direccioVertical[auxi], j + direccioHoritzontal[auxi]) == val+1)
+                                aux2= true;
+                
+                if(aux2 == false) return false;
+            }
+            if(conjuntUsats.contains(val-1)){
+                boolean aux3 = false;
+                for (int auxj = 0; auxj < direccioVertical.length; ++auxj){
+                    if(i+ direccioVertical[auxj] >=  0 && i+ direccioVertical[auxj] < t.sizeTauler()
+                        && j + direccioHoritzontal[auxj] > 0 && j + direccioHoritzontal[auxj] < t.sizeTauler())
+                            if(t.getCela(i+ direccioVertical[auxj], j + direccioHoritzontal[auxj]) == val-1)
+                                aux3= true;
+                }
+                if(aux3 == false) return false;
+            }
+            return true;
+        }
     }

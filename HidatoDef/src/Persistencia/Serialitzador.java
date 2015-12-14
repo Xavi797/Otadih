@@ -120,7 +120,8 @@ public class Serialitzador {
      */
     public Object deserialitzarObjecte (String name, String path) {
         if (!existeixObjecte(name, path)) {
-            return new Object();    //Si hi ha error retornem un Objecte buit
+            Object obj = null;
+            return obj;    //Si hi ha error retornem un Objecte buit
         }
         
         try {
@@ -135,7 +136,8 @@ public class Serialitzador {
         catch (IOException | ClassNotFoundException ex) {
             this.logerror = ex.getMessage();
             System.out.println(logerror);
-            return new Object();    //Si hi ha error retornem un Objecte buit
+            Object obj = null;
+            return obj;    //Si hi ha error retornem un Objecte buit
         }
     }
 }
