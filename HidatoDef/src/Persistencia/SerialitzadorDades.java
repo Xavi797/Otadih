@@ -12,10 +12,10 @@ package Persistencia;
 public class SerialitzadorDades extends Serialitzador {
 
     // Les direccions a passar son:
-    //      /Dades/Rankings/
-    //      /Dades/Estadistiques/
-    //      /Dades/Taulers/
-    //      /Dades/Usuaris/
+    //      Dades/Rankings/
+    //      Dades/Estadistiques/
+    //      Dades/Taulers/
+    //      Dades/Usuaris/
     
     /**
      * Funcio encarregada de destruir fitxers de la BD. Utilitza funcions de la superclasse.

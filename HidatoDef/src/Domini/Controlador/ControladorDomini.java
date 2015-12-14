@@ -79,7 +79,10 @@ public class ControladorDomini {
             }
             
             /**
-             * Funcio que cridara al controlador ControladorGenera per a generar un tauler. 
+             * Funcio que cridara al controlador ControladorGenera per a generar un tauler.
+             * @param costat
+             * @param numInicials
+             * @param forats
              * Despres fara els sets y getters per tenir aqui el tauler.
              */
             public void generaTauler(int costat, int numInicials, int forats){
@@ -108,10 +111,12 @@ public class ControladorDomini {
              * @return True si sha creat correctament el usuari
              */
             public boolean registrarUsuari(String user,String pass, String codi){
-                if(cPers.comprovaUser(user)) return false;
-                else{
+                if(cPers.comprovaUser(user)) {
+                    return false;
+                }
+                else {
                     Usuari userF = new Usuari(user,pass,codi);
-                    return cPers.guardaUser(userF, pass);
+                    return cPers.guardaUser((Object)userF, user);
                 }
             }
             

@@ -1,5 +1,6 @@
 package Domini.Clases;
 
+import Domini.Clases.Usuari;
 import Persistencia.*;
 import Domini.Controlador.*;
 import Vistes.vistaJugar;
@@ -27,8 +28,11 @@ public class Main {
         Scanner in = new Scanner(System.in);
         //Obtenim un objecte de la classe serialitzadora
         SerialitzadorPartides sP = new SerialitzadorPartides();
-        String nom = "";
-        String user = "";
+        SerialitzadorDades sD = new SerialitzadorDades();
+        String nom;
+        String user;
+        String passw;
+        String codi;
         
         int ordre = -10;
         
@@ -38,7 +42,8 @@ public class Main {
                     + "0: Crea un Tauler especificant tot //// 1: Genera un tauler nou\n"
                     + "2: Vista de jugar                  //// 3: Guarda partida/Hidato\n"
                     + "4: Carrega partida/Hidato          //// 5: Juga al tauler\n"
-                    + "6: Soluciona el tauler             //// 7: Destrueix partida/Hidato\n");
+                    + "6: Soluciona el tauler             //// 7: Destrueix partida/Hidato\n"
+                    + "8: Guarda User");
             ordre = in.nextInt();
             switch(ordre) {
                 case -1:
@@ -92,6 +97,17 @@ public class Main {
                     boolean dest = sP.destruirPartida(nom, user);
                     if (dest) System.out.println("Objecte destruit");
                     else System.out.println("Objecte no destruit");
+                    break;
+                case 8:
+                    System.out.println("Escriu el nom del user:");
+                    user = in.next();
+                    System.out.println("Escriu el password del user:");
+                    passw = in.next();
+                    System.out.println("Escriu el codi del user:");
+                    codi = in.next();
+                    Usuari us = new Usuari(user, passw, codi);
+                    sD.guardar((Object)us, user, "Dades/Usuaris/");
+                    System.out.println("FET!");
                     break;
             }
         }

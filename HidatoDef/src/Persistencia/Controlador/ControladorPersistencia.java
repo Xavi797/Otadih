@@ -15,8 +15,13 @@ import Persistencia.SerialitzadorPartides;
 public class ControladorPersistencia {
     
     /* Serialitzadors encarregats de fer les operacions*/
-    private SerialitzadorDades SDades;          /* Utilitzat per a tot menys partides */
-    private SerialitzadorPartides SPartides;
+    private final SerialitzadorDades SDades;          /* Utilitzat per a tot menys partides */
+    private final SerialitzadorPartides SPartides;
+    
+    public ControladorPersistencia() {
+        SDades = new SerialitzadorDades();
+        SPartides = new SerialitzadorPartides();
+    }
     
     /**
      * Funcio encarregada de fer la crida per guardar un Usuari.
@@ -25,7 +30,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean guardaUser(Object user, String name) {
-        return SDades.guardar(user, name, "/Dades/Usuaris/");
+        return SDades.guardar(user, name, "Dades/Usuaris/");
     }
     
     /**
@@ -35,7 +40,7 @@ public class ControladorPersistencia {
      */
     public Object carregaUser(String name) {
         Object obj;
-        return obj = SDades.carregar(name, "/Dades/Usuaris/");
+        return obj = SDades.carregar(name, "Dades/Usuaris/");
     }
     
     /**
@@ -44,7 +49,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean destrueixUser(String name) {
-        return SDades.destruir(name, "/Dades/Usuaris/");
+        return SDades.destruir(name, "Dades/Usuaris/");
     }
     
     /**
@@ -53,7 +58,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de que ja existeixi, false en cas contrari
      */
     public boolean comprovaUser(String name) {
-        return SDades.existeixObjecte(name, "/Dades/Usuaris/");
+        return SDades.existeixObjecte(name, "Dades/Usuaris/");
     }
     
     /**
@@ -63,7 +68,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean guardaRanking(Object rank, String name) {
-        return SDades.guardar(rank, name, "/Dades/Rankings/");
+        return SDades.guardar(rank, name, "Dades/Rankings/");
     }
     
     /**
@@ -73,7 +78,7 @@ public class ControladorPersistencia {
      */
     public Object carregaRanking(String name) {
         Object obj;
-        return obj = SDades.carregar(name, "/Dades/Rankings/");
+        return obj = SDades.carregar(name, "Dades/Rankings/");
     }
     
     /**
@@ -82,7 +87,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean destrueixRanking(String name) {
-        return SDades.destruir(name, "/Dades/Rankings/");
+        return SDades.destruir(name, "Dades/Rankings/");
     }
     
     /**
@@ -92,7 +97,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean guardaEstadistica(Object stat, String name) {
-        return SDades.guardar(stat, name, "/Dades/Estadistiques/");
+        return SDades.guardar(stat, name, "Dades/Estadistiques/");
     }
     
     /**
@@ -102,7 +107,7 @@ public class ControladorPersistencia {
      */
     public Object carregaEstadistica(String name) {
         Object obj;
-        return obj = SDades.carregar(name, "/Dades/Estadistiques/");
+        return obj = SDades.carregar(name, "Dades/Estadistiques/");
     }
     
     /**
@@ -111,7 +116,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean destrueixEstadistica(String name) {
-        return SDades.destruir(name, "/Dades/Estadistiques/");
+        return SDades.destruir(name, "Dades/Estadistiques/");
     }
     
     /**
@@ -121,7 +126,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean guardaTauler(Object taul, String name) {
-        return SDades.guardar(taul, name, "/Dades/Taulers/");
+        return SDades.guardar(taul, name, "Dades/Taulers/");
     }
     /**
      * Funcio encarregada de carregar de fer la crida per carregar un Tauler.
@@ -130,7 +135,7 @@ public class ControladorPersistencia {
      */
     public Object carregaTauler(String name) {
         Object obj;
-        return obj = SDades.carregar(name, "/Dades/Taulers/");
+        return obj = SDades.carregar(name, "Dades/Taulers/");
     }
     
     /**
@@ -139,7 +144,7 @@ public class ControladorPersistencia {
      * @return Cert en cas de exit, false en cas contrari
      */
     public boolean destrueixTauler(String name) {
-        return SDades.destruir(name, "/Dades/Taulers/");
+        return SDades.destruir(name, "Dades/Taulers/");
     }
     
     /**
