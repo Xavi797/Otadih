@@ -44,12 +44,13 @@ public class ControladorSoluciona {
         this.posInicial = posInicial;
     }
 
-         /**
-              * Funcio publica encarregadar de cridar a la funcio soluciona_aux per resoldre l'hidato
+            /**
+              * Funcio publica encarregadar de cridar a la funcio soluciona_aux per resoldre l'hidato.
+              * S'ecarrega de preparar les dades sobre el tauler per resoldre.
               * PRE: -- 
-              * @param cT Li passa el controlador taula per tenir el mateix tauler
-              * @return Retorna un bolea si te solucio
-              */
+              * @param t Tauler que se l'hi passa per resoldre
+              * @return Retorna un bolea si el tauler es pot resoldre.
+            */
 	    public boolean soluciona(Tauler t){
                 cT = new ControladorTaula();
                 solucio = t.clonar();
@@ -83,13 +84,19 @@ public class ControladorSoluciona {
                     }
                     return false;
 	    }
-             /* POST: Troba la solucio, s'hi te, i la guarda a solucion */
+             /** POST: Si te solucio, al tauler solucio es guarda el tauler resolt.
+              * 
+              */
 
             
               /**
-              * Soluciona_aux, la idea es que partint de la posicio inicial(on esta l'1), fa crides recursives ficant 
-              * el seguent valor valid, fins l'emplena, sempre que aquest numero estigui
-              * @param valor TÃ© per valor un nombre natural
+              * Soluciona_aux, la idea es que partint de la posicio inicial(on esta l'1), 
+              * fa crides recursives ficant el seguent valor valid, 
+              * fins l'emplena, sempre que aquest numero no estigui ja possat.
+              * @param fila Posicio de la fila (0....tamany tauler -1)
+              * @param col Posicio de la columna (0....tamany tauler -1)
+              * @param n Valor a ficar en la posicio(fila,col)
+              * @param seguent Index que indica el seguent numero ficat a la taula que encara no hem arribat.
               * @return Retorna un valor booleÃ  que indica si s'ha trobat la solucio o no
               * PRE: -- 
               */
@@ -123,6 +130,8 @@ public class ControladorSoluciona {
 	         solucio.setCela(fila, col, numRetorn);
 	         return false;
 	     }
-	    /* POST: Troba la solucio, o diu que no te solucio en cas de que no la tingui */
+	    /** POST: Al tauler solucio esta el tauler t solucionat si retorna true;
+             * 
+             */
     
 }

@@ -95,6 +95,12 @@ public class ControladorGenera {
             * i nSols que contindra el numero de solucions.
             */
             
+            /**
+            * Funcio encarregada de inicialitzar els parametres necesaris de el tauler t
+            * per tal de generar un tauler correcte.
+            * PRE: -- 
+            * @param t Conte el tauler t a partir del qual generarem
+            */  
             public void inicialitzacio(Tauler t){
                 int tam = t.sizeTauler();
                 n = tam;
@@ -174,12 +180,13 @@ public class ControladorGenera {
 	    /* POST: Intenta trobar mes d'una posible solucio per l'hidato
             */
             
-             /* S'acaba de modificar la posicio (i,j) per tant ara hem de comprobar que aquesta sigui valida.
+             /** S'acaba de modificar la posicio (i,j) per tant ara hem de comprobar que aquesta sigui valida.
             * Es a dir, hem de mirar si el seu seguent i anterior siguin adjacens a ell en cas de que totes les 
             * del seu voltant siguin plenes. Tambe mira si, en cas de que tingui caselles lliures al seu voltant,
             * mira si el seu seguent esta ja a la taula, per tant false.
             * @param i posicio x en la taula
             * @param j posicio y en la taula
+            * @return Retorna true si es un hidato correcte
             /* PRE: Pos(i,j) es valida */
 	    public boolean fastCheck(int i, int j) {
 
@@ -231,8 +238,8 @@ public class ControladorGenera {
             
              /** Es un dfs per mirar si la distancia entre els numeros es mes gran que la permesa(es a dir,
               * si el 9 i el 7 son a mes distacia de 2 retorna false.
-              * 
               * PRE: --
+              * @return retorna true si es un Hidato valid.
               */
 	    public boolean deepCheck() {
 	        int dist[][] = new int[n][m];
@@ -440,7 +447,20 @@ public class ControladorGenera {
 	    }
              /* POST: Tauler valid amb les caselles buides corresponents
             */
-	    
+            
+	    /** Quita_nums es una funcio per treure numeros un cop el tauler esta
+             * ple despres de generar-ho. Es un backtrack que treu numeros comprobant 
+             * que el hidato te solucio unica mentre treu numeros.
+             * @param num_inicials conte el numero de valors que vol l'usuari
+             * @param num_posats conte el numero de valors que conte el tauler en aquest moment.
+             * @param numMaxim conte el numero mes gran del tauler
+             * @param taulerGenerat Es el tauler al cual se li treuen numeros
+             * @param i Es l'iterador de les files sobre el tauler
+             * @param j Es l'iterador de les columnes sobre el tauler
+             * @param primera_it Bolea que indica si es la primera vegada que es fa el backtrack,
+             * per ficarli un timeout.
+             * @return 
+             */
             private boolean quita_nums(int num_inicials, int num_posats, int numMaxim, Tauler taulerGenerat,int i, int j, boolean primera_it){
                 int tam = taulerGenerat.sizeTauler();
                 if(primera_it){
@@ -585,6 +605,10 @@ public class ControladorGenera {
              /* POST: Retorna matriu de veis.
             */
 	    
+            /**
+             * Funcio per escollir el tipus de topologia que l'usuari vulgui.
+             * @param t Tauler sobre el que s'aplica la topologia
+             */
              public void escollir_topo(Tauler t){
                  System.out.println("1: Topologia piramide\n"
                          + "2: Creu\n"
@@ -593,11 +617,15 @@ public class ControladorGenera {
                  int op_top = in.nextInt();
                  if(op_top == 1) topPira(t);
                  else if(op_top == 2) topCreu(t);
-                 
+                 else if(op_top == 3) topTrival(t);
                  
                  
              }
              
+             /**
+              * S'aplica la topologia de piramide al tauler t.
+              * @param t Tauler sobre el que s'aplica la topologia 
+              */
              public void topPira(Tauler t){
                  int tam = t.sizeTauler();
                  for(int j = 0; j <= tam/2; ++j)
@@ -606,22 +634,47 @@ public class ControladorGenera {
                     }  
              }
              
-             
+             /**
+              * S'aplica la topologia de creu al tauler t.
+              * @param t Tauler sobre el que s'aplica la topologia 
+              */
              public void topCreu(Tauler t){
                  int tam = t.sizeTauler();
-                 int i = tam/2;
-                 for(int j = 0; tam/2 >= j; ++j)
+                 int j = tam/2;
+                 for(int i = 1; i < tam-1; ++i)
                      t.setCela(i, j, -1);
-                 for(int j = tam-1; j > tam/2; --j)
-                     t.setCela(i, j, -1);
-                 int j = 0;
              }
              
+             /**
+              * S'aplica la topologia de trival al tauler t.
+              * @param t Tauler sobre el que s'aplica la topologia 
+              */
              public void topTrival(Tauler t){
                  int tam = t.sizeTauler();
-                 for(int i = 1; i <= tam-1; ++i)
-                    for(int j = 0; j< i; ++j)
+                 int aux = 2;
+                 for(int i = tam/2; i < tam; ++i){
+                     for(int j = 0; j < aux; ++j)
                         t.setCela(i, j, -1);
+                     aux += 2;
+                     if(aux > tam) aux = tam;
+                 }
                     
              }
+             /*
+             public void prueba(int i, int j,Tauler t,List<Integer> conjuntPosibles){
+                 inicialitzacio(t);
+                 for (int k = 1; (k < maxCas - 1); ++k) {
+	                if(!usado[k]) {
+	                    usado[k] = true;
+	                    tablero.setCelaNoforat(i, j, k+1);
+
+	                    if (fastCheck(i, j) && deepCheck()) conjuntPosibles.add(k+1);
+
+	                    tablero.setCelaNoforat(i, j, 0);
+	                    usado[k] = false;
+	                }
+	            }          
+                 t.ModificaCela(i, j, 0);
+             }
+             */
 }
