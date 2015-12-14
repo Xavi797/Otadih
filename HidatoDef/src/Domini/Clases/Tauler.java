@@ -5,8 +5,8 @@ import Domini.Clases_compartides.Tauler_Compartit;
 import java.io.Serializable;
 
 /**
- * Classe encarregada de contenir diferents Cel�les per tal de formar un tauler de joc.
- * @author jaume
+ * Classe encarregada de contenir diferents Celes per tal de formar un tauler de joc.
+ * @author jaume.guell
  * 
  */
 public class Tauler extends Tauler_Compartit implements Serializable {
@@ -14,13 +14,13 @@ public class Tauler extends Tauler_Compartit implements Serializable {
   private Cela[][] taulerJoc;
 
   /**
-   * Constructor b�sic.
+   * Constructor basic.
    */
   public Tauler() { }
 
   /**
-   * Constructor. El tauler t� cel�les inicialitzades amb tipus i valor igual a 0.
-   * @param tamany Indica la mida que tindr� el tauler. �s a dir, tamany x tamany
+   * Constructor, el tauler te celes inicialitzades amb tipus i valor igual a 0.
+   * @param tamany Indica la mida que tindra el tauler. Es a dir, tamany x tamany
    */
   public Tauler (int tamany) {
     taulerJoc = new Cela[tamany][tamany];
@@ -58,7 +58,7 @@ public class Tauler extends Tauler_Compartit implements Serializable {
   }
   
   /**
-   * Getter encarregat d'obtenir una cel�la determinada del tauler.
+   * Getter encarregat d'obtenir una cela determinada del tauler.
    * @param i Indica la fila a accedir
    * @param j Indica la columna a accedir
    * @return Retorna un objecte de tipus Cela
@@ -73,7 +73,7 @@ public class Tauler extends Tauler_Compartit implements Serializable {
 
   /**
    * getTauler() retorna el propi tauler.
-   * @return Retorna el tauler (i les seves cel�les) sobre el que s'ha fet la crida a la funci�
+   * @return Retorna el tauler (i les seves celes) sobre el que s'ha fet la crida a la funcio
    */
   public Cela[][] getTauler() {
     return taulerJoc;

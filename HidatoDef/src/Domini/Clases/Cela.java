@@ -6,9 +6,9 @@ import Domini.Clases_compartides.Cela_Compartida;
 import java.io.Serializable;
 
 /**
- * Classe contenidora d'informació. Cada cel·la pren un valor i és d'un tipus determinat.
+ * Classe contenidora de informacio, cada cela pren un valor i es de un tipus determinat.
  * 
- * @author jaume
+ * @author jaume.guell
  */
 public class Cela extends Cela_Compartida implements Serializable {
   /*Definim una cela de diferents maneres:
@@ -21,13 +21,13 @@ public class Cela extends Cela_Compartida implements Serializable {
   private int valor = 0;
 
   /**
-   * Constructor bàsic. Les variables tipus i valor estan inicialitzades a 0.
+   * Constructor basic, les variables tipus i valor estan inicialitzades a 0.
    */
   public Cela() { }
   
   /**
-   * Constructor inicialitzat amb un determinat tipus, seguint la definició de cel·la.
-   * @param tipus Pot pendre els següents valors: -1(forat), 0(cel·la buida) o un valor enter positiu (cel·la fixe)
+   * Constructor inicialitzat amb un determinat tipus, seguint la definició de cela.
+   * @param tipus Pot pendre els seguents valors: -1(forat), 0(cela buida) o un valor enter positiu (cela fixe)
    */
   public Cela(int tipus) {
     this.tipus = tipus;
@@ -35,8 +35,8 @@ public class Cela extends Cela_Compartida implements Serializable {
   }
 
   /**
-   * Setter encarregat de canviar el valor d'una cel·la, només es pot canviar el valor d'una cel·la modificable.
-   * @param valor Té per valor un nombre natural
+   * Setter encarregat de canviar el valor de una cela, nomes es pot canviar el valor d'una cela modificable.
+   * @param valor Te per valor un nombre natural
    * 
    */
   public void setValor (int valor) {
@@ -60,9 +60,9 @@ public class Cela extends Cela_Compartida implements Serializable {
   }
 
   /**
-   * Setter encarregat de canviar el tipus d'una cel·la.
-   * @param tipus Pot pendre els següents valors: -1(forat), 0(cel·la buida) o un valor enter positiu (cel·la fixe)
-   * @return Retorna un valor booleà que indica si el setter ha provocat algun canvi en el tipus de la cel·la
+   * Setter encarregat de canviar el tipus d'una cela.
+   * @param tipus Pot pendre els seguents valors: -1(forat), 0(cela buida) o un valor enter positiu (cela fixe)
+   * @return Retorna un valor boolea que indica si el setter ha provocat algun canvi en el tipus de la cela
    */
   public boolean setTipus (int tipus) {
     if (this.tipus != tipus) {
@@ -76,16 +76,16 @@ public class Cela extends Cela_Compartida implements Serializable {
   } 
 
   /**
-   * Getter encarregat d'obtenir el tipus d'una cel·la.
-   * @return Valor (int) que indica el tipus de la cel·la
+   * Getter encarregat de obtenir el tipus d'una cela.
+   * @return Valor (int) que indica el tipus de la cela
    */
   public int getTipus() {
     return tipus;
   }
 
   /**
-   * Getter encarregat d'obtenir el valor d'una cel·la.
-   * @return Valor (int) de la cel·la
+   * Getter encarregat de obtenir el valor de una cela.
+   * @return Valor (int) de la cela
    */
   public int getValor() {
     return valor;

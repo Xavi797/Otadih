@@ -5,6 +5,8 @@
  */
 package Domini.Clases;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -14,14 +16,23 @@ import java.util.ListIterator;
  * @author jaume.guell
  */
 
-public class Rankings {
-    private class UsuariPuntuacio { /* Conte el nom del usuari i la seva puntuacio en una partida determinada */
-        private String user;
-        private int puntuacio;
-    }
+public class Rankings implements Serializable {
     
     private int nivellDificultat;   /* Indica el nivell de dificultat de la partida i per tant ranking a utilitzar */
     private List<UsuariPuntuacio> taulaRanking; /* Llista que conte el ranking de una determinada dificultat */
+    
+    /**
+     * Constructor que inicialitza totes les primeres posicions amb valors Dummy amb punts ascendents.
+     */
+    public Rankings() {
+        taulaRanking = new ArrayList<UsuariPuntuacio>();
+        for (int i = 0; i < 11; ++i) {
+            UsuariPuntuacio up = new UsuariPuntuacio("DUMMY", 100);
+            up.setPunts(i*100);
+            taulaRanking.add(up);
+            ordenar();
+        }
+    }
     
     /**
      * Funcio encarregada de obtenir el nivell de dificiultat de el Ranking.
@@ -56,11 +67,13 @@ public class Rankings {
     }
     
     /**
-     * Funcio encarregada de afegir un nou UsuariPuntuacio al ranking.
-     * @param up UsuariPuntuacio que sera afegit al ranking
+     * Funcio encarregada de afegir un nou UsuariPuntuacio al ranking i ordenarlo.
+     * @param user Nom del usuari
+     * @param punts Punts que ha fet el usuari
      */
-    public void afegeix(UsuariPuntuacio up) {
-        taulaRanking.add(up);
+    public void afegeix(String user, int punts) {
+        UsuariPuntuacio up = new UsuariPuntuacio(user, punts);
+        taulaRanking.add(taulaRanking.size()-1, up);
         ordenar();
         retallar();
     }
@@ -70,23 +83,19 @@ public class Rankings {
      */
     public void ordenar() {
         ListIterator<UsuariPuntuacio> it = taulaRanking.listIterator(taulaRanking.size()-1);
+        int index = taulaRanking.size() - 1;
+        
         while (it.hasPrevious()) {
-            UsuariPuntuacio up1 = it.previous();
-            UsuariPuntuacio up2 = it.next();
-            //it no ha canviat de posicio
+            it.previous();    //retrocedim el index 1 posicio
             
-            if (up1.puntuacio < up2.puntuacio) {
-                //Canviem els dos up
-                int previ = it.previousIndex();
-                it.previous();
-                int actual = it.nextIndex();
-                //it ha disminuit una posicio cap al inici de la llista
-                
-                Collections.swap(taulaRanking, previ, actual);
-            }
-            else {
-                //Avancem el punter una posicio endavant
-                it.previous();
+            UsuariPuntuacio up1 = taulaRanking.get(index);
+            int i1 = index;
+            --index;
+            UsuariPuntuacio up2 = taulaRanking.get(index);
+            int i2 = index;
+            
+            if (up1.getPunts() > up2.getPunts()) {
+                Collections.swap(taulaRanking, i1, i2);
             }
         }
     }
@@ -98,5 +107,31 @@ public class Rankings {
         while (taulaRanking.size() > 10) {
             taulaRanking.remove(taulaRanking.size()-1);
         }
+    }
+    
+    /**
+     * Funcio encarregada de retornar la mida del ranking.
+     * @return Int amb les posicions del ranking
+     */
+    public int mida() {
+        return taulaRanking.size();
+    }
+    
+    /**
+     * Funcio encarregada de obtenir el nom de usuari de una posicio del ranking.
+     * @param index Posicio del ranking a consultar
+     * @return String que conte el nom del usuari demanat
+     */
+    public String getUsuari(int index) {
+        return taulaRanking.get(index).getUser();
+    }
+    
+    /**
+     * Funcio encarregada de obtenir els punts de un usuari de una posicio del ranking.
+     * @param index Posicio del ranking a consultar
+     * @return Int que conte els punts del usuari de la posicio demanada
+     */
+    public int getPunts(int index) {
+        return taulaRanking.get(index).getPunts();
     }
 }
