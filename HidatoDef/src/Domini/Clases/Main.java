@@ -22,7 +22,7 @@ public class Main {
         /* Create and display the form */
         final ControladorDomini controlador = new ControladorDomini();
         final ControladorTaula controTaula = new ControladorTaula();
-        //Menu
+        //Men
         // TODO code application logic here
         Scanner in = new Scanner(System.in);
         //Obtenim un objecte de la classe serialitzadora
@@ -59,7 +59,7 @@ public class Main {
                 case 2:
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
-                            new ControladorVistes(controlador).setVisible(true);
+                            ControladorVistes controladorVistes = new ControladorVistes(controlador);
                         }
                     }); 
                     break;
