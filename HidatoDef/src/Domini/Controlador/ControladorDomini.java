@@ -35,7 +35,10 @@ public class ControladorDomini {
 
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             
-           
+           /**
+            * Contructora que inicialitza els taulers i tots els controladors de les funcions
+            * que necesitara.
+            */
             public ControladorDomini(){
                 tauler = new Tauler();
                 solucion = new Tauler();
@@ -45,7 +48,10 @@ public class ControladorDomini {
                 cGen = new ControladorGenera();
             }
             
-            
+            /**
+             * Funcio que cridara al controlador TaulerCreat per a crear al tauler. 
+             * Despres fara els sets y getters per tenir aqui el tauler.
+             */
             public void creaTauler(){
                 cCrea.crea();
                 tauler = cCrea.getTaulerCreat();
@@ -60,11 +66,19 @@ public class ControladorDomini {
                 }
             }
             
+             /**
+             * Funcio que cridara al controlador Controladorjuga per a jugar al tauler. 
+             * Despres fara els sets y getters per tenir aqui el tauler.
+             */
             public void juga(){
                 cJuga.juga(tauler,solucion);
                 tauler_partida = cJuga.getTauler_partida();
             }
             
+            /**
+             * Funcio que cridara al controlador ControladorGenera per a generar un tauler. 
+             * Despres fara els sets y getters per tenir aqui el tauler.
+             */
             public void generaTauler(int costat, int numInicials, int forats){
                 cGen.generaTauler(costat, numInicials,forats);
                 tauler = cGen.getTauler();
@@ -74,6 +88,10 @@ public class ControladorDomini {
                 
             }
             
+            /**
+             * Funcio que cridara al controlador ControladorSoluciona per a solucionar el tauler. 
+             * Despres fara els sets y getters per tenir aqui el tauler solucionat.
+             */
             public void soluciona(){
                 cSol.soluciona(tauler);
                 

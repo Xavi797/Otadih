@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author Carlos
  */
 public class ControladorCrea {
- /** @author Carlos */
+ 
     ControladorTaula cT;
     private int[] numDonats, posInicial;
 
@@ -50,10 +50,10 @@ public class ControladorCrea {
     }
     
      /**
-              * La idea es que l'usuari crei el tauler com ell vol, i pot rectificar decisions 
-              * @param costat Tamany del tauler
-              * PRE: -- 
-              */
+     * La idea es que l'usuari crei el tauler com ell vol, i pot rectificar decisions 
+     * @param costat Tamany del tauler
+     * PRE: -- 
+     */
     private void crea_aux() {
 		Scanner in = new Scanner(System.in);
                 System.out.println("Indica el Tamany del tauler(un costat nomes) ");
