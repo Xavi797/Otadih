@@ -72,6 +72,7 @@ public class ControladorVistes extends javax.swing.JFrame {
                 this.setContentPane(vistJugar);
                 vistJugar.setMatriu();
                 vistJugar.createBoard();
+                controladorDomini.novaPartida();
                 this.pack();
                 break;
         }

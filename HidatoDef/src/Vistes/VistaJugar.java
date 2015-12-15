@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -40,7 +42,7 @@ public class VistaJugar extends VistaGenerica {
         controladorDomini = contD;
         controladorVistes = contV;
         plataformaCeles = new JPanel();
-
+       
     }
 
     /**
@@ -56,6 +58,7 @@ public class VistaJugar extends VistaGenerica {
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton2 = new javax.swing.JButton();
         TimeLabel = new javax.swing.JLabel();
+        botoSortir = new javax.swing.JButton();
 
         jButton1.setText("Soluciona");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -73,6 +76,13 @@ public class VistaJugar extends VistaGenerica {
 
         TimeLabel.setBackground(Color.WHITE);
 
+        botoSortir.setText("Sortir");
+        botoSortir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoSortirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +94,8 @@ public class VistaJugar extends VistaGenerica {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(TimeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TimeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botoSortir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,7 +110,9 @@ public class VistaJugar extends VistaGenerica {
                 .addComponent(jToggleButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(botoSortir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
                 .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -109,12 +122,16 @@ public class VistaJugar extends VistaGenerica {
         matriu = controladorDomini.getTaulerSolucionatPerVista();
         createBoard();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void botoSortirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSortirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botoSortirActionPerformed
    
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
     }
     
-    private class ActionVistaCela implements MouseListener {
+    private class ActionVistaCela implements FocusListener {
 
         int x;
         int y;
@@ -123,33 +140,24 @@ public class VistaJugar extends VistaGenerica {
             x = i;
             y = j;
         }
-    
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
+        public void focusGained(FocusEvent e) {
             
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            
+        public void focusLost(FocusEvent e) {
+ 
             String num = tauler[x][y].getText();
+            int n;
+            if (num.isEmpty()){
+                n = 0;
+            } else {
+                n=Integer.parseInt(num);
+            }
             
-            boolean setCorrect = controladorDomini.setCela(x, y, Integer.parseInt(num)); // Controlar que no pongan letra
+            boolean setCorrect = controladorDomini.setCela(x, y, n); // Controlar que no pongan letra
             if (!setCorrect) {
                 tauler[x][y].setBackground(Color.red);
             } else {
@@ -173,7 +181,6 @@ public class VistaJugar extends VistaGenerica {
             x = 15;
             for (int j = 0;j <columnes; ++j) {
                 tauler[i][j] = new JTextField();
-                tauler[i][j].addMouseListener(new ActionVistaCela(i, j));
                 if (matriu[i][j] == -1) {
                     tauler[i][j].setEditable(false);
                     tauler[i][j].setBackground(Color.BLACK);
@@ -182,6 +189,8 @@ public class VistaJugar extends VistaGenerica {
                     tauler[i][j].setEditable(false);
                     tauler[i][j].setText(Integer.toString(matriu[i][j]));
                     tauler[i][j].setBackground(Color.GRAY);
+                } else {
+                    tauler[i][j].addFocusListener(new ActionVistaCela(i, j));
                 }
                 //System.out.print(matriu[i][j]);
 
@@ -200,6 +209,7 @@ public class VistaJugar extends VistaGenerica {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TimeLabel;
+    private javax.swing.JButton botoSortir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JToggleButton jToggleButton1;
