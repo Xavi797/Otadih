@@ -38,6 +38,9 @@ public class ControladorDomini {
             private ControladorTaula controladorTaula;
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             
+            private List<Integer> conjuntUsats;
+            private List<Integer> propers;
+            
            /**
             * Contructora que inicialitza els taulers i tots els controladors de les funcions
             * que necesitara.
@@ -159,17 +162,17 @@ public class ControladorDomini {
                 return null;
             }
             
-            public void novaPartida(List<Integer> conjuntUsats, List<Integer> propers){
+            public void novaPartida(){
                 tauler_partida = tauler.clonar();
                 cJuga.iniciaUsados(tauler_partida, conjuntUsats);
                 cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                 //actualizar lista posibles
             }
             
-            public void setCela(int i, int j, int val, List<Integer> conjuntUsats, List<Integer> propers){
+            public void setCela(int i, int j, int val){
                 //mirar si posible ponerlo benColocat
                 //if benColocat modificaCela y actualiza NUmeros a poner
-                if(benColocat(i, j, val, conjuntUsats)){
+                if(benColocat(i, j, val)){
                     int aux = tauler.getCela(i, j);
                     if(aux > 0) conjuntUsats.remove(aux);
                     tauler_partida.ModificaCela(i, j, val);
@@ -186,13 +189,31 @@ public class ControladorDomini {
                 return cJuga.bensolucionat(tauler_partida, solucion);
             }
             
-            public boolean benColocat(int i, int j, int val, List<Integer> conjuntUsats){
+            public boolean benColocat(int i, int j, int val){
                 return cJuga.bencolocat(i, j, val, tauler_partida,conjuntUsats);
             }
             
             public boolean celaCorrecte(int i, int j){
                 return cJuga.celaCorrecta(i, j, tauler_partida, solucion);
             }
+
+            public List<Integer> getConjuntUsats() {
+                return conjuntUsats;
+            }
+
+            public void setConjuntUsats(List<Integer> conjuntUsats) {
+                this.conjuntUsats = conjuntUsats;
+            }
+
+            public List<Integer> getPropers() {
+                return propers;
+            }
+
+            public void setPropers(List<Integer> propers) {
+                this.propers = propers;
+            }
+
+            
             
             /**
               * getSolucio, Retorna el tauler solucionat solucion
