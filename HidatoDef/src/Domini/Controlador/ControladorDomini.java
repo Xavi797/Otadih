@@ -7,6 +7,7 @@ package Domini.Controlador;
 
 import Domini.Clases.*;
 import Persistencia.Controlador.ControladorPersistencia;
+import java.util.List;
 
 /**
  *
@@ -156,6 +157,41 @@ public class ControladorDomini {
                     return resposta;
                 }
                 return null;
+            }
+            
+            public void novaPartida(List<Integer> conjuntUsats, List<Integer> propers){
+                tauler_partida = tauler.clonar();
+                cJuga.iniciaUsados(tauler_partida, conjuntUsats);
+                cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
+                //actualizar lista posibles
+            }
+            
+            public void setCela(int i, int j, int val, List<Integer> conjuntUsats, List<Integer> propers){
+                //mirar si posible ponerlo benColocat
+                //if benColocat modificaCela y actualiza NUmeros a poner
+                if(benColocat(i, j, val, conjuntUsats)){
+                    int aux = tauler.getCela(i, j);
+                    if(aux > 0) conjuntUsats.remove(aux);
+                    tauler_partida.ModificaCela(i, j, val);
+                    cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
+                }
+            }
+            
+            public boolean acabat(){
+                return cJuga.acabat(tauler_partida);
+                
+            }
+            
+            public boolean bensolucionat(){
+                return cJuga.bensolucionat(tauler_partida, solucion);
+            }
+            
+            public boolean benColocat(int i, int j, int val, List<Integer> conjuntUsats){
+                return cJuga.bencolocat(i, j, val, tauler_partida,conjuntUsats);
+            }
+            
+            public boolean celaCorrecte(int i, int j){
+                return cJuga.celaCorrecta(i, j, tauler_partida, solucion);
             }
             
             /**

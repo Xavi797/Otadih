@@ -61,7 +61,7 @@ public class ControladorJuga {
                 int continua = 1;
                 tauler_partida = t1.clonar();
 
-                iniciaUsados(tauler_partida);
+                iniciaUsados(tauler_partida, conjuntUsats);
                 while(!acabat(tauler_partida) && continua == 1) {
                     System.out.println("Estat actual del tauler:");
                     cT.escriuTauler(tauler_partida);
@@ -75,7 +75,7 @@ public class ControladorJuga {
                             System.out.println("Indica la cela que vols consultar si es correcte (i, j): ");
                             int iaux = in.nextInt();
                             int jaux = in.nextInt();
-                            if(celaCorrecta(iaux,jaux,tauler_partida)) System.out.println("Esta be!!!");
+                            if(celaCorrecta(iaux,jaux,tauler_partida,sol)) System.out.println("Esta be!!!");
                             else System.out.println("Esta malament :( !!!");
                         }
                         System.out.println("Indica la cela que vols escriure (i, j): ");
@@ -89,7 +89,7 @@ public class ControladorJuga {
  //Ajudes aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
                             //posibles(i,j,tauler_partida);
                             //proba(i,j,tauler_partida);
-                            ajudaPropers(tauler_partida);
+                            ajudaPropers(tauler_partida,conjuntUsats,conjuntPropers,maxTauler);
                             System.out.println("Posibles numeros a posar en el tauler: ");
                             for (int auxCont = 0; auxCont < conjuntPropers.size(); ++auxCont){
                                 System.out.printf(" " + conjuntPropers.get(auxCont));   
@@ -101,7 +101,7 @@ public class ControladorJuga {
                                 System.out.println("Valor no valid, torna a començar el proces");
                             }
                             
-                            else if(bencolocat(i,j,val,tauler_partida)) {
+                            else if(bencolocat(i,j,val,tauler_partida,conjuntUsats)) {
                                 int aux_val = tauler_partida.getCela(i, j);
                                 if(tauler_partida.ModificaCela(i, j, val)){
                                     System.out.println("Cela modificada correctament");
@@ -119,7 +119,7 @@ public class ControladorJuga {
                     }
                 }
                 if(continua == 1){
-                    if (bensolucionat(tauler_partida))
+                    if (bensolucionat(tauler_partida,sol))
                         System.out.println("SOLUCIONAT CORRECTAMENT!");
                     else 
                         System.out.println("SOLUCIÓ ERRONEA");
@@ -136,7 +136,7 @@ public class ControladorJuga {
             * @return Retorna true si el tauler esta ple
             * @param t Tauler que se l'hi passa per sapigue si es ple
             */
-            private boolean acabat (Tauler t){
+            public boolean acabat (Tauler t){
                   for (int i = 0; i < t.sizeTauler(); ++i)
                       for (int j = 0; j < t.sizeTauler(); ++j)
                            if (t.getCela(i, j) == 0) return false;
@@ -150,10 +150,10 @@ public class ControladorJuga {
             * @return Retorna true si el tauler esta ben solucionat
             * @param t Tauler que se l'hi passa per sapigue si es correcte
             */
-            private boolean bensolucionat(Tauler t){
+            public boolean bensolucionat(Tauler t, Tauler solucio){
                   for (int i = 0; i < t.sizeTauler(); ++i)
                       for (int j = 0; j < t.sizeTauler(); ++j)
-                           if (t.getCela(i, j) != sol.getCela(i, j)) return false;
+                           if (t.getCela(i, j) != solucio.getCela(i, j)) return false;
                   return true;
             }
             
@@ -166,9 +166,9 @@ public class ControladorJuga {
             * @param j Conte la posicio de la columne de la cela que es vol mirar
             * @param t Tauler que se l'hi passa per sapigue si una cela es correcte
             */
-            private boolean celaCorrecta(int i, int j, Tauler t){
+            public boolean celaCorrecta(int i, int j, Tauler t, Tauler solucio){
                 if(i < 0 || j <0 || i >= t.sizeTauler() || j >= t.sizeTauler()) return false;
-                if(t.getCela(i, j) != sol.getCela(i, j)) return false;
+                if(t.getCela(i, j) != solucio.getCela(i, j)) return false;
                 return true;
             }
             
@@ -183,7 +183,7 @@ public class ControladorJuga {
             * @param j Conte la posicio de la columne de la cela que es vol mirar
             * @param t Tauler que se l'hi passa per sapigue tots els posibles valors
             */
-            private void posibles(int i, int j, Tauler t){   
+            private void posibles(int i, int j, Tauler t){ 
                  conjuntPosibles.clear();
                  conjuntPosibles.add(0);
                  int tam = t.sizeTauler(); 
@@ -215,7 +215,7 @@ public class ControladorJuga {
             * POST: conjuntUsats conte tots els valors inicials del tauler t
             * @param t Tauler que se l'hi passa per sapigue tots els valors inicials.
             */
-            private void iniciaUsados(Tauler t){
+            public void iniciaUsados(Tauler t, List<Integer> conjuntUsats){
                 for(int i = 0; i < t.sizeTauler(); ++i){
                     for(int j = 0; j < t.sizeTauler(); ++j){
                         int aux = t.getCela(i, j);
@@ -370,24 +370,24 @@ public class ControladorJuga {
         }
         */
 
-        public void ajudaPropers(Tauler t){
-            conjuntPropers.clear();
-            conjuntPropers.add(0);
+        public void ajudaPropers(Tauler t, List<Integer> conjuntUsats, List<Integer> propers,int maxTauler){
+            propers.clear();
+            propers.add(0);
             int num, ant, post;
             for (int i = 0; i< conjuntUsats.size(); ++i){
                 num = conjuntUsats.get(i);
                 post = num +1;
                 ant = num -1;
-                if(post < maxTauler && !conjuntUsats.contains(post) && !conjuntPropers.contains(post)) conjuntPropers.add(post);
-                if(ant > 1 && !conjuntUsats.contains(ant) && !conjuntPropers.contains(ant)) conjuntPropers.add(ant);
+                if(post < maxTauler && !conjuntUsats.contains(post) && !propers.contains(post)) propers.add(post);
+                if(ant > 1 && !conjuntUsats.contains(ant) && !propers.contains(ant)) propers.add(ant);
             }
-            Collections.sort(conjuntPropers);
+            Collections.sort(propers);
         }
         
-        public boolean bencolocat(int i, int j, int val, Tauler t){
+        public boolean bencolocat(int i, int j, int val, Tauler t, List<Integer> conjuntUsats1){
             int[] direccioVertical = new int[]{-1,-1,-1,0,0,1,1,1};
 	    int[] direccioHoritzontal = new int[]{-1,0,1,-1,1,-1,0,1};
-            if(conjuntUsats.contains(val+1)){
+            if(conjuntUsats1.contains(val+1)){
                 boolean aux2 = false;
                 for (int auxi = 0; auxi < direccioVertical.length; ++auxi)
                     if(i+ direccioVertical[auxi] >=  0 && i+ direccioVertical[auxi] < t.sizeTauler()
@@ -397,7 +397,7 @@ public class ControladorJuga {
                 
                 if(aux2 == false) return false;
             }
-            if(conjuntUsats.contains(val-1)){
+            if(conjuntUsats1.contains(val-1)){
                 boolean aux3 = false;
                 for (int auxj = 0; auxj < direccioVertical.length; ++auxj){
                     if(i+ direccioVertical[auxj] >=  0 && i+ direccioVertical[auxj] < t.sizeTauler()
