@@ -178,8 +178,9 @@ public class ControladorDomini {
                 //mirar si posible ponerlo benColocat
                 //if benColocat modificaCela y actualiza NUmeros a poner
                 if(benColocat(i, j, val)){
-                    int aux = tauler.getCela(i, j);
+                    int aux = tauler_partida.getCela(i, j);
                     if(aux > 0) conjuntUsats.remove(aux);
+                    conjuntUsats.add(val);
                     tauler_partida.ModificaCela(i, j, val);
                     cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                     return true;
