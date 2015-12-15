@@ -1,6 +1,6 @@
 package Domini.Controlador.Drivers;
 
-import Vistes.vistaJugar;
+//import Vistes.vistaJugar;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,7 +12,7 @@ import Vistes.vistaJugar;
  *
  * @author xavi
  */
-public class DriverVistaJugar {
+/*public class DriverVistaJugar {
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -23,4 +23,4 @@ public class DriverVistaJugar {
             }
         }); 
     }
-}
+}*/
