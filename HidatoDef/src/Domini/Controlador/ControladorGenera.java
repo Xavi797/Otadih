@@ -298,7 +298,7 @@ public class ControladorGenera {
               * PRE: -- 
               */
 	    
-	    public void generaTauler(int costat, int numInicials, int forats, int opcion, String topo) {
+	    public void generaTauler(int costat, int numInicials, String topo) {
 	    	 int numMaxim;
 	    	 Coord posInicialProvisional = new Coord();
 	         Coord coordenadaAux = new Coord();
@@ -389,7 +389,7 @@ public class ControladorGenera {
                  */
 	         tauler = t;
  
-                 cTaul.escriuTauler(tauler);
+                 //cTaul.escriuTauler(tauler);
 	         
 	    }
 	     /* POST: tauler conte el nou tauler generat amb les caselles buides
