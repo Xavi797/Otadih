@@ -7,6 +7,8 @@ package Domini.Controlador;
 
 import Domini.Clases.*;
 import Persistencia.Controlador.ControladorPersistencia;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -164,6 +166,8 @@ public class ControladorDomini {
             
             public void novaPartida(){
                 tauler_partida = tauler.clonar();
+                conjuntUsats = new ArrayList<Integer>();
+                propers = new ArrayList<Integer>();
                 cJuga.iniciaUsados(tauler_partida, conjuntUsats);
                 cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                 //actualizar lista posibles
