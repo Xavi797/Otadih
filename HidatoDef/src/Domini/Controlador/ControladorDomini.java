@@ -169,7 +169,7 @@ public class ControladorDomini {
                 //actualizar lista posibles
             }
             
-            public void setCela(int i, int j, int val){
+            public boolean setCela(int i, int j, int val){
                 //mirar si posible ponerlo benColocat
                 //if benColocat modificaCela y actualiza NUmeros a poner
                 if(benColocat(i, j, val)){
@@ -177,7 +177,9 @@ public class ControladorDomini {
                     if(aux > 0) conjuntUsats.remove(aux);
                     tauler_partida.ModificaCela(i, j, val);
                     cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
+                    return true;
                 }
+                else return false;
             }
             
             public boolean acabat(){
