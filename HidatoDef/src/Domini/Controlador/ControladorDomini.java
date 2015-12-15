@@ -86,8 +86,8 @@ public class ControladorDomini {
              * @param forats
              * Despres fara els sets y getters per tenir aqui el tauler.
              */
-            public void generaTauler(int costat, int numInicials, int forats){
-                cGen.generaTauler(costat, numInicials,forats);
+            public void generaTauler(int costat, int numInicials, String topo){
+                cGen.generaTauler(costat, numInicials ,topo);
                 tauler = cGen.getTauler();
                 solucion = cGen.getSolucion();
                 nSols = cGen.getnSols();
@@ -98,6 +98,10 @@ public class ControladorDomini {
             public int[][] getTaulerPerVista() {
                 return controladorTaula.transformar(tauler);
             }
+            public int[][] getTaulerSolucionatPerVista() {
+                soluciona();
+                return controladorTaula.transformar(solucion);
+            }
             
             /**
              * Funcio que cridara al controlador ControladorSoluciona per a solucionar el tauler. 
@@ -105,7 +109,7 @@ public class ControladorDomini {
              */
             public void soluciona(){
                 cSol.soluciona(tauler);
-                
+                solucion = cSol.getSolucio();     
             }
             
             /**

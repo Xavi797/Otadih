@@ -24,6 +24,7 @@ public class ControladorVistes extends javax.swing.JFrame {
     public ControladorVistes(ControladorDomini contDom) {
         controladorDomini = contDom;
         initComponents();
+        this.setTitle("Hidato");
         initVistes();
         this.setVisible(true);
     }
@@ -69,6 +70,7 @@ public class ControladorVistes extends javax.swing.JFrame {
             case "vistaJugar":
                 this.getContentPane().removeAll();
                 this.setContentPane(vistJugar);
+                vistJugar.setMatriu();
                 vistJugar.createBoard();
                 this.pack();
                 break;

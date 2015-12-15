@@ -34,6 +34,13 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         boxDificultat.addItem("Intermedi");
         boxDificultat.addItem("Difícil");
         boxDificultat.setSelectedItem("Fácil");
+        
+        boxTopologia.removeAllItems();
+        boxTopologia.addItem("Forats manuals");
+        boxTopologia.addItem("Trival");
+        boxTopologia.addItem("Piramide");
+        boxTopologia.addItem("Creu");
+        boxTopologia.addItem("Sense Forats");     
     }
 
     /**
@@ -175,7 +182,8 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         String costat = (String)boxTamany.getSelectedItem();
         int numIni = Integer.parseInt(numInicials.getText());
         int numForats =Integer.parseInt( forats.getText());
-        controladorDomini.generaTauler(Integer.parseInt(costat), numIni, numForats);
+        String topologia = (String)boxTopologia.getSelectedItem();
+        controladorDomini.generaTauler(Integer.parseInt(costat), numIni, topologia);
         controladorVistes.mostraVista("vistaJugar");
     }//GEN-LAST:event_botoGeneraActionPerformed
 
