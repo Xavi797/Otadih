@@ -298,7 +298,7 @@ public class ControladorGenera {
               * PRE: -- 
               */
 	    
-	    public void generaTauler(int costat, int numInicials, int forats) {
+	    public void generaTauler(int costat, int numInicials, int forats, int opcion, String topo) {
 	    	 int numMaxim;
 	    	 Coord posInicialProvisional = new Coord();
 	         Coord coordenadaAux = new Coord();
@@ -311,19 +311,26 @@ public class ControladorGenera {
 	         int veins[][] = new int [costat][costat];
 	         int num_posar = 0;
 
-                 
-                 
-                 System.out.println("Vols posar manualment forats(1) o escollir topologia?(2) "
-                         + "o sense forats(0)");
-                 int op_forats = in.nextInt();
-                 
-                 if(op_forats == 2){
-                     escollir_topo(taulerGenerat);
+                 if("Forats manuals".equals(topo)){
+                     //llama vista con matriz de ints y pone forats
                      
                  }
                  
+                 else if(topo.equals("Trival")){
+                     topTrival(taulerGenerat);
+                 }
+                 
+                 else if(topo.equals("Piramide")){
+                     topPira(taulerGenerat);
+                 }
+                 
+                 else if(topo.equals("Creu")){
+                     topCreu(taulerGenerat);
+                 }                
+                     
+                 
                  numMaxim = cTaul.getMaxPossible(taulerGenerat);
-	         //FER FORATS
+	         
 	         boolean tauler_correcte = false;
 	         while(!tauler_correcte){
 		         //do while....
@@ -371,7 +378,7 @@ public class ControladorGenera {
                  startTime = System.currentTimeMillis();
 	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0,true)){
                     t = taulerGeneratAux.clonar();
-                    System.out.println("que esta pasando: " + min);
+                    
                     quita_nums(min,num_posar,numMaxim,t,0,0,false);
                 }
 	         Collections.sort(conjuntGenerat);
