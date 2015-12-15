@@ -168,6 +168,7 @@ public class ControladorDomini {
                 tauler_partida = tauler.clonar();
                 conjuntUsats = new ArrayList<Integer>();
                 propers = new ArrayList<Integer>();
+                maxCas = controladorTaula.getMax(tauler);
                 cJuga.iniciaUsados(tauler_partida, conjuntUsats);
                 cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                 //actualizar lista posibles
