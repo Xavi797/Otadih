@@ -7,6 +7,7 @@ package Persistencia.Controlador;
 
 import Persistencia.SerialitzadorDades;
 import Persistencia.SerialitzadorPartides;
+import java.util.List;
 
 /**
  *
@@ -148,6 +149,14 @@ public class ControladorPersistencia {
     }
     
     /**
+     * Funcio encarregada de fer la crida a la BD per a aconseguir una llista amb els noms de tots els taulers del sistema.
+     * @return Llista de Strings amb els noms de tots el taulers
+     */
+    public List<String> llistaTaulers() {
+        return SDades.aconsegueixLlista("Dades/Taulers/");
+    }
+    
+    /**
      * Funcio encarregada de fer la crida per guardar una Partida.
      * @param part Partida en questio
      * @param name Nom de la partida
@@ -185,6 +194,10 @@ public class ControladorPersistencia {
      */
     public void destrueixTotesPartides(String user) {
         SPartides.destruirTotesPartides(user);
+    }
+    
+    public List<String> llistaPartides(String user) {
+        return SPartides.aconsegueixLlista(user);
     }
     
 }

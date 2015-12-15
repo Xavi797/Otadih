@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change         wjoebdwjebcwecbw            this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Domini.Controlador;
@@ -16,8 +16,7 @@ import java.util.List;
  * @author Carlo
  */
 public class ControladorDomini {
-           /*Controla totes les operacions de la taula: Soluciona tauler, genera etc..
-        */
+           /*Controla totes les operacions de la taula: Soluciona tauler, genera etc..*/
             private final ControladorJuga cJuga;
             private final ControladorCrea cCrea;
             private final ControladorSoluciona cSol;
@@ -28,6 +27,9 @@ public class ControladorDomini {
             private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
+            private Usuari usuari;
+            private Partida partida;
+            private Hidatos hidatos;
 	    
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -37,7 +39,7 @@ public class ControladorDomini {
 	    private int n; /* anchura del tablero */
 	    private int m; /* altura del tablero */
 	    private int maxCas; /* numero de la casilla mas grande */
-            private ControladorTaula controladorTaula;
+            private final ControladorTaula controladorTaula;
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             
             private List<Integer> conjuntUsats;
@@ -49,6 +51,9 @@ public class ControladorDomini {
             */
             public ControladorDomini(){
                 tauler = new Tauler();
+                usuari = new Usuari();
+                partida = new Partida();
+                hidatos = new Hidatos();
                 solucion = new Tauler();
                 cJuga = new ControladorJuga();
                 cCrea = new ControladorCrea();
@@ -222,6 +227,81 @@ public class ControladorDomini {
             }
 
             
+            
+            /**
+             * Funcio encarregada de guardar una partida a mitges
+             * @param user
+             * @param name
+             * @return 
+             */
+           /* public boolean guardarPartida(String name) {
+                Partida p = new Partida();
+                Hidatos h = new Hidatos(tauler, tauler_partida, solucion);
+                
+                
+                
+                return cPers.guardaPartida(obj, name, user);
+            }*/
+            
+            
+            /**
+             * Funcio encarregada de fer la crida per a carregar una partida.
+             * @param user Nom del usuari que vol carregar la partida
+             * @param name Nom de la partida a carregar
+             * @return Partida demanada
+             */
+            public Partida carregarPartida(String name, String user) {
+                Partida p = new Partida();
+                return p = (Partida) cPers.carregaPartida(name, user);
+            }
+            
+            /**
+             * Funcio que demana a la BD el llistat de partides a mitges que te el usuari 'user'.
+             * @param user Nom del usuari
+             * @return Llista de Strings que conte el nom de les partides a mitges
+             */
+            public List<String> llistatPartides(String user) {
+                List<String> list = new ArrayList<String>();
+                list = cPers.llistaPartides(user);
+                return list;
+            }
+            
+            /**
+             * Funcio encarregada de enviar un tauler a la BD per a que es guardi.
+             * @param name Nom amb que es guardara el tauler
+             * @return Cert en cas de exit, false en cas contrari
+             */
+            public boolean guardarTauler(String name) {
+                Hidatos h = new Hidatos();
+                h.setTaulerJocInic(tauler);
+                h.setTaulerJocModi(tauler_partida);
+                h.setTaulerJocSolu(solucion);
+                Object obj = (Object) h;
+                return cPers.guardaTauler(obj, name);
+            }
+            
+            /**
+             * Funcio encarregada de fer la crida per carregar de la BD un tauler demanat.
+             * @param name Nom del tauler a carregar
+             */
+            public void carregarTauler(String name) {
+                Hidatos h = new Hidatos();
+                h = (Hidatos) cPers.carregaTauler(name);
+                
+                tauler = h.getTaulerJocInic();
+                tauler_partida = h.getTaulerJocModi();
+                solucion = h.getTaulerJocSolu();
+            }
+            
+            /**
+             * Funcio que demana a la BD el llistat de tots els taulers que te el sistema.
+             * @return Llista de Stings que conte el nom dels taulers del sistema
+             */
+            public List<String> llistatTaulers() {
+                List<String> list = new ArrayList<String>();
+                list = cPers.llistaTaulers();
+                return list;
+            }
             
             /**
               * getSolucio, Retorna el tauler solucionat solucion

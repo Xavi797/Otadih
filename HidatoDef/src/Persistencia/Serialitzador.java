@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -139,5 +141,25 @@ public class Serialitzador {
             Object obj = null;
             return obj;    //Si hi ha error retornem un Objecte buit
         }
+    }
+    
+    /**
+     * Funcio encarregada de llistar tots els objectes de un directori en concret de la BD.
+     * @param path Direccio del directori de on es llistaran els fitxers
+     * @return Retorna una llista de Strings amb els noms de tots els fitxers del directori
+     */
+    public List<String> llistaObjectes(String path) {
+        List<String> list = new ArrayList<String>();
+        File f = new File(path);
+        File[] files = f.listFiles();
+        
+        if (files != null) {
+            for (File fil : files) {
+                if (fil.isDirectory() == false) {
+                    list.add(fil.getName());
+                }
+            }
+        }
+        return list;
     }
 }
