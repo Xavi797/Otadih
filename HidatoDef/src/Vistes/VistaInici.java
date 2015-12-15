@@ -190,10 +190,10 @@ public class VistaInici extends VistaGenerica {
     }//GEN-LAST:event_botoLogInActionPerformed
 
     private void botoRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoRegistrarActionPerformed
-        String nomUserRegister = userRegistrar.getText();
+        /*String nomUserRegister = userRegistrar.getText();
         String passUserRegister= contrasenyaRegistrar.getText();
         String paraula = paraulaClau.getText();
-        controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
+        controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);*/
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_botoRegistrarActionPerformed
 

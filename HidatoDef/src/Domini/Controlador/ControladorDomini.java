@@ -34,7 +34,7 @@ public class ControladorDomini {
 	    private int n; /* anchura del tablero */
 	    private int m; /* altura del tablero */
 	    private int maxCas; /* numero de la casilla mas grande */
-
+            private ControladorTaula controladorTaula;
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             
            /**
@@ -49,6 +49,7 @@ public class ControladorDomini {
                 cSol = new ControladorSoluciona();
                 cGen = new ControladorGenera();
                 cPers = new ControladorPersistencia();
+                controladorTaula = new ControladorTaula();
             }
             
             /**
@@ -92,6 +93,10 @@ public class ControladorDomini {
                 nSols = cGen.getnSols();
                 maxCas = cGen.getMaxCas();
                 
+            }
+            
+            public int[][] getTaulerPerVista() {
+                return controladorTaula.transformar(tauler);
             }
             
             /**

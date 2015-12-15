@@ -16,8 +16,10 @@ public class ControladorVistes extends javax.swing.JFrame {
     
     ControladorDomini controladorDomini;
     VistaMenu  vistaMenu;
-    vistaJugar vistJugar;
+    VistaJugar vistJugar;
     VistaInici vistaInici;
+    VistaGeneraHidato vistaGeneraHidato;
+    MenuJugar menuJugar;
     
     public ControladorVistes(ControladorDomini contDom) {
         controladorDomini = contDom;
@@ -30,6 +32,9 @@ public class ControladorVistes extends javax.swing.JFrame {
         //this.vistaMenu = new VistaMenu().setVisible(false);
         vistaInici = new VistaInici(controladorDomini, this);
         vistaMenu  = new VistaMenu(controladorDomini, this);
+        vistaGeneraHidato = new VistaGeneraHidato(controladorDomini, this);
+        menuJugar = new MenuJugar(controladorDomini, this);
+        vistJugar = new VistaJugar(controladorDomini, this);
         this.setContentPane(vistaInici);
         this.pack();
  
@@ -38,7 +43,7 @@ public class ControladorVistes extends javax.swing.JFrame {
     public void mostraVista(String desti) {
         switch(desti) {
             case "Inici":
-                this.removeAll();
+                this.getContentPane().removeAll();
                 this.setContentPane(vistaInici);
                 this.pack();
                 break;
@@ -46,6 +51,25 @@ public class ControladorVistes extends javax.swing.JFrame {
             case "Menu":
                 this.getContentPane().removeAll();
                 this.setContentPane(vistaMenu);
+                this.pack();
+                break;
+            
+            case "menuJugar":
+                this.getContentPane().removeAll();
+                this.setContentPane(menuJugar);
+                this.pack();
+                break;
+                
+            case "GeneraHidato":
+                this.getContentPane().removeAll();
+                this.setContentPane(vistaGeneraHidato);
+                this.pack();
+                break;
+                
+            case "vistaJugar":
+                this.getContentPane().removeAll();
+                this.setContentPane(vistJugar);
+                vistJugar.createBoard();
                 this.pack();
                 break;
         }

@@ -5,23 +5,29 @@
  */
 package Vistes;
 import java.awt.Color;
-import javax.swing.JFrame;
+import Domini.Controlador.ControladorDomini;
 import javax.swing.JTextField;
 
 /**
  *
  * @author xavi
  */
-public class vistaJugar extends javax.swing.JFrame {
+public class VistaJugar extends VistaGenerica {
 
-
-
+    /**
+     * Creates new form VistaJugar
+     */
+    ControladorVistes controladorVistes;
+    ControladorDomini controladorDomini;
     /**
      * Creates new form vistaJugar
      */
     
-    public vistaJugar() {
+    public VistaJugar(ControladorDomini contD, ControladorVistes contV) {
+        
         initComponents();
+        controladorDomini = contD;
+        controladorVistes = contV;
     }
 
     /**
@@ -33,44 +39,22 @@ public class vistaJugar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+            .addGap(0, 759, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+            .addGap(0, 438, Short.MAX_VALUE)
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
-    public static void createBoard (int[][] matriu)
+   
+    public void createBoard ()
     {
+        
+        int [][] matriu = controladorDomini.getTaulerPerVista();
         int width  = 40;
         int height = 40;
         int x   = 15;
@@ -94,14 +78,13 @@ public class vistaJugar extends javax.swing.JFrame {
                 //System.out.print(matriu[i][j]);
 
                 tauler[i][j].setBounds(x, y, width, height);
-                jPanel1.add(tauler[i][j]);
+                this.add(tauler[i][j]);
                 x +=55;
             }
             y += 55;
         }  
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

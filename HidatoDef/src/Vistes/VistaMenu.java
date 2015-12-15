@@ -42,6 +42,11 @@ public class VistaMenu extends VistaGenerica {
         BotoLogOut = new javax.swing.JButton();
 
         BotoJuga.setText("Jugar Partida");
+        BotoJuga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotoJugaActionPerformed(evt);
+            }
+        });
 
         BotoCarrega.setText("Carregar Partida");
 
@@ -101,6 +106,10 @@ public class VistaMenu extends VistaGenerica {
         controladorVistes.mostraVista("Inici");
         
     }//GEN-LAST:event_BotoLogOutActionPerformed
+
+    private void BotoJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoJugaActionPerformed
+        controladorVistes.mostraVista("menuJugar");
+    }//GEN-LAST:event_BotoJugaActionPerformed
 
     
 
