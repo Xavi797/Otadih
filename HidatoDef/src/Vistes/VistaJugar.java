@@ -9,6 +9,12 @@ import Domini.Controlador.ControladorDomini;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  *
@@ -23,6 +29,7 @@ public class VistaJugar extends VistaGenerica {
     JPanel plataformaCeles;
     ControladorDomini controladorDomini;
     int [][] matriu;
+    JTextField[][] tauler;
     /**
      * Creates new form vistaJugar
      */
@@ -107,6 +114,51 @@ public class VistaJugar extends VistaGenerica {
         matriu = controladorDomini.getTaulerPerVista();
     }
     
+    private class ActionVistaCela implements MouseListener {
+
+        int x;
+        int y;
+        
+        public ActionVistaCela(int i, int j) {
+            x = i;
+            y = j;
+        }
+    
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+            String num = tauler[x][y].getText();
+            
+            boolean setCorrect = controladorDomini.setCela(x, y, Integer.parseInt(num)); // Controlar que no pongan letra
+            if (!setCorrect) {
+                tauler[x][y].setBackground(Color.red);
+            } else {
+                tauler[x][y].setBackground(Color.white);
+            }
+        }
+    
+    }
+    
     public void createBoard ()
     {
 
@@ -116,11 +168,12 @@ public class VistaJugar extends VistaGenerica {
         int y   = 15;
         int files  = matriu.length;
         int columnes = matriu[0].length;
-        JTextField[][] tauler = new JTextField[files][columnes];
+        tauler = new JTextField[files][columnes];
         for (int i = 0;i < files; ++i) {
             x = 15;
             for (int j = 0;j <columnes; ++j) {
                 tauler[i][j] = new JTextField();
+                tauler[i][j].addMouseListener(new ActionVistaCela(i, j));
                 if (matriu[i][j] == -1) {
                     tauler[i][j].setEditable(false);
                     tauler[i][j].setBackground(Color.BLACK);
