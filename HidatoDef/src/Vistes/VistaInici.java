@@ -180,7 +180,8 @@ public class VistaInici extends VistaGenerica {
 
     private void botoLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoLogInActionPerformed
         String nomUserLogIn = usuariLogIn.getText();
-        String passUserLogIn= contrasenyaLogIn.getText();
+        String passUserLogIn= contrasenyaLogIn.getPassword().toString();
+        
         boolean resposta = controladorDomini.logInUsuari(nomUserLogIn, passUserLogIn);
         if (!resposta) JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes", "Atenció", JOptionPane.ERROR_MESSAGE);
         else controladorVistes.mostraVista("Menu");
@@ -188,10 +189,12 @@ public class VistaInici extends VistaGenerica {
     }//GEN-LAST:event_botoLogInActionPerformed
 
     private void botoRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoRegistrarActionPerformed
-        /*String nomUserRegister = userRegistrar.getText();
+        String nomUserRegister = userRegistrar.getText();
         String passUserRegister= contrasenyaRegistrar.getText();
         String paraula = paraulaClau.getText();
-        controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);*/
+        boolean resposta = controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
+        if (!resposta) JOptionPane.showMessageDialog(null, "Usuari ja registrat", "Atenció", JOptionPane.ERROR_MESSAGE);
+        else controladorVistes.mostraVista("Menu");
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_botoRegistrarActionPerformed
 
