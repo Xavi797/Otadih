@@ -7,6 +7,7 @@
 
 package Vistes;
 import Domini.Controlador.ControladorDomini;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +42,6 @@ public class VistaInici extends VistaGenerica {
         botoLogIn = new javax.swing.JButton();
         botoRegistrar = new javax.swing.JButton();
         usuariLogIn = new javax.swing.JTextField();
-        contrasenyaLogIn = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -51,6 +51,7 @@ public class VistaInici extends VistaGenerica {
         userRegistrar = new javax.swing.JTextField();
         contrasenyaRegistrar = new javax.swing.JPasswordField();
         textBenvinguda = new javax.swing.JLabel();
+        contrasenyaLogIn = new javax.swing.JPasswordField();
 
         jScrollPane1.setViewportView(jTextPane1);
 
@@ -84,12 +85,6 @@ public class VistaInici extends VistaGenerica {
             }
         });
 
-        contrasenyaLogIn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contrasenyaLogInActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Usuari");
 
         jLabel2.setText("Contrasenya");
@@ -119,13 +114,9 @@ public class VistaInici extends VistaGenerica {
                     .addComponent(botoLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botoRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                            .addComponent(usuariLogIn)))
+                        .addComponent(contrasenyaLogIn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -133,9 +124,13 @@ public class VistaInici extends VistaGenerica {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userRegistrar)
+                            .addComponent(userRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                             .addComponent(paraulaClau)
-                            .addComponent(contrasenyaRegistrar))))
+                            .addComponent(contrasenyaRegistrar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(45, 45, 45)
+                        .addComponent(usuariLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -143,15 +138,15 @@ public class VistaInici extends VistaGenerica {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(textBenvinguda, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(usuariLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel2)
+                    .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botoLogIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -183,16 +178,12 @@ public class VistaInici extends VistaGenerica {
         usuariLogIn.setVisible(true);
     }//GEN-LAST:event_botoLogInMouseClicked
 
-    private void contrasenyaLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasenyaLogInActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contrasenyaLogInActionPerformed
-
     private void botoLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoLogInActionPerformed
         String nomUserLogIn = usuariLogIn.getText();
         String passUserLogIn= contrasenyaLogIn.getText();
-        controladorDomini.logInUsuari(nomUserLogIn, passUserLogIn);
-        controladorVistes.mostraVista("Menu");
-        this.setVisible(false);
+        boolean resposta = controladorDomini.logInUsuari(nomUserLogIn, passUserLogIn);
+        if (!resposta) JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes", "Atenció", JOptionPane.ERROR_MESSAGE);
+        else controladorVistes.mostraVista("Menu");
         
     }//GEN-LAST:event_botoLogInActionPerformed
 
@@ -212,7 +203,7 @@ public class VistaInici extends VistaGenerica {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botoLogIn;
     private javax.swing.JButton botoRegistrar;
-    private javax.swing.JTextField contrasenyaLogIn;
+    private javax.swing.JPasswordField contrasenyaLogIn;
     private javax.swing.JPasswordField contrasenyaRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

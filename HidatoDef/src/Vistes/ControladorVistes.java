@@ -44,31 +44,31 @@ public class ControladorVistes extends javax.swing.JFrame {
     public void mostraVista(String desti) {
         switch(desti) {
             case "Inici":
-                this.getContentPane().removeAll();
+                //this.getContentPane().removeAll();
                 this.setContentPane(vistaInici);
                 this.pack();
                 break;
                 
             case "Menu":
-                this.getContentPane().removeAll();
+                //this.getContentPane().removeAll();
                 this.setContentPane(vistaMenu);
                 this.pack();
                 break;
             
             case "menuJugar":
-                this.getContentPane().removeAll();
+                //this.getContentPane().removeAll();
                 this.setContentPane(menuJugar);
                 this.pack();
                 break;
                 
             case "GeneraHidato":
-                this.getContentPane().removeAll();
+                //this.getContentPane().removeAll();
                 this.setContentPane(vistaGeneraHidato);
                 this.pack();
                 break;
                 
             case "vistaJugar":
-                this.getContentPane().removeAll();
+                //this.getContentPane().removeAll();
                 this.setContentPane(vistJugar);
                 vistJugar.setMatriu();
                 vistJugar.createBoard();

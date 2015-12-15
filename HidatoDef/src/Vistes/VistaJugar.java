@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -124,7 +125,20 @@ public class VistaJugar extends VistaGenerica {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botoSortirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSortirActionPerformed
-        // TODO add your handling code here:
+        Object[] options = {"Sortir",
+                    "Cancelar"};
+        int resposta = JOptionPane.showOptionDialog(controladorVistes,
+        "Estàs segur que vols sortir de la partida actual",
+        "Confrimació",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,     
+        options,  
+        options[0]);
+        if (resposta == 0) controladorVistes.mostraVista("Menu");
+        //VistaPopUp vistaPop = new VistaPopUp(controladorDomini, controladorVistes);
+        //vistaPop.setVisible(true);
+        //this.add(vistaPop);
     }//GEN-LAST:event_botoSortirActionPerformed
    
     public void setMatriu() {
