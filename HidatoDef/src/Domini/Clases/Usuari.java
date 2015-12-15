@@ -19,6 +19,11 @@ public class Usuari extends UsuariCompartit implements Serializable {
     private String codi;
 
     /**
+     * Constructora basica.
+     */
+    public Usuari() { }
+    
+    /**
      * Constructor. L'usuari té el nom, password i codi inicialitzats.
      * @param nom Nom de l'usuari
      * @param password Password de l'usuari

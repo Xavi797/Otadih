@@ -14,9 +14,7 @@ import java.io.Serializable;
 public class Partida implements Serializable {
     private Usuari user;
     private Rankings ranking;
-   // private Hidato hidato;
-    private static int ultimId = 1;
-    private int idPartida;// buscar com fer unica
+    private Hidatos hidatos;
     private int temps; //provisional.buscar funcio de clock
     private int numChekcs;
     private boolean solve;

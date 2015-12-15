@@ -5,6 +5,8 @@
  */
 package Persistencia;
 
+import java.util.List;
+
 /**
  * Classe encarregada del guardat i carregat especific de estadistiques
  * @author jaume.guell
@@ -46,5 +48,14 @@ public class SerialitzadorDades extends Serialitzador {
      */
     public Object carregar(String name, String dir) {
         return super.deserialitzarObjecte(name, dir);
+    }
+    
+    /**
+     * Funcio encarregada de carregar en una llista els noms de tots els fitxers de un directori.
+     * @param dir Path del directori de on es carregaran els fitxers
+     * @return Llista de Strings amb els noms de tots els fitxers del diectori demanat, llista buida en cas de que el directori sigui buit
+     */
+    public List<String> aconsegueixLlista(String dir) {
+        return super.llistaObjectes(dir);
     }
 }

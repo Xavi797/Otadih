@@ -6,6 +6,7 @@
 package Persistencia;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Classe encarregada del guardat i carregat especific de partides
@@ -66,5 +67,17 @@ public class SerialitzadorPartides extends Serialitzador {
     public Object carregarPartida(String name, String user) {
         String dirAux = direccio + user + "/";
         return super.deserialitzarObjecte(name, dirAux);
+    }
+    
+    /**
+     * Funcio encarregada de carregar en una llista tots els noms de les partides a mitges de un usuari, utilitza funcions de la superclasse.
+     * @param user Nom del Usuari a aconseguir el nom de les seves partides
+     * @return Llista de Strings amb el nom de les seves partides, llista buida en cas de no ternir-ne cap
+     */
+    public List<String>aconsegueixLlista(String user) {
+        String dirAux = direccio + user + "/";
+        File f = new File(dirAux);
+        f.mkdir();  //Per evitar errors
+        return super.llistaObjectes(dirAux);
     }
 }
