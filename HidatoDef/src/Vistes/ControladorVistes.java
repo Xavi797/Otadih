@@ -27,6 +27,7 @@ public class ControladorVistes extends javax.swing.JFrame {
         this.setTitle("Hidato");
         initVistes();
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
     
     public void initVistes() {
