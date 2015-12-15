@@ -7,6 +7,13 @@
 
 package Vistes;
 import Domini.Controlador.ControladorDomini;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Shape;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,13 +27,38 @@ public class VistaInici extends VistaGenerica {
      */
     ControladorDomini controladorDomini;
     ControladorVistes controladorVistes;
+    Image image;
     
     public VistaInici(ControladorDomini contDomini , ControladorVistes contVistes) {
         initComponents();
         controladorDomini = contDomini;
         controladorVistes = contVistes;
+        Font font = new Font("Verdana", Font.BOLD, 14);
+        titulLabel.setFont(font);
+        image = new ImageIcon(getClass().getResource("japan.jpg")).getImage();
+        image = image.getScaledInstance(1050, 600,Image.SCALE_SMOOTH);
+        //this.paintComponent(this.getGraphics(), image);
         
     }
+
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image,0,0,this);
+    }
+    
+    /*public void paintComponent(Graphics g, Image image)
+    {
+        
+        
+        if (image != null)
+        {
+            g.drawImage(image,0,0,null);
+          }
+        super.paintComponent(g);
+    }*/
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +82,7 @@ public class VistaInici extends VistaGenerica {
         paraulaClau = new javax.swing.JTextField();
         userRegistrar = new javax.swing.JTextField();
         contrasenyaRegistrar = new javax.swing.JPasswordField();
-        textBenvinguda = new javax.swing.JLabel();
+        titulLabel = new javax.swing.JLabel();
         contrasenyaLogIn = new javax.swing.JPasswordField();
 
         jScrollPane1.setViewportView(jTextPane1);
@@ -101,18 +133,16 @@ public class VistaInici extends VistaGenerica {
             }
         });
 
-        textBenvinguda.setText("Benvingut!  ");
+        titulLabel.setText("Benvingut al joc hidato, registrat per començar  ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(308, 308, 308)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textBenvinguda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botoLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botoRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(titulLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -120,7 +150,7 @@ public class VistaInici extends VistaGenerica {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(userRegistrar)
                             .addComponent(paraulaClau)
                             .addComponent(contrasenyaRegistrar)))
                     .addGroup(layout.createSequentialGroup()
@@ -130,14 +160,19 @@ public class VistaInici extends VistaGenerica {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usuariLogIn)
-                            .addComponent(contrasenyaLogIn))))
-                .addGap(22, 22, 22))
+                            .addComponent(contrasenyaLogIn)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botoRegistrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botoLogIn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(346, 346, 346))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(textBenvinguda, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titulLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(usuariLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,7 +183,7 @@ public class VistaInici extends VistaGenerica {
                     .addComponent(contrasenyaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botoLogIn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(userRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -162,7 +197,7 @@ public class VistaInici extends VistaGenerica {
                     .addComponent(paraulaClau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(botoRegistrar)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -216,8 +251,13 @@ public class VistaInici extends VistaGenerica {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextField paraulaClau;
-    private javax.swing.JLabel textBenvinguda;
+    private javax.swing.JLabel titulLabel;
     private javax.swing.JTextField userRegistrar;
     private javax.swing.JTextField usuariLogIn;
     // End of variables declaration//GEN-END:variables
+
+
+        
+
+    
 }
