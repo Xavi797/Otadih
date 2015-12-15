@@ -3,7 +3,7 @@ package Domini.Clases;
 import Domini.Clases.Usuari;
 import Persistencia.*;
 import Domini.Controlador.*;
-import Vistes.vistaJugar;
+//import Vistes.vistaJugar;
 import java.util.Scanner;
 import Vistes.ControladorVistes;
 
@@ -59,7 +59,7 @@ public class Main {
                     System.out.println("Indica el numero de Numeros per defecte que vol al tauler\n"
                             + "Com a minim: "+ (l*l)/2);
                     int numInicial = in.nextInt();
-                    controlador.generaTauler(l, numInicial, 0);
+                    //controlador.generaTauler(l, numInicial, 0);
                     break;
                 case 2:
                     java.awt.EventQueue.invokeLater(new Runnable() {
