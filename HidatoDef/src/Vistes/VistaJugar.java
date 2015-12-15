@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 /**
  *
@@ -153,15 +154,30 @@ public class VistaJugar extends VistaGenerica {
             int n;
             if (num.isEmpty()){
                 n = 0;
+                
             } else {
                 n=Integer.parseInt(num);
             }
             
+            List<Integer> propers = controladorDomini.getPropers();
+            //printa els propers en un layout
+            
             boolean setCorrect = controladorDomini.setCela(x, y, n); // Controlar que no pongan letra
-            if (!setCorrect) {
+            if (!setCorrect && n!=0) {
                 tauler[x][y].setBackground(Color.red);
             } else {
                 tauler[x][y].setBackground(Color.white);
+            }
+            
+            if(controladorDomini.acabat()){
+                if(controladorDomini.bensolucionat()){
+                    //Pop up de correcte ben solucionat!!!
+                }
+                else{
+                    //Pop up de mal solucionat!!!!
+                    
+                }
+                
             }
         }
     
