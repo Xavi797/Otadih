@@ -55,7 +55,7 @@ public class SerialitzadorPartides extends Serialitzador {
         String dirAux = direccio + user + "/";
         File f = new File(dirAux);
         f.mkdir();  //Creacio nou folder, si ja existia no fa res
-        return super.serialitzarObjecte(obj, name, direccio);
+        return super.serialitzarObjecte(obj, name, dirAux);
     }
     
     /**

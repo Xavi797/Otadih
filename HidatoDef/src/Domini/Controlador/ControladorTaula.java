@@ -96,8 +96,21 @@ public class ControladorTaula {
                           if(t.getCela(i, j) != -1) max++;
                  return max;
              }
-             /** POST: Retorna el numero teoric maxim (max) del tauler t
-              *
-              */
+             
+             /**
+             * Transforma una matriu de ints en un tauler per defecte 
+             * @param mat  matriu a transformar
+             * @return Retorna el tauler t
+             * PRE: --
+             */
+             public Tauler transformarInversa (int [][] mat){
+                int tam = mat.length;
+                Tauler t = new Tauler(mat.length);
+                
+                for(int i = 0; i < tam; ++i)
+                    for(int j = 0; j < tam; ++j)
+                        t.setCela(i, j, mat[i][j]);
+                return t;
+             }
      
 }
