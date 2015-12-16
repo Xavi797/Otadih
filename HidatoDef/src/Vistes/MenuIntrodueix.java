@@ -28,6 +28,12 @@ public class MenuIntrodueix extends VistaGenerica {
     int[][] matriu;
     JTextField[][] tauler;
     
+    /**
+     * Constructora que inicialitza els components, agafa els Controladors i 
+     * crea la taula per introduir els numeros.
+     * @param contDomini
+     * @param contVistes 
+     */
     public MenuIntrodueix(ControladorDomini contDomini , ControladorVistes contVistes) {
         initComponents();
         controladorDomini = contDomini;
@@ -122,7 +128,11 @@ public class MenuIntrodueix extends VistaGenerica {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
+    /**
+     * Event que es crida en cas de que es modifiqui el comboBox del tamany.
+     * @param evt 
+     */
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         if (tauler != null){
             for (JTextField[] ts : tauler)
@@ -133,7 +143,13 @@ public class MenuIntrodueix extends VistaGenerica {
         }
         
     }//GEN-LAST:event_jComboBox1ItemStateChanged
-
+    
+    /**
+     * Event que es crida en cas de que es premi el boto valida, llavors crida 
+     * a controladorDomini per a que li validi. En cas de que es validi et
+     * pregunta si el vols guardar
+     * @param evt 
+     */
     private void BotoValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoValidarActionPerformed
         if (tauler != null){
             String num;
@@ -181,11 +197,18 @@ public class MenuIntrodueix extends VistaGenerica {
             }
         }
     }//GEN-LAST:event_BotoValidarActionPerformed
-
+    /**
+     * Event que canvia a la vista Menu en premer el boto sortir
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Crea la taula a la vista per a que el usuari pugui posar els numeros
+     * @param tamany 
+     */
     public void createBoard (int tamany)
     {
         matriu = new int[tamany][tamany];

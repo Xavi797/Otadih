@@ -22,6 +22,11 @@ public class ControladorVistes extends javax.swing.JFrame {
     MenuJugar menuJugar;
     MenuIntrodueix menuIntrodueix;
     
+    /**
+     * Controlador vistes que inicialitza controlador domini i els components
+     * del frame
+     * @param contDom 
+     */
     public ControladorVistes(ControladorDomini contDom) {
         controladorDomini = contDom;
         initComponents();
@@ -31,6 +36,9 @@ public class ControladorVistes extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    /**
+     * Funciuo que inicialitza la resta de vistes.
+     */
     public void initVistes() {
         //this.vistaMenu = new VistaMenu().setVisible(false);
         vistaInici = new VistaInici(controladorDomini, this);
@@ -44,6 +52,11 @@ public class ControladorVistes extends javax.swing.JFrame {
  
     }
     
+    /**
+     * Funcio a la que se li passa el parametre desti i amb un swich escull
+     * la vista indicada.
+     * @param desti 
+     */
     public void mostraVista(String desti) {
         switch(desti) {
             case "Inici":

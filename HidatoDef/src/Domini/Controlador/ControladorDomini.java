@@ -31,16 +31,9 @@ public class ControladorDomini {
             private Partida partida;
             private Hidatos hidatos;
 	    
-	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
-	    private int nSols; /* numero de soluciones encontradas (como mucho dos) */
-	    private int nRest; /* numero de casillas que me quedan por poner */
-	    private boolean usado[]; /* usado[i] nos dice si el numero i + 1 esta colocado */
-	    private int n; /* anchura del tablero */
-	    private int m; /* altura del tablero */
 	    private int maxCas; /* numero de la casilla mas grande */
             private final ControladorTaula controladorTaula;
-            private int min; /* Minim de caselles posbiles a posar en el tauler */
             
             private List<Integer> conjuntUsats;
             private List<Integer> propers;
@@ -77,7 +70,6 @@ public class ControladorDomini {
                     solucion = cSol.getSolucio().clonar();
                 }
                 else{
-                    System.out.println("Tauler no valid!!!!");
                     tauler = null;
                 }
             }
@@ -93,9 +85,9 @@ public class ControladorDomini {
             
             /**
              * Funcio que cridara al controlador ControladorGenera per a generar un tauler.
-             * @param costat
-             * @param numInicials
-             * @param forats
+             * @param costat tamany d'un costat del tauler
+             * @param numInicials Numeros inicials que l'usuari vol
+             * @param topo Indica topologia de forats del tauler.
              * Despres fara els sets y getters per tenir aqui el tauler.
              */
             public void generaTauler(int costat, int numInicials, String topo){
@@ -103,18 +95,33 @@ public class ControladorDomini {
                 tauler = cGen.getTauler();
                 tauler_partida = tauler.clonar();
                 solucion = cGen.getSolucion();
-                nSols = cGen.getnSols();
                 maxCas = cGen.getMaxCas();
                 
             }
             
+            /**
+             * Retorna el tauler_partida transformat a matriu de ints per a la 
+             * utilitzacio de les vistes
+             * @return Retorna solucio en matriu de ints
+             */
             public int[][] getTaulerPartidaPerVista(){
                 return controladorTaula.transformar(tauler_partida);
             }
             
+            /**
+             * Retorna el tauler inicial transformat a matriu de ints per a la 
+             * utilitzacio de les vistes.
+             * @return Retorna el tauler en matriu de ints
+             */
             public int[][] getTaulerPerVista() {
                 return controladorTaula.transformar(tauler);
             }
+            
+            /**
+             * Retorna el tauler solucionat transformat a matriu de ints per a la 
+             * utilitzacio de les vistes.
+             * @return Retorna el tauler solucionat en matriu de ints
+             */
             public int[][] getTaulerSolucionatPerVista() {
                 soluciona();
                 return controladorTaula.transformar(solucion);
@@ -175,6 +182,10 @@ public class ControladorDomini {
                 return null;
             }
             
+            /**
+             * Crea una nova partida per poder jugar al tauler previament creat
+             * o carregat. Tambe s'utilitza per retomar una partida.
+             */
             public void novaPartida() {
                // tauler_partida = tauler.clonar();
                 conjuntUsats = new ArrayList<Integer>();
@@ -184,11 +195,16 @@ public class ControladorDomini {
                 cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                 //actualizar lista posibles
             }
-            
+            /**
+            * Comproba que la cela que es vol posar, comprobant que es 
+            * compleixin les regles del joc
+            * @param i posicio de la fila a comprobar i posar
+            * @param j posicio de la columna a comprobar i posar
+            * @param val Valor de la nova cela que es vol posar
+            * @return Cert en cas de que s'insereixi correctament la cela
+            */
             public boolean setCela(int i, int j, int val){
                 int aux = tauler_partida.getCela(i, j);
-                for(int auxint = 0; auxint < propers.size(); ++auxint) System.out.printf(" " + propers.get(auxint));
-                for(int auxint = 0; auxint < conjuntUsats.size(); ++auxint) System.out.printf(" " + conjuntUsats.get(auxint));
                 if(val == aux) return true;
                 if(val > maxCas || val < 0 || conjuntUsats.contains(val) || !propers.contains(val)) return false;
                 if(val == 0){
@@ -213,19 +229,43 @@ public class ControladorDomini {
                 else return false;
             }
             
+            /**
+             * Comproba que el tauler estigui tot ple de numeros.
+             * @return Retorna cert si el tauler es ple.
+             */
             public boolean acabat(){
                 return cJuga.acabat(tauler_partida);
                 
             }
             
+            /**
+             * Comproba que el tauler esta ben solucionat, comparant amb la 
+             * solucio.
+             * @return Retorna cert si el tauler de la partida es igual al de 
+             * la solucio
+             */
             public boolean bensolucionat(){
                 return cJuga.bensolucionat(tauler_partida, solucion);
             }
             
+            /**
+             * Comproba que la nova cela posada compleix les regles del joc
+             * @param i posicio de la fila a comprobar
+             * @param j posicio de la columna a comprobar
+             * @param val Valor de la nova cela que es vol posar
+             * @return Retorna cert si la compleix les regles del joc
+             */
             public boolean benColocat(int i, int j, int val){
                 return cJuga.bencolocat(i, j, val, tauler_partida,conjuntUsats);
             }
             
+            /**
+             * Comproba si una cela es la correcte, respecte a la solucio final
+             * @param i posicio de la fila a comprobar
+             * @param j posicio de la columna a comprobar
+             * @return Cert en cas de que la mateixa posicio
+             * en el tauler soluciona tingui el mateix valor
+             */
             public boolean celaCorrecte(int i, int j){
                 return cJuga.celaCorrecta(i, j, tauler_partida, solucion);
             }
@@ -234,7 +274,7 @@ public class ControladorDomini {
              * Funcio encarregada de fer la crida per guardar una partida a mitges
              * @param name Nom de la partida a guardar
              * @param sobreescriure Indica si la partida es pot sobreescriure (cert) o no
-             * @return Cert en cas de exit, false en cas contrari
+             * @return Cert si la partida es guarda correctament.
              */
             public boolean guardarPartida(String name, boolean sobreescriure) {
                 hidatos.setTaulerJocInic(tauler);
@@ -255,9 +295,15 @@ public class ControladorDomini {
                 }
             }
             
+            /**
+             * Funcio encarregada de Validar un tauler, utilitzant el algoritme
+             * de buscasolucions
+             * @param mat Matriu de ints de la vista a validar
+             * @return Cert en cas de que tauler sigui valid, false altrament.
+             */
             public boolean validaTablero(int [][] mat){
                 Tauler t =controladorTaula.transformarInversa(mat);
-                cGen.BuscaSolucions(t);
+                cGen.ValidaBusca(t);
                 if(cGen.getnSols() == 1){
                     tauler = t.clonar();
                     tauler_partida = t.clonar();
@@ -299,8 +345,8 @@ public class ControladorDomini {
              * @return Cert en cas de exit, false en cas contrari
              */
             public boolean guardarTauler(String name) {
-                hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler);
+                hidatos.setTaulerJocInic(tauler.clonar());
+                hidatos.setTaulerJocModi(tauler.clonar());
                 hidatos.setTaulerJocSolu(solucion);
                 Object obj = (Object) hidatos;
                 
@@ -319,8 +365,8 @@ public class ControladorDomini {
             public void carregarTauler(String name) {
                 hidatos = (Hidatos) cPers.carregaTauler(name);
                 
-                tauler = hidatos.getTaulerJocInic();
-                tauler_partida = hidatos.getTaulerJocModi();
+                tauler = hidatos.getTaulerJocInic().clonar();
+                tauler_partida = hidatos.getTaulerJocModi().clonar();
                 solucion = hidatos.getTaulerJocSolu();
             }
             
@@ -361,13 +407,6 @@ public class ControladorDomini {
                 tauler = t.clonar(); 
             }
             
-            public Tauler getTablero(){
-		return tablero;
-	    }
-            
-            public void setTablero(Tauler t){
-                tablero = t; //cambiar esto tardara mucho si copio todo el rato
-            }
             
             public Tauler getPartida(){
                 return tauler_partida;

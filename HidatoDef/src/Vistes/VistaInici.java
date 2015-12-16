@@ -28,7 +28,12 @@ public class VistaInici extends VistaGenerica {
     ControladorDomini controladorDomini;
     ControladorVistes controladorVistes;
     Image image;
-    
+    /**
+     * Constructora principal que inicialitza altres controladors i el propi
+     * panel.
+     * @param contDomini
+     * @param contVistes 
+     */
     public VistaInici(ControladorDomini contDomini , ControladorVistes contVistes) {
         initComponents();
         controladorDomini = contDomini;
@@ -212,7 +217,11 @@ public class VistaInici extends VistaGenerica {
     private void botoLogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botoLogInMouseClicked
         usuariLogIn.setVisible(true);
     }//GEN-LAST:event_botoLogInMouseClicked
-
+    /**
+     * Event de login on comproba si l'usuari esta ja registrat per donar acces
+     * o denegarlo en cas contrari o que la contraseña sigui incorrecta.
+     * @param evt 
+     */
     private void botoLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoLogInActionPerformed
         String nomUserLogIn = usuariLogIn.getText();
         String passUserLogIn= contrasenyaLogIn.getText();
@@ -222,7 +231,11 @@ public class VistaInici extends VistaGenerica {
         else controladorVistes.mostraVista("Menu");
         
     }//GEN-LAST:event_botoLogInActionPerformed
-
+    /**
+     * Event que s'encarrega del registre d'usuaris, comprobant la seva existencia
+     * i si no es aixi afegintlo
+     * @param evt 
+     */
     private void botoRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoRegistrarActionPerformed
         String nomUserRegister = userRegistrar.getText();
         String passUserRegister= contrasenyaRegistrar.getText();
@@ -230,7 +243,7 @@ public class VistaInici extends VistaGenerica {
         boolean resposta = controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
         if (!resposta) JOptionPane.showMessageDialog(null, "Usuari ja registrat", "Atenció", JOptionPane.ERROR_MESSAGE);
         else controladorVistes.mostraVista("Menu");
-        controladorVistes.mostraVista("Menu"); // s'ha de borrar;
+        //controladorVistes.mostraVista("Menu"); // s'ha de borrar;
     }//GEN-LAST:event_botoRegistrarActionPerformed
 
     private void userRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRegistrarActionPerformed
