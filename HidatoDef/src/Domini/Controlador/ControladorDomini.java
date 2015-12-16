@@ -244,31 +244,29 @@ public class ControladorDomini {
             /**
              * Funcio encarregada de fer la crida per guardar una partida a mitges
              * @param name Nom de la partida a guardar
-             * @param user Nom del usuari que guarda la partida
              * @return Cert en cas de exit, false en cas contrari
              */
-            public boolean guardarPartida(String name, String user) {
+            public boolean guardarPartida(String name) {
                 partida.setHidatos(hidatos);
                 partida.setUser(usuari);
                 Object obj = (Object) partida;
                 
-                if(cPers.comprovaPartida(name, user)) {
+                if(cPers.comprovaPartida(name, usuari.getNom())) {
                     //Ja existeix una partida amb aquest nom. Sobreescriure?
                     return false;
                 }
                 else {
-                    return cPers.guardaPartida(obj, name, user);
+                    return cPers.guardaPartida(obj, name, usuari.getNom());
                 }
             }
             
             
             /**
              * Funcio encarregada de fer la crida per a carregar una partida.
-             * @param user Nom del usuari que vol carregar la partida
              * @param name Nom de la partida a carregar
              */
-            public void carregarPartida(String name, String user) {
-                partida = (Partida) cPers.carregaPartida(name, user);
+            public void carregarPartida(String name) {
+                partida = (Partida) cPers.carregaPartida(name, usuari.getNom());
                 
                 hidatos = partida.getHidatos();
                 usuari = partida.getUser();
