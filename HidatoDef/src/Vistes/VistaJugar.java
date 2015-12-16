@@ -177,24 +177,20 @@ public class VistaJugar extends VistaGenerica {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String inputValue = JOptionPane.showInputDialog("Possa el nom del fitxer");
-        System.out.println(inputValue);
+        String inputValue = JOptionPane.showInputDialog("Possa un nom a la partida");
         if (inputValue != null) {
             
             boolean sobreescriure = false;
             String anteriorNom = inputValue;
-            System.out.println(anteriorNom);
             boolean resultatGuardar = controladorDomini.guardarPartida(inputValue, sobreescriure);
             
             while (!resultatGuardar) {
                 inputValue = JOptionPane.showInputDialog("La partida ja existeix. Per sobreescriure posa el mateix nom");
                 if (inputValue == null) break;
                 
-                System.out.println("aaaa");
                 if (inputValue.equals(anteriorNom)) sobreescriure = true;
                 else {
                     anteriorNom = inputValue;
-                    System.out.println(anteriorNom);
                 }
                 resultatGuardar = controladorDomini.guardarPartida(inputValue, sobreescriure);
             }

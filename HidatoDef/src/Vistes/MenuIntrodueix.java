@@ -163,6 +163,19 @@ public class MenuIntrodueix extends VistaGenerica {
                 null,     
                 options,  
                 options[0]);
+                
+                if (res == 0) {
+                    String inputValue = JOptionPane.showInputDialog("Possa el nom del Hidato");
+                    if (inputValue != null) {
+                        boolean resultatGuardar = controladorDomini.guardarTauler(inputValue);
+                        while (!resultatGuardar) {
+                            inputValue = JOptionPane.showInputDialog("Ja existeix un Hidato amb aquest nom. Posa'n un altre");
+                            if (inputValue == null) break;
+                            resultatGuardar = controladorDomini.guardarTauler(inputValue);
+                        }
+                    }
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Hidato incorrecte", "Incorrecte", JOptionPane.ERROR_MESSAGE);
             }
