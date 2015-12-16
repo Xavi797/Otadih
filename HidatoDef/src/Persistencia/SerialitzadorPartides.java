@@ -80,4 +80,15 @@ public class SerialitzadorPartides extends Serialitzador {
         f.mkdir();  //Per evitar errors
         return super.llistaObjectes(dirAux);
     }
+    
+    /**
+     * Funcio encarregada de comprovar si la partida name de user ja existeix a la BD.
+     * @param name Nom del usuari
+     * @param user Nom de la partida
+     * @return True en cas de que ja existeixi, false en cas contrari
+     */
+    public boolean comprovaPartida(String name, String user) {
+        String dirAux = direccio + user + "/";
+        return super.existeixObjecte(name, dirAux);
+    }
 }

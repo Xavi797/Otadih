@@ -13,9 +13,50 @@ import java.io.Serializable;
  */
 public class Partida implements Serializable {
     private Usuari user;
-    private Rankings ranking;
     private Hidatos hidatos;
     private int temps; //provisional.buscar funcio de clock
-    private int numChekcs;
+    private int numChecks;
     private boolean solve;
+
+    public Usuari getUser() {
+        return user;
+    }
+
+    public void setUser(Usuari user) {
+        this.user = user;
+    }
+
+    public Hidatos getHidatos() {
+        return hidatos;
+    }
+
+    public void setHidatos(Hidatos hidatos) {
+        this.hidatos = hidatos;
+    }
+
+    public int getTemps() {
+        return temps;
+    }
+
+    public void setTemps(int temps) {
+        this.temps = temps;
+    }
+
+    public int getNumChecks() {
+        return numChecks;
+    }
+
+    public void setNumChecks(int numChecks) {
+        this.numChecks = numChecks;
+    }
+
+    public boolean isSolve() {
+        return solve;
+    }
+
+    public void setSolve(boolean solve) {
+        this.solve = solve;
+    }
+    
+    
 }
