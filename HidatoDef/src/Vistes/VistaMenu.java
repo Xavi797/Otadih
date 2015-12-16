@@ -51,6 +51,11 @@ public class VistaMenu extends VistaGenerica {
         BotoCarrega.setText("Carregar Partida");
 
         BotoIntroHidato.setText("Introdueix Hidato");
+        BotoIntroHidato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotoIntroHidatoActionPerformed(evt);
+            }
+        });
 
         BotoRanking.setText("Rankings");
         BotoRanking.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +107,7 @@ public class VistaMenu extends VistaGenerica {
     }//GEN-LAST:event_BotoRankingActionPerformed
 
     private void BotoLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoLogOutActionPerformed
-        this.setVisible(false);
+        
         controladorVistes.mostraVista("Inici");
         
     }//GEN-LAST:event_BotoLogOutActionPerformed
@@ -110,6 +115,10 @@ public class VistaMenu extends VistaGenerica {
     private void BotoJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoJugaActionPerformed
         controladorVistes.mostraVista("menuJugar");
     }//GEN-LAST:event_BotoJugaActionPerformed
+
+    private void BotoIntroHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoIntroHidatoActionPerformed
+        controladorVistes.mostraVista("IntrodueixHidato");
+    }//GEN-LAST:event_BotoIntroHidatoActionPerformed
 
     
 

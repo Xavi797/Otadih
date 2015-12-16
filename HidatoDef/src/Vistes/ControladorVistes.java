@@ -20,6 +20,7 @@ public class ControladorVistes extends javax.swing.JFrame {
     VistaInici vistaInici;
     VistaGeneraHidato vistaGeneraHidato;
     MenuJugar menuJugar;
+    MenuIntrodueix menuIntrodueix;
     
     public ControladorVistes(ControladorDomini contDom) {
         controladorDomini = contDom;
@@ -37,6 +38,7 @@ public class ControladorVistes extends javax.swing.JFrame {
         vistaGeneraHidato = new VistaGeneraHidato(controladorDomini, this);
         menuJugar = new MenuJugar(controladorDomini, this);
         vistJugar = new VistaJugar(controladorDomini, this);
+        menuIntrodueix = new MenuIntrodueix(controladorDomini, this); 
         this.setContentPane(vistaInici);
         this.pack();
  
@@ -65,6 +67,12 @@ public class ControladorVistes extends javax.swing.JFrame {
             case "GeneraHidato":
                 //this.getContentPane().removeAll();
                 this.setContentPane(vistaGeneraHidato);
+                this.pack();
+                break;
+                
+            case "IntrodueixHidato":
+                //this.getContentPane().removeAll();
+                this.setContentPane(menuIntrodueix);
                 this.pack();
                 break;
                 
