@@ -154,7 +154,8 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
     }//GEN-LAST:event_boxDificultatActionPerformed
 
     /**
-     * Event que al modificar el box de dificultat canvien 
+     * Event que al modificar el box de dificultat canvien el tamany del tauler
+     * disponible
      * @param evt 
      */
     private void boxDificultatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxDificultatItemStateChanged
@@ -178,6 +179,10 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_boxDificultatItemStateChanged
 
+    /**
+     * Event que genera la vista Jugar amb el tauler creat
+     * @param evt 
+     */
     private void botoGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoGeneraActionPerformed
         String costat = (String)boxTamany.getSelectedItem();
         String num = numInicials.getText();

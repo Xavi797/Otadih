@@ -17,6 +17,11 @@ public class VistaPopUp extends javax.swing.JPanel {
     ControladorDomini controladorDomini;
     ControladorVistes controladorVistes;
     
+    /**
+     * Creadora de la vista Pop up de confirmacio de que es vol sortir.
+     * @param contDomini
+     * @param contVistes 
+     */
     public VistaPopUp(ControladorDomini contDomini , ControladorVistes contVistes) {
         initComponents();
         controladorDomini = contDomini;
@@ -81,10 +86,18 @@ public class VistaPopUp extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Crida a la vista menu.
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Event que s'oculta quan es prem el boto ok
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed

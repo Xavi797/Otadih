@@ -20,8 +20,11 @@ public class VistaMenu extends VistaGenerica {
     
     ControladorVistes controladorVistes;
     ControladorDomini controladorDomini;
+    
     /**
-     * Creates new form VistaMenu
+     * Creadora per defecte que inicialitza els components i afegeix controladors.
+     * @param contDomini
+     * @param contrVistes 
      */
     public VistaMenu(ControladorDomini contDomini, ControladorVistes contrVistes) {
         initComponents();
@@ -115,16 +118,28 @@ public class VistaMenu extends VistaGenerica {
         // TODO add your handling code here:
     }//GEN-LAST:event_BotoRankingActionPerformed
 
+    /**
+     * Event que mostra la vista Inici
+     * @param evt 
+     */
     private void BotoLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoLogOutActionPerformed
         
         controladorVistes.mostraVista("Inici");
         
     }//GEN-LAST:event_BotoLogOutActionPerformed
 
+    /**
+     * Event que mostra la vista menuJugar
+     * @param evt 
+     */
     private void BotoJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoJugaActionPerformed
         controladorVistes.mostraVista("menuJugar");
     }//GEN-LAST:event_BotoJugaActionPerformed
-
+    
+    /**
+     * Event que mostra la vista IntrodueixHidato
+     * @param evt 
+     */
     private void BotoIntroHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoIntroHidatoActionPerformed
         controladorVistes.mostraVista("IntrodueixHidato");
     }//GEN-LAST:event_BotoIntroHidatoActionPerformed
