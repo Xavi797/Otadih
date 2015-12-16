@@ -100,6 +100,7 @@ public class ControladorDomini {
             public void generaTauler(int costat, int numInicials, String topo){
                 cGen.generaTauler(costat, numInicials ,topo);
                 tauler = cGen.getTauler();
+                tauler_partida = tauler.clonar();
                 solucion = cGen.getSolucion();
                 nSols = cGen.getnSols();
                 maxCas = cGen.getMaxCas();
@@ -108,7 +109,7 @@ public class ControladorDomini {
             
             
             public int[][] getTaulerPerVista() {
-                return controladorTaula.transformar(tauler);
+                return controladorTaula.transformar(tauler_partida);
             }
             public int[][] getTaulerSolucionatPerVista() {
                 soluciona();
@@ -171,7 +172,7 @@ public class ControladorDomini {
             }
             
             public void novaPartida(){
-                tauler_partida = tauler.clonar();
+               // tauler_partida = tauler.clonar();
                 conjuntUsats = new ArrayList<Integer>();
                 propers = new ArrayList<Integer>();
                 maxCas = controladorTaula.getMax(tauler);
@@ -232,8 +233,13 @@ public class ControladorDomini {
              * @return Cert en cas de exit, false en cas contrari
              */
             public boolean guardarPartida(String name, boolean sobreescriure) {
+                hidatos.setTaulerJocInic(tauler);
+                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocSolu(solucion);
                 partida.setHidatos(hidatos);
+                
                 partida.setUser(usuari);
+                
                 Object obj = (Object) partida;
                 
                 if(cPers.comprovaPartida(name, usuari.getNom()) && !sobreescriure) {
@@ -267,6 +273,10 @@ public class ControladorDomini {
                 
                 hidatos = partida.getHidatos();
                 usuari = partida.getUser();
+                
+                tauler = hidatos.getTaulerJocInic();
+                tauler_partida = hidatos.getTaulerJocModi();
+                solucion = hidatos.getTaulerJocSolu();
             }
             
             /**

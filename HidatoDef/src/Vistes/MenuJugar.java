@@ -109,7 +109,7 @@ public class MenuJugar extends VistaGenerica {
                 "Carregar Partida",
                 1);
         
-        while (jlist.getSelectedIndex() != -1) {
+        if (jlist.getSelectedIndex() != -1) {
             int x = jlist.getSelectedIndex();
             controladorDomini.carregarPartida(list.get(x));
             controladorVistes.mostraVista("vistaJugar");
