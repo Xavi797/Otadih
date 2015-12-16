@@ -106,6 +106,7 @@ public class ControladorDomini {
                 
             }
             
+            
             public int[][] getTaulerPerVista() {
                 return controladorTaula.transformar(tauler);
             }

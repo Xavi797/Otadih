@@ -9,16 +9,12 @@ import Domini.Controlador.ControladorDomini;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 /**
  *
@@ -44,6 +40,11 @@ public class VistaJugar extends VistaGenerica {
         controladorDomini = contD;
         controladorVistes = contV;
         plataformaCeles = new JPanel();
+        
+        Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+        HelpLabel.setBorder(border);
+        HelpLabel.setVisible(false); 
+        HelpLabel.setBackground(Color.white);
        
     }
 
@@ -61,6 +62,7 @@ public class VistaJugar extends VistaGenerica {
         jButton2 = new javax.swing.JButton();
         TimeLabel = new javax.swing.JLabel();
         botoSortir = new javax.swing.JButton();
+        HelpLabel = new javax.swing.JLabel();
 
         jButton1.setText("Soluciona");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -72,6 +74,11 @@ public class VistaJugar extends VistaGenerica {
 
         jToggleButton1.setText("Activa ajudes");
         jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Guarda partida");
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -85,12 +92,17 @@ public class VistaJugar extends VistaGenerica {
             }
         });
 
+        HelpLabel.setBackground(new java.awt.Color(255, 250, 250));
+        HelpLabel.setFont(new java.awt.Font("Droid Sans", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(569, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addComponent(HelpLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 525, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,7 +127,9 @@ public class VistaJugar extends VistaGenerica {
                 .addGap(18, 18, 18)
                 .addComponent(botoSortir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
-                .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HelpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -136,14 +150,29 @@ public class VistaJugar extends VistaGenerica {
         null,     
         options,  
         options[0]);
-        if (resposta == 0) controladorVistes.mostraVista("Menu");
+        if (resposta == 0) {
+            for (JTextField[] ts : tauler)
+                for (JTextField t : ts)
+                    this.remove(t);
+            HelpLabel.setText("");
+            controladorVistes.mostraVista("Menu");
+
+        }
         //VistaPopUp vistaPop = new VistaPopUp(controladorDomini, controladorVistes);
         //vistaPop.setVisible(true);
         //this.add(vistaPop);
     }//GEN-LAST:event_botoSortirActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        
+        if (!HelpLabel.isVisible())
+            HelpLabel.setVisible(true);
+        else  HelpLabel.setVisible(false);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
    
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
+        
     }
     
     private class ActionVistaCela implements FocusListener {
@@ -183,6 +212,15 @@ public class VistaJugar extends VistaGenerica {
                 tauler[x][y].setBackground(Color.white);
             }
             
+            List<Integer> numsLabel;
+            numsLabel = controladorDomini.getPropers();
+            String resultat= "";
+            for (int i=0; i<numsLabel.size(); ++i) {
+                resultat += numsLabel.get(i) + " ";
+            }
+            HelpLabel.setText(resultat);
+            
+            
             if(controladorDomini.acabat()){
                 if(controladorDomini.bensolucionat()){
                     //Pop up de correcte ben solucionat!!!
@@ -199,7 +237,8 @@ public class VistaJugar extends VistaGenerica {
     
     public void createBoard ()
     {
-
+        
+        
         int width  = 40;
         int height = 40;
         int x   = 15;
@@ -230,7 +269,14 @@ public class VistaJugar extends VistaGenerica {
             }
             y += 45;
         }
-        this.setPreferredSize(new Dimension(files*45 + 220, files*45 + 50));
+        List<Integer> numsLabel;
+        numsLabel = controladorDomini.getPropers();
+        String resultat= "";
+        for (int i=0; i<numsLabel.size(); ++i) {
+            resultat += numsLabel.get(i) + " ";
+        }
+        HelpLabel.setText(resultat);
+        this.setPreferredSize(new Dimension(files*45 + 220, files*45 + 80));
         controladorVistes.pack();
         
     }
@@ -238,6 +284,7 @@ public class VistaJugar extends VistaGenerica {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel HelpLabel;
     private javax.swing.JLabel TimeLabel;
     private javax.swing.JButton botoSortir;
     private javax.swing.JButton jButton1;
