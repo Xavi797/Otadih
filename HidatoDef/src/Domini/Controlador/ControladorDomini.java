@@ -225,22 +225,6 @@ public class ControladorDomini {
                 return cJuga.celaCorrecta(i, j, tauler_partida, solucion);
             }
 
-            public List<Integer> getConjuntUsats() {
-                return conjuntUsats;
-            }
-
-            public void setConjuntUsats(List<Integer> conjuntUsats) {
-                this.conjuntUsats = conjuntUsats;
-            }
-
-            public List<Integer> getPropers() {
-                return propers;
-            }
-
-            public void setPropers(List<Integer> propers) {
-                this.propers = propers;
-            }
-            
             /**
              * Funcio encarregada de fer la crida per guardar una partida a mitges
              * @param name Nom de la partida a guardar
@@ -258,6 +242,17 @@ public class ControladorDomini {
                 else {
                     return cPers.guardaPartida(obj, name, usuari.getNom());
                 }
+            }
+            
+            public boolean validaTablero(int [][] mat){
+                Tauler t =controladorTaula.transformarInversa(mat);
+                cGen.BuscaSolucions(t);
+                if(cGen.getnSols() == 1){
+                    tauler = t;
+                    solucion = cGen.getSolucion();
+                    return true;
+                }
+                else return false;
             }
             
             
@@ -395,4 +390,22 @@ public class ControladorDomini {
             public String getNomUsuari() {
                 return usuari.getNom();
             }
+            
+            
+            public List<Integer> getConjuntUsats() {
+                return conjuntUsats;
+            }
+
+            public void setConjuntUsats(List<Integer> conjuntUsats) {
+                this.conjuntUsats = conjuntUsats;
+            }
+
+            public List<Integer> getPropers() {
+                return propers;
+            }
+
+            public void setPropers(List<Integer> propers) {
+                this.propers = propers;
+            }
+            
 }
