@@ -64,6 +64,7 @@ public class VistaJugar extends VistaGenerica {
         TimeLabel = new javax.swing.JLabel();
         botoSortir = new javax.swing.JButton();
         HelpLabel = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         jButton1.setText("Soluciona");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -101,6 +102,13 @@ public class VistaJugar extends VistaGenerica {
         HelpLabel.setBackground(new java.awt.Color(255, 250, 250));
         HelpLabel.setFont(new java.awt.Font("Droid Sans", 0, 14)); // NOI18N
 
+        jButton3.setText("Acaba");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,11 +122,12 @@ public class VistaJugar extends VistaGenerica {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TimeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botoSortir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botoSortir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
@@ -130,9 +139,11 @@ public class VistaJugar extends VistaGenerica {
                 .addComponent(jToggleButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(botoSortir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HelpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -200,6 +211,25 @@ public class VistaJugar extends VistaGenerica {
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(controladorDomini.acabat()){
+                if(controladorDomini.bensolucionat()){
+                    JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
+                    surt();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Hidato mal solucionat :( !!!","Information",JOptionPane.INFORMATION_MESSAGE);
+                    surt();
+                    //Pop up de mal solucionat!!!!
+                    
+                }
+                
+            }
+        else
+            JOptionPane.showMessageDialog(null,"Encara no s'ha completat","Information",JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton3ActionPerformed
    
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
@@ -252,19 +282,7 @@ public class VistaJugar extends VistaGenerica {
             HelpLabel.setText(resultat);
             
             
-            if(controladorDomini.acabat()){
-                if(controladorDomini.bensolucionat()){
-                    JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
-                    surt();
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Hidato mal solucionat :( !!!","Information",JOptionPane.INFORMATION_MESSAGE);
-                    surt();
-                    //Pop up de mal solucionat!!!!
-                    
-                }
-                
-            }
+            
         }
     
     }
@@ -332,6 +350,7 @@ public class VistaJugar extends VistaGenerica {
     private javax.swing.JButton botoSortir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,7 +26,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButton3" max="32767" attributes="0"/>
                           <Component id="jButton2" alignment="1" max="32767" attributes="0"/>
                           <Component id="TimeLabel" alignment="1" min="-2" pref="94" max="-2" attributes="0"/>
                           <Component id="jToggleButton1" alignment="1" max="32767" attributes="0"/>
@@ -47,9 +48,11 @@
               <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="168" max="32767" attributes="0"/>
+              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="botoSortir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="199" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="TimeLabel" min="-2" pref="58" max="-2" attributes="0"/>
                   <Component id="HelpLabel" min="-2" pref="35" max="-2" attributes="0"/>
@@ -108,6 +111,14 @@
           <Font name="Droid Sans" size="14" style="0"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Acaba"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

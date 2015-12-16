@@ -243,7 +243,7 @@ public class VistaInici extends VistaGenerica {
         boolean resposta = controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
         if (!resposta) JOptionPane.showMessageDialog(null, "Usuari ja registrat", "Atenció", JOptionPane.ERROR_MESSAGE);
         else controladorVistes.mostraVista("Menu");
-        //controladorVistes.mostraVista("Menu"); // s'ha de borrar;
+        controladorVistes.mostraVista("Menu"); // s'ha de borrar;
     }//GEN-LAST:event_botoRegistrarActionPerformed
 
     private void userRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRegistrarActionPerformed
