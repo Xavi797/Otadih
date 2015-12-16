@@ -8,6 +8,10 @@ package Vistes;
 import Vistes.ControladorVistes;
 import Vistes.VistaGenerica;
 import Domini.Controlador.ControladorDomini;
+import java.util.List;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 /**
  *
  * @author xavi
@@ -127,7 +131,21 @@ public class VistaMenu extends VistaGenerica {
 
     private void BotoCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoCarregaActionPerformed
         // TODO add your handling code here:
+        List<String> list = controladorDomini.llistatTaulers();
+        JScrollPane jsp = new JScrollPane();
+        JList jlist = new JList(list.toArray());
         
+        JOptionPane.showMessageDialog(
+                null, 
+                jsp = new JScrollPane(jlist), 
+                "Carregar Partida",
+                1);
+        
+        if (jlist.getSelectedIndex() != -1) {
+            int x = jlist.getSelectedIndex();
+            controladorDomini.carregarTauler(list.get(x));
+            controladorVistes.mostraVista("vistaJugar");
+        }
     }//GEN-LAST:event_BotoCarregaActionPerformed
 
     

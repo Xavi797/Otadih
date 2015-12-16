@@ -255,7 +255,7 @@ public class ControladorDomini {
                 Tauler t =controladorTaula.transformarInversa(mat);
                 cGen.BuscaSolucions(t);
                 if(cGen.getnSols() == 1){
-                    tauler = t;
+                    tauler = t.clonar();
                     tauler_partida = t.clonar();
                     solucion = cGen.getSolucion();
                     return true;
@@ -296,7 +296,7 @@ public class ControladorDomini {
              */
             public boolean guardarTauler(String name) {
                 hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocModi(tauler);
                 hidatos.setTaulerJocSolu(solucion);
                 Object obj = (Object) hidatos;
                 
@@ -317,6 +317,7 @@ public class ControladorDomini {
                 
                 tauler = hidatos.getTaulerJocInic();
                 tauler_partida = hidatos.getTaulerJocModi();
+                controladorTaula.escriuTauler(tauler_partida);
                 solucion = hidatos.getTaulerJocSolu();
             }
             
