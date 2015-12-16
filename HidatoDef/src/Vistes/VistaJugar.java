@@ -11,6 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -241,6 +244,7 @@ public class VistaJugar extends VistaGenerica {
         matriu_aux = controladorDomini.getTaulerPartidaPerVista();
     }
     
+    
     private class ActionVistaCela implements FocusListener {
 
         int x;
@@ -254,6 +258,38 @@ public class VistaJugar extends VistaGenerica {
         @Override
         public void focusGained(FocusEvent e) {
             
+            List<Integer> numsLabel;
+            ArrayList<Integer> numsAjuda = new ArrayList();
+            String resultat= "";
+            numsLabel = controladorDomini.getPropers();
+            int[] dirHorit ={1,1,1,0,0,-1,-1,-1};
+            int[] dirVerti ={1,0,-1,1,-1,1,0,-1};
+            int novaPosX;
+            int novaPosY;
+            if (matriu[x][y] > 0) {
+                HelpLabel.setText("Nombre ben colocat");
+                return;
+            }
+                    
+            for (int i=0; i<dirHorit.length; ++i) {
+                novaPosX = x + dirHorit[i];
+                novaPosY = y + dirVerti[i];
+                if (matriu.length>novaPosX &&  matriu.length > novaPosY && novaPosX>=0 && novaPosY >=0) {
+                    if (matriu[novaPosX][novaPosY] > 0) {
+                        for (int numProper : numsLabel) {
+                            if (matriu[novaPosX][novaPosY] == numProper + 1 || matriu[novaPosX][novaPosY] == numProper - 1) {
+                                if (!numsAjuda.contains(numProper) && numProper >0){
+                                    numsAjuda.add(numProper);
+                                    resultat += numProper + " ";
+                                }
+                            }
+                        }
+                    } 
+                }
+                
+            }
+            if (resultat.isEmpty()) HelpLabel.setText("Cap nombre possible!");
+            else HelpLabel.setText(resultat);
         }
 
         @Override
@@ -267,29 +303,16 @@ public class VistaJugar extends VistaGenerica {
             } else {
                 n=Integer.parseInt(num);
             }
+         
             
-            List<Integer> propers = controladorDomini.getPropers();
-            //printa els propers en un layout
-            
-            boolean setCorrect = controladorDomini.setCela(x, y, n); // Controlar que no pongan letra
+            boolean setCorrect = controladorDomini.setCela(x, y, n);
             if (!setCorrect && n!=0) {
                 tauler[x][y].setBackground(Color.red);
             } else {
                 tauler[x][y].setBackground(Color.white);
-            }
-            
-            List<Integer> numsLabel;
-            numsLabel = controladorDomini.getPropers();
-            String resultat= "";
-            for (int i=0; i<numsLabel.size(); ++i) {
-                resultat += numsLabel.get(i) + " ";
-            }
-            HelpLabel.setText(resultat);
-            
-            
-            
-        }
-    
+                matriu[x][y] = n;
+            }     
+        }   
     }
     
     public void surt(){
@@ -335,13 +358,7 @@ public class VistaJugar extends VistaGenerica {
             }
             y += 45;
         }
-        List<Integer> numsLabel;
-        numsLabel = controladorDomini.getPropers();
-        String resultat= "";
-        for (int i=0; i<numsLabel.size(); ++i) {
-            resultat += numsLabel.get(i) + " ";
-        }
-        HelpLabel.setText(resultat);
+
         this.setPreferredSize(new Dimension(files*45 + 220, files*45 + 80));
         controladorVistes.pack();
         
