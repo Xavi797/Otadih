@@ -25,10 +25,10 @@ public class ControladorGenera {
             private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
-            private long startTime;//variables de temps per fer els corresponents timeouts
+	    private long startTime;
             private final long timeout = 8000;                                   
             private long elapsed;
-	    
+            
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
 	    private int nSols; /* numero de soluciones trobades */

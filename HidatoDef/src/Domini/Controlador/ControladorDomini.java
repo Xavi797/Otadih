@@ -23,6 +23,10 @@ public class ControladorDomini {
             private final ControladorGenera cGen;
             private final ControladorPersistencia cPers;
             
+            private long startTime;//variables de temps per fer els corresponents timeouts
+            private final long timeout = 8000;                                   
+            private long elapsed;
+            
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
             private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */

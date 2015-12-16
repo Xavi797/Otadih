@@ -79,7 +79,7 @@ public class ControladorSoluciona {
 
                     //this.posInicial = cT.getPosInicial();
                     if(soluciona_aux(posInicial[0], posInicial[1], 1, 0)) {
-                        cT.escriuTauler(solucio);
+                        //cT.escriuTauler(solucio);
                         return true;
                     }
                     return false;

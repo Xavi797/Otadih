@@ -153,8 +153,12 @@ public class VistaJugar extends VistaGenerica {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         matriu = controladorDomini.getTaulerSolucionatPerVista();
+        for (JTextField[] ts : tauler)
+                for (JTextField t : ts)
+                    this.remove(t);
         createBoard();
         JOptionPane.showMessageDialog(null,"Rendicio!!","Information",JOptionPane.INFORMATION_MESSAGE);
+        //HelpLabel.setText("");
         surt();
     }//GEN-LAST:event_jButton1ActionPerformed
 
