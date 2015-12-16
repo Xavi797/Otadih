@@ -299,8 +299,8 @@ public class ControladorDomini {
              * @return Cert en cas de exit, false en cas contrari
              */
             public boolean guardarTauler(String name) {
-                hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocInic(tauler.clonar());
+                hidatos.setTaulerJocModi(tauler.clonar());
                 hidatos.setTaulerJocSolu(solucion);
                 Object obj = (Object) hidatos;
                 
@@ -319,8 +319,8 @@ public class ControladorDomini {
             public void carregarTauler(String name) {
                 hidatos = (Hidatos) cPers.carregaTauler(name);
                 
-                tauler = hidatos.getTaulerJocInic();
-                tauler_partida = hidatos.getTaulerJocModi();
+                tauler = hidatos.getTaulerJocInic().clonar();
+                tauler_partida = hidatos.getTaulerJocModi().clonar();
                 solucion = hidatos.getTaulerJocSolu();
             }
             
