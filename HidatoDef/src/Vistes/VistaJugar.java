@@ -29,6 +29,7 @@ public class VistaJugar extends VistaGenerica {
     JPanel plataformaCeles;
     ControladorDomini controladorDomini;
     int [][] matriu;
+    int [][] matriu_aux;
     JTextField[][] tauler;
     /**
      * Creates new form vistaJugar
@@ -202,7 +203,7 @@ public class VistaJugar extends VistaGenerica {
    
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
-        
+        matriu_aux = controladorDomini.getTaulerPartidaPerVista();
     }
     
     private class ActionVistaCela implements FocusListener {
@@ -300,6 +301,7 @@ public class VistaJugar extends VistaGenerica {
                     tauler[i][j].setText(Integer.toString(matriu[i][j]));
                     tauler[i][j].setBackground(Color.GRAY);
                 } else {
+                    if(matriu_aux[i][j] != 0) tauler[i][j].setText(Integer.toString(matriu_aux[i][j]));
                     tauler[i][j].addFocusListener(new ActionVistaCela(i, j));
                 }
                 //System.out.print(matriu[i][j]);

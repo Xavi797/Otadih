@@ -107,9 +107,12 @@ public class ControladorDomini {
                 
             }
             
+            public int[][] getTaulerPartidaPerVista(){
+                return controladorTaula.transformar(tauler_partida);
+            }
             
             public int[][] getTaulerPerVista() {
-                return controladorTaula.transformar(tauler_partida);
+                return controladorTaula.transformar(tauler);
             }
             public int[][] getTaulerSolucionatPerVista() {
                 soluciona();
