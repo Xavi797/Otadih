@@ -192,6 +192,8 @@ public class ControladorDomini {
              */
             public void novaPartida() {
                // tauler_partida = tauler.clonar();
+                startTime = System.currentTimeMillis();
+                elapsed = partida.getTemps();
                 conjuntUsats = new ArrayList<Integer>();
                 propers = new ArrayList<Integer>();
                 maxCas = controladorTaula.getMax(tauler);
@@ -285,7 +287,7 @@ public class ControladorDomini {
                 hidatos.setTaulerJocModi(tauler_partida);
                 hidatos.setTaulerJocSolu(solucion);
                 partida.setHidatos(hidatos);
-                
+                partida.setTemps((System.currentTimeMillis() - startTime) + elapsed);
                 partida.setUser(usuari);
                 
                 Object obj = (Object) partida;
@@ -315,6 +317,15 @@ public class ControladorDomini {
                     return true;
                 }
                 else return false;
+            }
+            
+            /**
+             * Quan la partida finalitza actualitza el ranking amb nom user
+             * + temps nou;
+             */
+            public void actualitzaRanking() {
+                //Envia a ranking l'usuari, dificultat?, temps
+                long temps_total = (System.currentTimeMillis() - startTime) + elapsed;
             }
             
             
@@ -465,5 +476,7 @@ public class ControladorDomini {
             public void setPropers(List<Integer> propers) {
                 this.propers = propers;
             }
+
+    
             
 }
