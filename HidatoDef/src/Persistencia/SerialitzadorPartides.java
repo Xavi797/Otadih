@@ -13,7 +13,7 @@ import java.util.List;
  * @author jaume.guell
  */
 public class SerialitzadorPartides extends Serialitzador {
-    private final String direccio = "Dades/Partides/";   /* Conte el path de la carpeta on es guardaran les partides */
+    private final String direccio = "../Dades/Partides/";   /* Conte el path de la carpeta on es guardaran les partides */
     
     /**
      * Funcio encarregada de destruir fitxers de la BD, utilitza funcions de la superclasse.
