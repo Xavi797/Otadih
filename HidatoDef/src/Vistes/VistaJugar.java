@@ -142,6 +142,8 @@ public class VistaJugar extends VistaGenerica {
         
         matriu = controladorDomini.getTaulerSolucionatPerVista();
         createBoard();
+        JOptionPane.showMessageDialog(null,"Rendicio!!","Information",JOptionPane.INFORMATION_MESSAGE);
+        surt();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botoSortirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSortirActionPerformed
@@ -243,9 +245,12 @@ public class VistaJugar extends VistaGenerica {
             
             if(controladorDomini.acabat()){
                 if(controladorDomini.bensolucionat()){
-                    //Pop up de correcte ben solucionat!!!
+                    JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
+                    surt();
                 }
                 else{
+                    JOptionPane.showMessageDialog(null,"Hidato mal solucionat :( !!!","Information",JOptionPane.INFORMATION_MESSAGE);
+                    surt();
                     //Pop up de mal solucionat!!!!
                     
                 }
@@ -253,6 +258,14 @@ public class VistaJugar extends VistaGenerica {
             }
         }
     
+    }
+    
+    public void surt(){
+        for (JTextField[] ts : tauler)
+                for (JTextField t : ts)
+                    this.remove(t);
+            HelpLabel.setText("");
+            controladorVistes.mostraVista("Menu");
     }
     
     public void createBoard ()

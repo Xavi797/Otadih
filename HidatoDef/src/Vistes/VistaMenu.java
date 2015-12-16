@@ -49,6 +49,11 @@ public class VistaMenu extends VistaGenerica {
         });
 
         BotoCarrega.setText("Carregar Hidato");
+        BotoCarrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotoCarregaActionPerformed(evt);
+            }
+        });
 
         BotoIntroHidato.setText("Introdueix Hidato");
         BotoIntroHidato.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +124,11 @@ public class VistaMenu extends VistaGenerica {
     private void BotoIntroHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoIntroHidatoActionPerformed
         controladorVistes.mostraVista("IntrodueixHidato");
     }//GEN-LAST:event_BotoIntroHidatoActionPerformed
+
+    private void BotoCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoCarregaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_BotoCarregaActionPerformed
 
     
 

@@ -269,12 +269,11 @@ public class ControladorDomini {
             
             /**
              * Funcio que demana a la BD el llistat de partides a mitges que te el usuari 'user'.
-             * @param user Nom del usuari
              * @return Llista de Strings que conte el nom de les partides a mitges
              */
-            public List<String> llistatPartides(String user) {
+            public List<String> llistatPartides() {
                 List<String> list = new ArrayList<String>();
-                list = cPers.llistaPartides(user);
+                list = cPers.llistaPartides(usuari.getNom());
                 return list;
             }
             
