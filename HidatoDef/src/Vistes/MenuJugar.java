@@ -35,6 +35,7 @@ public class MenuJugar extends VistaGenerica {
 
         botoGeneraHidato = new javax.swing.JButton();
         botoCarregaHidato = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         botoGeneraHidato.setText("Genera hidato aleatori");
         botoGeneraHidato.addActionListener(new java.awt.event.ActionListener() {
@@ -45,6 +46,13 @@ public class MenuJugar extends VistaGenerica {
 
         botoCarregaHidato.setText("Carrega hidato");
 
+        jToggleButton1.setText("Tornar");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -53,7 +61,8 @@ public class MenuJugar extends VistaGenerica {
                 .addGap(288, 288, 288)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(botoGeneraHidato, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(botoCarregaHidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botoCarregaHidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(297, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -63,7 +72,9 @@ public class MenuJugar extends VistaGenerica {
                 .addComponent(botoGeneraHidato)
                 .addGap(18, 18, 18)
                 .addComponent(botoCarregaHidato)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jToggleButton1)
+                .addContainerGap(204, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -71,9 +82,14 @@ public class MenuJugar extends VistaGenerica {
         controladorVistes.mostraVista("GeneraHidato");
     }//GEN-LAST:event_botoGeneraHidatoActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        controladorVistes.mostraVista("Menu");
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botoCarregaHidato;
     private javax.swing.JButton botoGeneraHidato;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

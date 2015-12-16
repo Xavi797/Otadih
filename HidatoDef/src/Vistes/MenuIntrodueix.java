@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import static java.lang.Integer.parseInt;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -59,6 +60,7 @@ public class MenuIntrodueix extends VistaGenerica {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         BotoValidar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -75,18 +77,32 @@ public class MenuIntrodueix extends VistaGenerica {
         jLabel1.setText("Selecciona tamany");
 
         BotoValidar.setText("Validar");
+        BotoValidar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotoValidarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Sortir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
                 .addGap(37, 37, 37)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
-                .addComponent(BotoValidar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotoValidar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -97,7 +113,9 @@ public class MenuIntrodueix extends VistaGenerica {
                     .addComponent(jLabel1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotoValidar))
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
+                .addContainerGap(268, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -115,6 +133,45 @@ public class MenuIntrodueix extends VistaGenerica {
         }
         
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void BotoValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoValidarActionPerformed
+        if (tauler != null){
+            String num;
+            int[][] conjuntTauler;
+            conjuntTauler = new int[tauler.length][tauler.length];
+            int i= 0;
+            int j= 0;
+            for (JTextField[] ts : tauler) {
+                for (JTextField t : ts) {
+                   num = t.getText();
+                   if (num.isEmpty()) num = "0";
+                   conjuntTauler[i][j] = Integer.parseInt(num);
+                   ++i;
+                }
+                i = 0;
+                ++j;
+            }
+            boolean resposta = controladorDomini.validaTablero(conjuntTauler);
+            if (resposta) {
+                Object[] options = {"Guardar",
+                    "Cancelar"};
+                int res = JOptionPane.showOptionDialog(controladorVistes,
+                "Hidato vàlid, vols guardar?",
+                "Confrimació",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,     
+                options,  
+                options[0]);
+            } else {
+                JOptionPane.showMessageDialog(null, "Hidato incorrecte", "Incorrecte", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_BotoValidarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controladorVistes.mostraVista("Menu");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void createBoard (int tamany)
     {
@@ -137,13 +194,14 @@ public class MenuIntrodueix extends VistaGenerica {
             }
             y += 45;
         }
-        this.setPreferredSize(new Dimension(files*45 + 200, files*45 + 200));
+        this.setPreferredSize(new Dimension(files*45 + 250, files*45 + 200));
         controladorVistes.pack();
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotoValidar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
