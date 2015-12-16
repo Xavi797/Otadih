@@ -181,11 +181,25 @@ public class ControladorDomini {
             }
             
             public boolean setCela(int i, int j, int val){
-                //mirar si posible ponerlo benColocat
-                //if benColocat modificaCela y actualiza NUmeros a poner
+                int aux = tauler_partida.getCela(i, j);
+                for(int auxint = 0; auxint < propers.size(); ++auxint) System.out.printf(" " + propers.get(auxint));
+                for(int auxint = 0; auxint < conjuntUsats.size(); ++auxint) System.out.printf(" " + conjuntUsats.get(auxint));
+                if(val == aux) return true;
+                if(val > maxCas || val < 0 || conjuntUsats.contains(val) || !propers.contains(val)) return false;
+                if(val == 0){
+                    if(aux != 0){
+                        tauler_partida.ModificaCela(i, j, val);
+                        for(int auxUsats = 0; auxUsats < conjuntUsats.size(); ++auxUsats)
+                        if(conjuntUsats.get(auxUsats) == aux) conjuntUsats.remove(auxUsats);
+                    }
+                    cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
+                    return true;
+                }
                 if(benColocat(i, j, val)){
-                    int aux = tauler_partida.getCela(i, j);
-                    if(aux > 0) conjuntUsats.remove(aux);
+                    if(aux > 0){
+                        for(int auxUsats = 0; auxUsats < conjuntUsats.size(); ++auxUsats)
+                        if(conjuntUsats.get(auxUsats) == aux) conjuntUsats.remove(auxUsats);
+                    }
                     conjuntUsats.add(val);
                     tauler_partida.ModificaCela(i, j, val);
                     cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
