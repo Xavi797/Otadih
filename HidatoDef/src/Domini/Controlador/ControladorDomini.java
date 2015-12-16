@@ -300,7 +300,7 @@ public class ControladorDomini {
              */
             public boolean guardarTauler(String name) {
                 hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocModi(tauler);
                 hidatos.setTaulerJocSolu(solucion);
                 Object obj = (Object) hidatos;
                 
