@@ -20,9 +20,10 @@ public class MenuJugar extends VistaGenerica {
     ControladorVistes controladorVistes;
     
     /**
-     * Creates new form MenuJugar
+     * Constructora que inicialitza els components i afegeix els controladors
+     * @param contD
+     * @param contV 
      */
-    
     public MenuJugar(ControladorDomini contD, ControladorVistes contV) {
         initComponents();
         controladorDomini = contD;
@@ -87,15 +88,26 @@ public class MenuJugar extends VistaGenerica {
                 .addContainerGap(205, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Mostra la vista generaHidato en cas de que es premi el boto generar
+     * partida aleatoria
+     * @param evt 
+     */
     private void botoGeneraHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoGeneraHidatoActionPerformed
         controladorVistes.mostraVista("GeneraHidato");
     }//GEN-LAST:event_botoGeneraHidatoActionPerformed
-
+    /**
+     * Event que mostra la vista menu en cas de que es premi boto enrere
+     * @param evt 
+     */
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_jToggleButton1ActionPerformed
-
+    /**
+     * Aquest event es encarrega de treure una llista de les partides del usuari
+     * i carregarles en cas de que premi ok
+     * @param evt 
+     */
     private void botoCarregaHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoCarregaHidatoActionPerformed
         // TODO add your handling code here:
         

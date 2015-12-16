@@ -128,7 +128,11 @@ public class VistaMenu extends VistaGenerica {
     private void BotoIntroHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoIntroHidatoActionPerformed
         controladorVistes.mostraVista("IntrodueixHidato");
     }//GEN-LAST:event_BotoIntroHidatoActionPerformed
-
+    /**
+     * Event que s'activa al premer el boto Carrega hidato al menu principal.
+     * Mostra un scrollPane de la llista dels hidatos que existeixen.
+     * @param evt 
+     */
     private void BotoCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoCarregaActionPerformed
         // TODO add your handling code here:
         List<String> list = controladorDomini.llistatTaulers();
@@ -138,7 +142,7 @@ public class VistaMenu extends VistaGenerica {
         JOptionPane.showMessageDialog(
                 null, 
                 jsp = new JScrollPane(jlist), 
-                "Carregar Partida",
+                "Carregar Hidato",
                 1);
         
         if (jlist.getSelectedIndex() != -1) {

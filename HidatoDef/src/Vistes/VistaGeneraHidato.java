@@ -14,8 +14,12 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
 
     ControladorDomini controladorDomini;
     ControladorVistes controladorVistes;
+    
     /**
-     * Creates new form VistaGeneraHidato
+     * Constructora que inicialitza els components i els controladors que li 
+     * passen
+     * @param contD
+     * @param contV 
      */
     public VistaGeneraHidato(ControladorDomini contD, ControladorVistes contV) {
         initComponents();
@@ -27,6 +31,9 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         
     }
     
+    /**
+     * Inicialitza els boxes amb els items corresponents.
+     */
     private void initBoxes() {
         
         boxDificultat.removeAllItems();
@@ -146,6 +153,10 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
 
     }//GEN-LAST:event_boxDificultatActionPerformed
 
+    /**
+     * Event que al modificar el box de dificultat canvien 
+     * @param evt 
+     */
     private void boxDificultatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxDificultatItemStateChanged
         String itemName =(String) boxDificultat.getSelectedItem();
         if (itemName == "Fàcil") {
