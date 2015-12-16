@@ -180,11 +180,23 @@ public class VistaJugar extends VistaGenerica {
         String inputValue = JOptionPane.showInputDialog("Possa el nom del fitxer");
         System.out.println(inputValue);
         if (inputValue != null) {
-            boolean resultatGuardar = controladorDomini.guardarPartida(inputValue);
+            
+            boolean sobreescriure = false;
+            String anteriorNom = inputValue;
+            System.out.println(anteriorNom);
+            boolean resultatGuardar = controladorDomini.guardarPartida(inputValue, sobreescriure);
+            
             while (!resultatGuardar) {
-                inputValue = JOptionPane.showInputDialog("El nom de la partida ja existeix, vols reescriure'l?");
+                inputValue = JOptionPane.showInputDialog("La partida ja existeix. Per sobreescriure posa el mateix nom");
                 if (inputValue == null) break;
-                resultatGuardar = controladorDomini.guardarPartida(inputValue);
+                
+                System.out.println("aaaa");
+                if (inputValue.equals(anteriorNom)) sobreescriure = true;
+                else {
+                    anteriorNom = inputValue;
+                    System.out.println(anteriorNom);
+                }
+                resultatGuardar = controladorDomini.guardarPartida(inputValue, sobreescriure);
             }
         }
 

@@ -86,7 +86,7 @@ public class Serialitzador {
      * @return Retorna un valor boolea que indica si s'ha efectuat correctament el proces de guardat
      */
     public boolean serialitzarObjecte (Object obj, String name, String path) {
-        int ordre = 0;
+        /* int ordre = 0;
         while (existeixObjecte(name, path) && ordre == 0) {
             System.out.println("El fitxer '"+name+"' ja exiseix. Vols sobreescriure'l?" );
             System.out.println("0 --> NO, canviar el nom // 1 --> SI, sobreescriure");
@@ -97,7 +97,7 @@ public class Serialitzador {
                 System.out.println("Escriu el nou nom:");
                 name = in.next();
             }
-        }
+        } */
         
         try {
             String objectiu = path + name;

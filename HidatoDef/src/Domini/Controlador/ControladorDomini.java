@@ -228,14 +228,15 @@ public class ControladorDomini {
             /**
              * Funcio encarregada de fer la crida per guardar una partida a mitges
              * @param name Nom de la partida a guardar
+             * @param sobreescriure Indica si la partida es pot sobreescriure (cert) o no
              * @return Cert en cas de exit, false en cas contrari
              */
-            public boolean guardarPartida(String name) {
+            public boolean guardarPartida(String name, boolean sobreescriure) {
                 partida.setHidatos(hidatos);
                 partida.setUser(usuari);
                 Object obj = (Object) partida;
                 
-                if(cPers.comprovaPartida(name, usuari.getNom())) {
+                if(cPers.comprovaPartida(name, usuari.getNom()) && !sobreescriure) {
                     //Ja existeix una partida amb aquest nom. Sobreescriure?
                     return false;
                 }
