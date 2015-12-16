@@ -250,6 +250,7 @@ public class ControladorDomini {
                 cGen.BuscaSolucions(t);
                 if(cGen.getnSols() == 1){
                     tauler = t;
+                    tauler_partida = t.clonar();
                     solucion = cGen.getSolucion();
                     return true;
                 }
