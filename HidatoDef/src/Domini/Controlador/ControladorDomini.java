@@ -181,19 +181,11 @@ public class ControladorDomini {
             }
             
             public boolean setCela(int i, int j, int val){
-                //mirar si posible ponerlo benColocat
-                //if benColocat modificaCela y actualiza NUmeros a poner
                 int aux = tauler_partida.getCela(i, j);
                 for(int auxint = 0; auxint < propers.size(); ++auxint) System.out.printf(" " + propers.get(auxint));
-                System.out.println(""); 
                 for(int auxint = 0; auxint < conjuntUsats.size(); ++auxint) System.out.printf(" " + conjuntUsats.get(auxint));
-                System.out.println(""); 
-                System.out.println(""); 
-                 System.out.println("rly man?");
                 if(val == aux) return true;
-                System.out.println("aqui?");
                 if(val > maxCas || val < 0 || conjuntUsats.contains(val) || !propers.contains(val)) return false;
-                System.out.println("burraca?");
                 if(val == 0){
                     if(aux != 0){
                         tauler_partida.ModificaCela(i, j, val);
@@ -203,9 +195,7 @@ public class ControladorDomini {
                     cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
                     return true;
                 }
-                System.out.println("pruebaaaaaa");
                 if(benColocat(i, j, val)){
-                    System.out.println("yaaaaaaaaas");
                     if(aux > 0){
                         for(int auxUsats = 0; auxUsats < conjuntUsats.size(); ++auxUsats)
                         if(conjuntUsats.get(auxUsats) == aux) conjuntUsats.remove(auxUsats);
