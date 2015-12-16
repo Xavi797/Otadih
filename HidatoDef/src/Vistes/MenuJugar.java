@@ -5,6 +5,11 @@
  */
 package Vistes;
 import Domini.Controlador.ControladorDomini;
+import java.awt.Component;
+import java.util.List;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 /**
  *
  * @author xavi
@@ -45,6 +50,11 @@ public class MenuJugar extends VistaGenerica {
         });
 
         botoCarregaHidato.setText("Carregar partida");
+        botoCarregaHidato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoCarregaHidatoActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setText("Tornar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +95,27 @@ public class MenuJugar extends VistaGenerica {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void botoCarregaHidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoCarregaHidatoActionPerformed
+        // TODO add your handling code here:
+        
+        List<String> list = controladorDomini.llistatPartides();
+        JScrollPane jsp = new JScrollPane();
+        JList jlist = new JList(list.toArray());
+        
+        JOptionPane.showMessageDialog(
+                null, 
+                jsp = new JScrollPane(jlist), 
+                "Carregar Partida",
+                1);
+        
+        while (jlist.getSelectedIndex() != -1) {
+            int x = jlist.getSelectedIndex();
+            controladorDomini.carregarPartida(list.get(x));
+            controladorVistes.mostraVista("vistaJugar");
+        }
+        
+    }//GEN-LAST:event_botoCarregaHidatoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
