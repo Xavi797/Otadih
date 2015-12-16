@@ -17,26 +17,26 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="288" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="283" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="botoGeneraHidato" pref="199" max="32767" attributes="0"/>
+                  <Component id="botoGeneraHidato" max="32767" attributes="0"/>
                   <Component id="botoCarregaHidato" max="32767" attributes="0"/>
-                  <Component id="jToggleButton1" max="32767" attributes="0"/>
+                  <Component id="jToggleButton1" min="-2" pref="217" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="297" max="32767" attributes="0"/>
+              <EmptySpace pref="284" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
               <Component id="botoGeneraHidato" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="botoCarregaHidato" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="204" max="32767" attributes="0"/>
+              <EmptySpace pref="205" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,7 +44,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="botoGeneraHidato">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Genera hidato aleatori"/>
+        <Property name="text" type="java.lang.String" value="Generar partida aleatoria"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botoGeneraHidatoActionPerformed"/>
@@ -52,7 +52,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botoCarregaHidato">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Carrega hidato"/>
+        <Property name="text" type="java.lang.String" value="Carregar partida"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="jToggleButton1">

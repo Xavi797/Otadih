@@ -37,14 +37,14 @@ public class MenuJugar extends VistaGenerica {
         botoCarregaHidato = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
 
-        botoGeneraHidato.setText("Genera hidato aleatori");
+        botoGeneraHidato.setText("Generar partida aleatoria");
         botoGeneraHidato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botoGeneraHidatoActionPerformed(evt);
             }
         });
 
-        botoCarregaHidato.setText("Carrega hidato");
+        botoCarregaHidato.setText("Carregar partida");
 
         jToggleButton1.setText("Tornar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -58,23 +58,23 @@ public class MenuJugar extends VistaGenerica {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(288, 288, 288)
+                .addGap(283, 283, 283)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botoGeneraHidato, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                    .addComponent(botoGeneraHidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botoCarregaHidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(297, Short.MAX_VALUE))
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(96, 96, 96)
                 .addComponent(botoGeneraHidato)
                 .addGap(18, 18, 18)
                 .addComponent(botoCarregaHidato)
                 .addGap(26, 26, 26)
                 .addComponent(jToggleButton1)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

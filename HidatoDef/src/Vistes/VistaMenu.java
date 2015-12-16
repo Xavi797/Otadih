@@ -48,7 +48,7 @@ public class VistaMenu extends VistaGenerica {
             }
         });
 
-        BotoCarrega.setText("Carregar Partida");
+        BotoCarrega.setText("Carregar Hidato");
 
         BotoIntroHidato.setText("Introdueix Hidato");
         BotoIntroHidato.addActionListener(new java.awt.event.ActionListener() {
@@ -76,27 +76,27 @@ public class VistaMenu extends VistaGenerica {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(189, 189, 189)
+                .addGap(226, 226, 226)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BotoCarrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotoJuga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotoIntroHidato, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                     .addComponent(BotoRanking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotoLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addComponent(BotoJuga)
-                .addGap(38, 38, 38)
-                .addComponent(BotoCarrega)
-                .addGap(42, 42, 42)
+                .addGap(37, 37, 37)
                 .addComponent(BotoIntroHidato)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BotoCarrega)
+                .addGap(38, 38, 38)
                 .addComponent(BotoRanking)
-                .addGap(30, 30, 30)
+                .addGap(58, 58, 58)
                 .addComponent(BotoLogOut)
                 .addContainerGap(74, Short.MAX_VALUE))
         );

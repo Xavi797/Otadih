@@ -17,7 +17,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="226" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="BotoCarrega" alignment="0" max="32767" attributes="0"/>
                   <Component id="BotoJuga" max="32767" attributes="0"/>
@@ -25,7 +25,7 @@
                   <Component id="BotoRanking" alignment="0" max="32767" attributes="0"/>
                   <Component id="BotoLogOut" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="263" max="32767" attributes="0"/>
+              <EmptySpace pref="226" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,13 +34,13 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
               <Component id="BotoJuga" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="BotoCarrega" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="BotoIntroHidato" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="BotoCarrega" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="BotoRanking" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
               <Component id="BotoLogOut" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="74" max="32767" attributes="0"/>
           </Group>
@@ -58,7 +58,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="BotoCarrega">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Carregar Partida"/>
+        <Property name="text" type="java.lang.String" value="Carregar Hidato"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="BotoIntroHidato">
