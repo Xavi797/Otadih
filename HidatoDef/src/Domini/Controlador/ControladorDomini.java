@@ -106,6 +106,7 @@ public class ControladorDomini {
                 
             }
             
+            
             public int[][] getTaulerPerVista() {
                 return controladorTaula.transformar(tauler);
             }
@@ -135,8 +136,8 @@ public class ControladorDomini {
                     return false;
                 }
                 else {
-                    Usuari userF = new Usuari(user,pass,codi);
-                    return cPers.guardaUser((Object)userF, user);
+                    usuari = new Usuari(user,pass,codi);
+                    return cPers.guardaUser((Object)usuari, user);
                 }
             }
             
@@ -147,9 +148,9 @@ public class ControladorDomini {
              * @return Retorna true si el usuari existeix i te el password corresponent, false en cas contrari
              */
             public boolean logInUsuari(String user,String pass){
-                Usuari userF = (Usuari) cPers.carregaUser(user);
-                if (userF == null) return false;
-                return userF.getPassword().equals(pass);
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return false;
+                return usuari.getPassword().equals(pass);
                 
             }
             
@@ -160,10 +161,10 @@ public class ControladorDomini {
              * @return String que conte el password recuperat en cas de exit, string amb valor null en cas contrari
              */
             public String restauraPassword(String user, String codi) {
-                Usuari userF = (Usuari) cPers.carregaUser(user);
-                if (userF == null) return null;
-                if (userF.getCodi().equals(codi)) {
-                    String resposta = userF.getPassword();
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return null;
+                if (usuari.getCodi().equals(codi)) {
+                    String resposta = usuari.getPassword();
                     return resposta;
                 }
                 return null;
@@ -249,34 +250,38 @@ public class ControladorDomini {
             public void setPropers(List<Integer> propers) {
                 this.propers = propers;
             }
-
-            
             
             /**
-             * Funcio encarregada de guardar una partida a mitges
-             * @param user
-             * @param name
-             * @return 
+             * Funcio encarregada de fer la crida per guardar una partida a mitges
+             * @param name Nom de la partida a guardar
+             * @param user Nom del usuari que guarda la partida
+             * @return Cert en cas de exit, false en cas contrari
              */
-           /* public boolean guardarPartida(String name) {
-                Partida p = new Partida();
-                Hidatos h = new Hidatos(tauler, tauler_partida, solucion);
+            public boolean guardarPartida(String name, String user) {
+                partida.setHidatos(hidatos);
+                partida.setUser(usuari);
+                Object obj = (Object) partida;
                 
-                
-                
-                return cPers.guardaPartida(obj, name, user);
-            }*/
+                if(cPers.comprovaPartida(name, user)) {
+                    //Ja existeix una partida amb aquest nom. Sobreescriure?
+                    return false;
+                }
+                else {
+                    return cPers.guardaPartida(obj, name, user);
+                }
+            }
             
             
             /**
              * Funcio encarregada de fer la crida per a carregar una partida.
              * @param user Nom del usuari que vol carregar la partida
              * @param name Nom de la partida a carregar
-             * @return Partida demanada
              */
-            public Partida carregarPartida(String name, String user) {
-                Partida p = new Partida();
-                return p = (Partida) cPers.carregaPartida(name, user);
+            public void carregarPartida(String name, String user) {
+                partida = (Partida) cPers.carregaPartida(name, user);
+                
+                hidatos = partida.getHidatos();
+                usuari = partida.getUser();
             }
             
             /**
@@ -296,12 +301,17 @@ public class ControladorDomini {
              * @return Cert en cas de exit, false en cas contrari
              */
             public boolean guardarTauler(String name) {
-                Hidatos h = new Hidatos();
-                h.setTaulerJocInic(tauler);
-                h.setTaulerJocModi(tauler_partida);
-                h.setTaulerJocSolu(solucion);
-                Object obj = (Object) h;
-                return cPers.guardaTauler(obj, name);
+                hidatos.setTaulerJocInic(tauler);
+                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocSolu(solucion);
+                Object obj = (Object) hidatos;
+                
+                if(cPers.comprovaTauler(name)) {
+                    return false;
+                }
+                else {
+                    return cPers.guardaTauler(obj, name);
+                }
             }
             
             /**
@@ -309,12 +319,11 @@ public class ControladorDomini {
              * @param name Nom del tauler a carregar
              */
             public void carregarTauler(String name) {
-                Hidatos h = new Hidatos();
-                h = (Hidatos) cPers.carregaTauler(name);
+                hidatos = (Hidatos) cPers.carregaTauler(name);
                 
-                tauler = h.getTaulerJocInic();
-                tauler_partida = h.getTaulerJocModi();
-                solucion = h.getTaulerJocSolu();
+                tauler = hidatos.getTaulerJocInic();
+                tauler_partida = hidatos.getTaulerJocModi();
+                solucion = hidatos.getTaulerJocSolu();
             }
             
             /**
@@ -393,5 +402,9 @@ public class ControladorDomini {
 
             public void setMaxCas(int maxCas) {
                 this.maxCas = maxCas;
+            }
+            
+            public String getNomUsuari() {
+                return usuari.getNom();
             }
 }

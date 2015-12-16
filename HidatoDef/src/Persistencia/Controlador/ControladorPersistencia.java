@@ -149,6 +149,15 @@ public class ControladorPersistencia {
     }
     
     /**
+     * Funcio encarregada de fer la crida per comprovar si ja existeix un tauler amb nom name.
+     * @param name Nom del tauler
+     * @return True en cas de que el tauler ja existeixi, false en cas contrari
+     */
+    public boolean comprovaTauler(String name) {
+        return SDades.existeixObjecte(name, "Dades/Taulers/");
+    }
+    
+    /**
      * Funcio encarregada de fer la crida a la BD per a aconseguir una llista amb els noms de tots els taulers del sistema.
      * @return Llista de Strings amb els noms de tots el taulers
      */
@@ -196,8 +205,22 @@ public class ControladorPersistencia {
         SPartides.destruirTotesPartides(user);
     }
     
+    /**
+     * Funcio encarregada de fer la crida per aconseguir una llista amb els noms de totes les partides de usuari.
+     * @param user Nom del usuari
+     * @return Llista de Strings amb els noms de totes les partides del usuari
+     */
     public List<String> llistaPartides(String user) {
         return SPartides.aconsegueixLlista(user);
     }
     
+    /**
+     * Funcio encarregada de fer la crida per comprovar si ja existeix una partida de user amb nom name.
+     * @param name Nom de la partida
+     * @param user Nom del usuari
+     * @return True en cas de que la partida ja existeixi, false en cas contrari
+     */
+    public boolean comprovaPartida(String name, String user) {
+        return SPartides.comprovaPartida(name, user);
+    }
 }
