@@ -135,8 +135,8 @@ public class ControladorDomini {
                     return false;
                 }
                 else {
-                    Usuari userF = new Usuari(user,pass,codi);
-                    return cPers.guardaUser((Object)userF, user);
+                    usuari = new Usuari(user,pass,codi);
+                    return cPers.guardaUser((Object)usuari, user);
                 }
             }
             
@@ -147,9 +147,9 @@ public class ControladorDomini {
              * @return Retorna true si el usuari existeix i te el password corresponent, false en cas contrari
              */
             public boolean logInUsuari(String user,String pass){
-                Usuari userF = (Usuari) cPers.carregaUser(user);
-                if (userF == null) return false;
-                return userF.getPassword().equals(pass);
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return false;
+                return usuari.getPassword().equals(pass);
                 
             }
             
@@ -160,10 +160,10 @@ public class ControladorDomini {
              * @return String que conte el password recuperat en cas de exit, string amb valor null en cas contrari
              */
             public String restauraPassword(String user, String codi) {
-                Usuari userF = (Usuari) cPers.carregaUser(user);
-                if (userF == null) return null;
-                if (userF.getCodi().equals(codi)) {
-                    String resposta = userF.getPassword();
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return null;
+                if (usuari.getCodi().equals(codi)) {
+                    String resposta = usuari.getPassword();
                     return resposta;
                 }
                 return null;
@@ -369,5 +369,9 @@ public class ControladorDomini {
 
             public void setMaxCas(int maxCas) {
                 this.maxCas = maxCas;
+            }
+            
+            public String getNomUsuari() {
+                return usuari.getNom();
             }
 }
