@@ -150,15 +150,18 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         String itemName =(String) boxDificultat.getSelectedItem();
         if (itemName == "Fàcil") {
             boxTamany.removeAllItems();
+            numInicials.setText("3");
             boxTamany.addItem("3");
             boxTamany.addItem("4");
             boxTamany.addItem("5");
         } else if (itemName == "Intermedi"){
             boxTamany.removeAllItems();
+            numInicials.setText("6");
             boxTamany.addItem("6");
             boxTamany.addItem("7");
         } else {
             boxTamany.removeAllItems();
+            numInicials.setText("8");
             boxTamany.addItem("8");
             boxTamany.addItem("9");
         }
@@ -166,7 +169,9 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
 
     private void botoGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoGeneraActionPerformed
         String costat = (String)boxTamany.getSelectedItem();
-        int numIni = Integer.parseInt(numInicials.getText());
+        String num = numInicials.getText();
+        if (num == "") num = "0";
+        int numIni = Integer.parseInt(num);
         String topologia = (String)boxTopologia.getSelectedItem();
         controladorDomini.generaTauler(Integer.parseInt(costat), numIni, topologia);
         controladorVistes.mostraVista("vistaJugar");

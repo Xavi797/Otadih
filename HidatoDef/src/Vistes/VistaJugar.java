@@ -178,20 +178,16 @@ public class VistaJugar extends VistaGenerica {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String inputValue = JOptionPane.showInputDialog("Possa el nom del fitxer");
-        Object[] options = {"Aceptar",
-                    "Cancelar"};
-        int resposta = JOptionPane.showOptionDialog(controladorVistes,
-        "Nom de la partida",
-        "Confrimació",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        null,     
-        options,  
-        options[0]);
-        if (resposta == 0) {
-            controladorDomini.guardarPartida(inputValue);
-
+        System.out.println(inputValue);
+        if (inputValue != null) {
+            boolean resultatGuardar = controladorDomini.guardarPartida(inputValue);
+            while (!resultatGuardar) {
+                inputValue = JOptionPane.showInputDialog("El nom de la partida ja existeix, vols reescriure'l?");
+                if (inputValue == null) break;
+                resultatGuardar = controladorDomini.guardarPartida(inputValue);
+            }
         }
+
     }//GEN-LAST:event_jButton2ActionPerformed
    
     public void setMatriu() {
