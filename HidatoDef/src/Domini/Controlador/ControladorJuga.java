@@ -391,7 +391,7 @@ public class ControladorJuga {
                 boolean aux2 = false;
                 for (int auxi = 0; auxi < direccioVertical.length; ++auxi)
                     if(i+ direccioVertical[auxi] >=  0 && i+ direccioVertical[auxi] < t.sizeTauler()
-                        && j + direccioHoritzontal[auxi] > 0 && j + direccioHoritzontal[auxi] < t.sizeTauler())
+                        && j + direccioHoritzontal[auxi] >= 0 && j + direccioHoritzontal[auxi] < t.sizeTauler())
                             if(t.getCela(i+ direccioVertical[auxi], j + direccioHoritzontal[auxi]) == val+1)
                                 aux2= true;
                 
@@ -401,7 +401,7 @@ public class ControladorJuga {
                 boolean aux3 = false;
                 for (int auxj = 0; auxj < direccioVertical.length; ++auxj){
                     if(i+ direccioVertical[auxj] >=  0 && i+ direccioVertical[auxj] < t.sizeTauler()
-                        && j + direccioHoritzontal[auxj] > 0 && j + direccioHoritzontal[auxj] < t.sizeTauler())
+                        && j + direccioHoritzontal[auxj] >= 0 && j + direccioHoritzontal[auxj] < t.sizeTauler())
                             if(t.getCela(i+ direccioVertical[auxj], j + direccioHoritzontal[auxj]) == val-1)
                                 aux3= true;
                 }
