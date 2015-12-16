@@ -21,7 +21,9 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="453" max="32767" attributes="0"/>
+              <EmptySpace pref="373" max="32767" attributes="0"/>
+              <Component id="BotoValidar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -32,6 +34,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BotoValidar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="323" max="32767" attributes="0"/>
           </Group>
@@ -58,6 +61,11 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Selecciona tamany"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotoValidar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Validar"/>
       </Properties>
     </Component>
   </SubComponents>
