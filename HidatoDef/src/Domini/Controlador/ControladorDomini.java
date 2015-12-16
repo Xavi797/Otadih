@@ -51,6 +51,7 @@ public class ControladorDomini {
             */
             public ControladorDomini(){
                 tauler = new Tauler();
+                tauler_partida = new Tauler();
                 usuari = new Usuari();
                 partida = new Partida();
                 hidatos = new Hidatos();
@@ -174,7 +175,7 @@ public class ControladorDomini {
                 return null;
             }
             
-            public void novaPartida(){
+            public void novaPartida() {
                // tauler_partida = tauler.clonar();
                 conjuntUsats = new ArrayList<Integer>();
                 propers = new ArrayList<Integer>();
@@ -299,7 +300,7 @@ public class ControladorDomini {
              */
             public boolean guardarTauler(String name) {
                 hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler);
+                hidatos.setTaulerJocModi(tauler_partida);
                 hidatos.setTaulerJocSolu(solucion);
                 Object obj = (Object) hidatos;
                 
@@ -320,7 +321,6 @@ public class ControladorDomini {
                 
                 tauler = hidatos.getTaulerJocInic();
                 tauler_partida = hidatos.getTaulerJocModi();
-                controladorTaula.escriuTauler(tauler_partida);
                 solucion = hidatos.getTaulerJocSolu();
             }
             
