@@ -300,14 +300,9 @@ public class VistaJugar extends VistaGenerica {
         @Override
         public void focusGained(FocusEvent e) {
             
-            List<Integer> numsLabel;
+ 
             ArrayList<Integer> numsAjuda = new ArrayList();
             String resultat= "";
-            numsLabel = controladorDomini.getPropers();
-            int[] dirHorit ={1,1,1,0,0,-1,-1,-1};
-            int[] dirVerti ={1,0,-1,1,-1,1,0,-1};
-            int novaPosX;
-            int novaPosY;
             if (matriu[x][y] > 0) {
                 HelpLabel.setText("Nombre ben colocat");
                 return;
@@ -326,12 +321,15 @@ public class VistaJugar extends VistaGenerica {
         public void focusLost(FocusEvent e) {
  
             String num = tauler[x][y].getText();
-            int n;
-            if (num.isEmpty()){
-                n = 0;
-                
-            } else {
-                n=Integer.parseInt(num);
+            int n = 0;
+            if(!num.isEmpty()) {
+                try{
+                    n=Integer.parseInt(num);
+                }
+                catch(Exception e1){
+                    tauler[x][y].setText("");
+                    n = 0;
+                }
             }
          
             

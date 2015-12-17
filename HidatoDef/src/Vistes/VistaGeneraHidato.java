@@ -100,6 +100,12 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
 
         jLabel5.setText("Num inicials");
 
+        numInicials.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numInicialsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,6 +198,16 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         controladorDomini.generaTauler(Integer.parseInt(costat), numIni, topologia);
         controladorVistes.mostraVista("vistaJugar");
     }//GEN-LAST:event_botoGeneraActionPerformed
+
+    private void numInicialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numInicialsActionPerformed
+        // TODO add your handling code here:
+        try{
+           int n = Integer.parseInt(numInicials.getText());
+        }
+        catch (Exception e1){
+            numInicials.setText("");
+        }
+    }//GEN-LAST:event_numInicialsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
