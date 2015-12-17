@@ -91,6 +91,11 @@ public class ControladorPersistencia {
         return SDades.destruir(name, "../Dades/Rankings/");
     }
     
+    /**
+     * Funcio encarregada de fer la crida per comprovar si ja existeix un Ranking amb nom name.
+     * @param name Nom del ranking
+     * @return Cert en cas de que ja existeixi, false en cas contrari
+     */
     public boolean comprovaRanking(String name) {
         return SDades.existeixObjecte(name, "../Dades/Rankings");
     }

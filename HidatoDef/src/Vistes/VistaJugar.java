@@ -173,6 +173,7 @@ public class VistaJugar extends VistaGenerica {
         createBoard();
         JOptionPane.showMessageDialog(null,"Rendicio!!","Information",JOptionPane.INFORMATION_MESSAGE);
         //HelpLabel.setText("");
+        controladorDomini.esborraPartida();
         surt();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -226,6 +227,7 @@ public class VistaJugar extends VistaGenerica {
                 }
                 resultatGuardar = controladorDomini.guardarPartida(inputValue, sobreescriure);
             }
+            surt();
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -236,11 +238,12 @@ public class VistaJugar extends VistaGenerica {
                 if(controladorDomini.bensolucionat()){
                     JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
                     controladorDomini.actualitzaRanking();
-                    //controladorDomini.guardaPuntuacio();
+                    controladorDomini.esborraPartida();
                     surt();
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Hidato mal solucionat :( !!!","Information",JOptionPane.INFORMATION_MESSAGE);
+                    controladorDomini.esborraPartida();
                     surt();
                     //Pop up de mal solucionat!!!!
                     
@@ -254,6 +257,7 @@ public class VistaJugar extends VistaGenerica {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         ArrayList<Integer> llista = new ArrayList();
+        controladorDomini.augmentaChecks();
         if(controladorDomini.checkTauler(llista)){
             JOptionPane.showMessageDialog(null,"Totes les caselles correctes!!!","Information",JOptionPane.INFORMATION_MESSAGE);
         }

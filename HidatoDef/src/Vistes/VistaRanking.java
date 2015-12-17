@@ -89,14 +89,15 @@ public class VistaRanking extends VistaGenerica {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotoTornar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotoTornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoTornarActionPerformed
+        ListaDificultat.clearSelection();
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_BotoTornarActionPerformed
 
@@ -108,8 +109,18 @@ public class VistaRanking extends VistaGenerica {
     private void ListaDificultatValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaDificultatValueChanged
         int seleccionat = ListaDificultat.getSelectedIndex();
         System.out.println(seleccionat);
+        //System.out.println("wtf");
         String[] puntuacions = controladorDomini.obteRanking(seleccionat);
-        LlistaPuntuacions.setListData(puntuacions);
+        /*for (int i = 0; i < puntuacions.length; ++i) {
+            System.out.println(puntuacions[i]);
+        }*/
+        if (seleccionat == -1) {
+            String[] buit = {"SELECCIONA UN RANKING"};
+            LlistaPuntuacions.setListData(buit);
+        }
+        else {
+            LlistaPuntuacions.setListData(puntuacions);
+        }
     }//GEN-LAST:event_ListaDificultatValueChanged
 
 
@@ -124,6 +135,8 @@ public class VistaRanking extends VistaGenerica {
     private void initLlistes() {
         String[] listData = {"Facil", "Intermedi", "Dificil"};
         ListaDificultat.setListData(listData);
-        ListaDificultat.setSelectedIndex(0);
+        
+        String[] buit = {"SELECCIONA UN RANKING"};
+        LlistaPuntuacions.setListData(buit);
     }
 }
