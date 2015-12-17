@@ -26,8 +26,9 @@ public class ControladorGenera {
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
 	    private long startTime;
-            private final long timeout = 8000;                                   
+            private long timeout = 8000;                                   
             private long elapsed;
+            private final long [] timeVect = {1000,2000,3000,5000,5500,6500,8000};
             
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -39,6 +40,7 @@ public class ControladorGenera {
 
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             private Scanner in = new Scanner(System.in);
+
     
             public Tauler getTauler() {
                 return tauler;
@@ -92,6 +94,8 @@ public class ControladorGenera {
               * PRE: -- 
               */
 	    public void generaTauler(int costat, int numInicials, String topo) {
+                
+                 timeout = timeVect[costat - 3];
 	    	 int numMaxim;
 	    	 Coord posInicialProvisional = new Coord();
 	         Coord coordenadaAux = new Coord();
@@ -170,19 +174,12 @@ public class ControladorGenera {
                  min = numMaxim;
                  startTime = System.currentTimeMillis();
 	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0,true)){
-                    t = taulerGeneratAux.clonar();
-                    
-                    quita_nums(min,num_posar,numMaxim,t,0,0,false);
+                    //t = taulerGeneratAux.clonar();
+                    //quita_nums(min,num_posar,numMaxim,t,0,0,false);
                 }
 	         Collections.sort(conjuntGenerat);
-                 /*
-	         numDonats = new int[conjuntGenerat.size()];
-	         for (int i = 0; i < numDonats.length; i++)
-	             numDonats[i] = conjuntGenerat.get(i);
-                 */
-	         tauler = t;
- 
-                 //cTaul.escriuTauler(tauler);
+
+	         //tauler = t;
 	         
 	    }
 	     /* POST: tauler conte el nou tauler generat amb les caselles buides
@@ -276,8 +273,11 @@ public class ControladorGenera {
                     tauler = taulerGenerat;
                     return true;
                 }
-                else if(min > num_posats)
+                else if(min > num_posats){
                     min = num_posats;
+                    tauler = taulerGenerat.clonar();
+                }
+                    
                 
                 while(i<tam){
                     while(j<tam){
