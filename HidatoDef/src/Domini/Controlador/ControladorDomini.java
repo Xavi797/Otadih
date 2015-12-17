@@ -251,6 +251,27 @@ public class ControladorDomini {
                 }
                 else return false;
             }
+            /**
+             * Fa un check de tauler que retorna true si totes estan ben colocades
+             * fins al moment. La llista conte els numeros mal colocats
+             * @param llista
+             * @return 
+             */
+            public boolean checkTauler(List<Integer> llista){
+                return cJuga.check(llista, tauler_partida, solucion);
+            }
+            
+            /** Afegeix a llista tots els numeros posibles a colocar per la casella (i,j)
+             * 
+             * @param i posicio casella files
+             * @param j posicio casella columna
+             * @param llista llista que contindra els posibles numeros a ficar
+             */
+            public void numsPosibles(int i, int j,List<Integer> llista){
+                for(int aux = 0; aux < propers.size(); ++ aux)
+                if(cJuga.bencolocat(i, j,propers.get(aux) , tauler, conjuntUsats))
+                    llista.add(propers.get(aux));
+            }
             
             /**
               * getSolucio, Retorna el tauler solucionat solucion
