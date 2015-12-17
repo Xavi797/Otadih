@@ -33,6 +33,7 @@ public class ControladorDomini {
             
             private Usuari usuari;
             private Partida partida;
+            private String nomPartidaActual;
             private Hidatos hidatos;
             private Rankings rankings;
             private Estadistiques estadistiques;
@@ -54,7 +55,7 @@ public class ControladorDomini {
                 usuari = new Usuari();
                 partida = new Partida();
                 hidatos = new Hidatos();
-                rankings = new Rankings(0);
+                rankings = new Rankings(-1);
                 estadistiques = new Estadistiques();
                 solucion = new Tauler();
                 cJuga = new ControladorJuga();
@@ -105,6 +106,16 @@ public class ControladorDomini {
                 solucion = cGen.getSolucion();
                 maxCas = cGen.getMaxCas();
                 
+                //Iniciem ranking esperat en base la mida del tauler
+                if (tauler.sizeTauler() < 6) { //Tauler facil
+                    rankings = (Rankings) cPers.carregaRanking("0");
+                }
+                else if (tauler.sizeTauler() < 8) { //Tauler intermig
+                    rankings = (Rankings) cPers.carregaRanking("1");
+                }
+                else { //Tauler diuficil
+                    rankings = (Rankings) cPers.carregaRanking("2");
+                }
             }
             
             /**
@@ -429,10 +440,21 @@ public class ControladorDomini {
             public void actualitzaRanking() {
                 int punts = (int) ((System.currentTimeMillis() - startTime) + elapsed);
                 punts = punts/1000;
+                System.out.println(partida.getNumChecks());
+                punts = punts + (20 * partida.getNumChecks());
                
-                rankings.afegeix(usuari.getNom(), punts); 
+                if (rankings.getNivellDificultat() == 0) {
+                    punts = punts/(tauler.sizeTauler()-2);  //Dividim temps entre 1 (tauler de 3), 2 (de 4) o 3 (de 5)
+                }
+                else if (rankings.getNivellDificultat() == 1) {
+                    punts = punts/(tauler.sizeTauler()-5);  //Dividim temps entre 1 (de 6) o 2 (de 7)
+                }
+                else {
+                    punts = punts/(tauler.sizeTauler()-7);  //Dividim temps entre 1 (de 8) o 2 (de 9)
+                }
                 
-                cPers.guardaRanking((Object)rankings, usuari.getNom());
+                rankings.afegeix(usuari.getNom(), punts); 
+                cPers.guardaRanking((Object)rankings, Integer.toString(rankings.getNivellDificultat()));
             }
             
             /**
@@ -534,6 +556,7 @@ public class ControladorDomini {
                 partida.setHidatos(hidatos);
                 partida.setTemps((System.currentTimeMillis() - startTime) + elapsed);
                 partida.setUser(usuari);
+                partida.setRanking(rankings);
                 
                 Object obj = (Object) partida;
                 
@@ -551,10 +574,13 @@ public class ControladorDomini {
              * @param name Nom de la partida a carregar
              */
             public void carregarPartida(String name) {
+                nomPartidaActual = name;
+                partida = new Partida();
                 partida = (Partida) cPers.carregaPartida(name, usuari.getNom());
                 
                 hidatos = partida.getHidatos();
                 usuari = partida.getUser();
+                rankings = partida.getRanking();
                 
                 tauler = hidatos.getTaulerJocInic();
                 tauler_partida = hidatos.getTaulerJocModi();
@@ -576,8 +602,16 @@ public class ControladorDomini {
              * @param name Nom de la partida ha destruir
              * @return Cert en cas de exit, false en cas contrari
              */
-            public boolean esborraPartida(String name) {
-                return cPers.destrueixPartida(name, usuari.getNom());
+            public boolean esborraPartida() {
+                
+                return cPers.destrueixPartida(nomPartidaActual, usuari.getNom());
+            }
+            
+            /**
+             * Funcio encarregada de augmentar la quantitat de checks que ha fet un usuari durant una partida.
+             */
+            public void augmentaChecks() {
+                partida.setNumChecks(partida.getNumChecks() + 1);
             }
             
             /**** TAULER ****/
@@ -606,11 +640,22 @@ public class ControladorDomini {
              * @param name Nom del tauler a carregar
              */
             public void carregarTauler(String name) {
+                nomPartidaActual = name;
                 hidatos = (Hidatos) cPers.carregaTauler(name);
                 
                 tauler = hidatos.getTaulerJocInic().clonar();
                 tauler_partida = hidatos.getTaulerJocModi().clonar();
                 solucion = hidatos.getTaulerJocSolu();
+                
+                if (tauler.sizeTauler() < 6) { //Tauler facil
+                    rankings = (Rankings) cPers.carregaRanking("0");
+                }
+                else if (tauler.sizeTauler() < 8) { //Tauler intermig
+                    rankings = (Rankings) cPers.carregaRanking("1");
+                }
+                else { //Tauler diuficil
+                    rankings = (Rankings) cPers.carregaRanking("2");
+                }
             }
             
             /**

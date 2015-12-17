@@ -22,9 +22,10 @@ public class Partida implements Serializable {
      */
     private Usuari user;
     private Hidatos hidatos;
+    private Rankings ranking;
     private long temps = 0;
     private int numChecks;
-    private boolean solve;
+    //private boolean solve;
 
     public Usuari getUser() {
         return user;
@@ -42,6 +43,14 @@ public class Partida implements Serializable {
         this.hidatos = hidatos;
     }
 
+    public Rankings getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Rankings ranking) {
+        this.ranking = ranking;
+    }
+
     public long getTemps() {
         return temps;
     }
@@ -57,14 +66,16 @@ public class Partida implements Serializable {
     public void setNumChecks(int numChecks) {
         this.numChecks = numChecks;
     }
-
+/*
     public boolean isSolve() {
         return solve;
     }
 
     public void setSolve(boolean solve) {
         this.solve = solve;
-    }
+    }*/
+
+    
     
     
 }
