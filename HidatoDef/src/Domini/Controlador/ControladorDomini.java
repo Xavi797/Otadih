@@ -100,6 +100,7 @@ public class ControladorDomini {
              * Despres fara els sets y getters per tenir aqui el tauler.
              */
             public void generaTauler(int costat, int numInicials, String topo){
+                partida = new Partida();
                 cGen.generaTauler(costat, numInicials ,topo);
                 tauler = cGen.getTauler();
                 tauler_partida = tauler.clonar();
@@ -611,6 +612,7 @@ public class ControladorDomini {
              */
             public void augmentaChecks() {
                 partida.setNumChecks(partida.getNumChecks() + 1);
+                System.out.println(partida.getNumChecks());
             }
             
             /**** TAULER ****/
