@@ -54,7 +54,7 @@ public class ControladorDomini {
                 usuari = new Usuari();
                 partida = new Partida();
                 hidatos = new Hidatos();
-                rankings = new Rankings();
+                rankings = new Rankings(0);
                 estadistiques = new Estadistiques();
                 solucion = new Tauler();
                 cJuga = new ControladorJuga();
@@ -429,7 +429,7 @@ public class ControladorDomini {
             public void actualitzaRanking() {
                 //Envia a ranking l'usuari, dificultat?, temps
                 //CALCUL DE LA PUNTUACIO <>
-                long temps_total = (System.currentTimeMillis() - startTime) + elapsed;
+                
                 //CALCUL DE LA PUNTUACIO </>
                 
                 //rankings.afegeix(usuari.getNom(), punts); 
@@ -452,6 +452,39 @@ public class ControladorDomini {
              */
             public void carregarRanking(String name) {
                 rankings = (Rankings) cPers.carregaRanking(name);
+            }
+            
+            /**
+             * Funcio encarregada de enviar el ranking demanat a la vista.
+             * @param seleccionat Int que indica quin ranking es demana
+             * @return Vector de strings de 20 posicions on les posicions parelles corresponen als usuaris i les senars a les puntuacions
+             */
+            public String[] obteRanking(int seleccionat) {
+                //Guardat del ranking NO GUARDEM EL INICIALITZADOR
+                if (rankings.getNivellDificultat() != 0) {
+                    cPers.guardaRanking((Object)rankings, Integer.toString(rankings.getNivellDificultat()));
+                }
+                
+                //Carregat del ranking demanat, el creem si no existia
+                String demanatAux = Integer.toString(seleccionat);
+                if (cPers.comprovaRanking(demanatAux)) {
+                    rankings = (Rankings) cPers.carregaRanking(demanatAux);
+                }
+                else {
+                    rankings = new Rankings(seleccionat);
+                }
+                
+                String[] rankingObtingut = new String[20];
+                for (int i = 0; i < rankingObtingut.length; ++i) {
+                    if (i % 2 == 0) {
+                        rankingObtingut[i] = rankings.getUsuari(i);
+                    }
+                    else {
+                        rankingObtingut[i] = Integer.toString(rankings.getPunts(i));
+                    }
+                }
+                
+                return rankingObtingut;
             }
             
             /**** ESTADISTIQUES ****/

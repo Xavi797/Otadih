@@ -14,7 +14,7 @@ import Domini.Clases.Rankings;
 public class DriverRanking {
     public static void main(String[] args) {
         
-        Rankings rank = new Rankings();
+        Rankings rank = new Rankings(0);
         rank.afegeix("Jaume", 1000);
         rank.afegeix("Carlos", 1200);
         rank.afegeix("Xavi", 1100);

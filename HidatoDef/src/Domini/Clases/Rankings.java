@@ -23,14 +23,16 @@ public class Rankings implements Serializable {
     
     /**
      * Constructor que inicialitza totes les primeres posicions amb valors Dummy amb punts ascendents.
+     * @param dificultat 
      */
-    public Rankings() {
+    public Rankings(int dificultat) {
+        nivellDificultat = dificultat;
         taulaRanking = new ArrayList<UsuariPuntuacio>();
         for (int i = 0; i < 11; ++i) {
-            UsuariPuntuacio up = new UsuariPuntuacio("DUMMY", 100);
-            up.setPunts(i*100);
+            UsuariPuntuacio up = new UsuariPuntuacio();
+            up.punts = 0;
+            up.user = "DUMMY";
             taulaRanking.add(up);
-            ordenar();
         }
     }
     
@@ -72,7 +74,9 @@ public class Rankings implements Serializable {
      * @param punts Punts que ha fet el usuari
      */
     public void afegeix(String user, int punts) {
-        UsuariPuntuacio up = new UsuariPuntuacio(user, punts);
+        UsuariPuntuacio up = new UsuariPuntuacio();
+        up.user = user;
+        up.punts = punts;
         taulaRanking.add(taulaRanking.size()-1, up);
         ordenar();
         retallar();
@@ -94,7 +98,7 @@ public class Rankings implements Serializable {
             UsuariPuntuacio up2 = taulaRanking.get(index);
             int i2 = index;
             
-            if (up1.getPunts() > up2.getPunts()) {
+            if (up1.punts> up2.punts) {
                 Collections.swap(taulaRanking, i1, i2);
             }
         }
@@ -123,7 +127,7 @@ public class Rankings implements Serializable {
      * @return String que conte el nom del usuari demanat
      */
     public String getUsuari(int index) {
-        return taulaRanking.get(index).getUser();
+        return taulaRanking.get(index).user;
     }
     
     /**
@@ -132,6 +136,6 @@ public class Rankings implements Serializable {
      * @return Int que conte els punts del usuari de la posicio demanada
      */
     public int getPunts(int index) {
-        return taulaRanking.get(index).getPunts();
+        return taulaRanking.get(index).punts;
     }
 }
