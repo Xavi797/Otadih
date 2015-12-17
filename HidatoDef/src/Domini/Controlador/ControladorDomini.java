@@ -145,63 +145,6 @@ public class ControladorDomini {
             }
             
             /**
-             * Registra un nou usuari a la base de dades.
-             * @param user Nom de usuari
-             * @param pass Password de el usuari
-             * @param codi Codi de recuperacio
-             * @return True si sha creat correctament el usuari
-             */
-            public boolean registrarUsuari(String user,String pass, String codi){
-                if(cPers.comprovaUser(user)) {
-                    return false;
-                }
-                else {
-                    estadistiques = new Estadistiques(0, 0, 0, 0);
-                    cPers.guardaEstadistica((Object)estadistiques, user);   //Inicialitzem unes estadistiques per al usuari
-                    usuari = new Usuari(user,pass,codi);
-                    return cPers.guardaUser((Object)usuari, user);
-                }
-            }
-            
-            /**
-             * Funcio encarregada de comprovar si la relacio user-password existeix
-             * @param user Nom del usuari
-             * @param pass Contrassenya del usuari
-             * @return Retorna true si el usuari existeix i te el password corresponent, false en cas contrari
-             */
-            public boolean logInUsuari(String user,String pass){
-                usuari = (Usuari) cPers.carregaUser(user);
-                if (usuari == null) return false;
-                return usuari.getPassword().equals(pass);
-                
-            }
-            
-            /**
-             * Funcio encarregada de recuperar el password de un usuari donat el seu codi de recuperacio.
-             * @param user Nom del usuari
-             * @param codi Codi de recuperacio
-             * @return String que conte el password recuperat en cas de exit, string amb valor null en cas contrari
-             */
-            public String restauraPassword(String user, String codi) {
-                usuari = (Usuari) cPers.carregaUser(user);
-                if (usuari == null) return null;
-                if (usuari.getCodi().equals(codi)) {
-                    String resposta = usuari.getPassword();
-                    return resposta;
-                }
-                return null;
-            }
-            
-            /**
-             * Funcio encarregada de esborrar un usuari i totes les seves dades del sistema.
-             */
-            public void esborraUsuari() {
-                cPers.destrueixTotesPartides(usuari.getNom());
-                cPers.destrueixEstadistica(usuari.getNom());
-                cPers.destrueixUser(usuari.getNom());
-            }
-            
-            /**
              * Crea una nova partida per poder jugar al tauler previament creat
              * o carregat. Tambe s'utilitza per retomar una partida.
              */
@@ -290,31 +233,6 @@ public class ControladorDomini {
             public boolean celaCorrecte(int i, int j){
                 return cJuga.celaCorrecta(i, j, tauler_partida, solucion);
             }
-
-            /**
-             * Funcio encarregada de fer la crida per guardar una partida a mitges.
-             * @param name Nom de la partida a guardar
-             * @param sobreescriure Indica si la partida es pot sobreescriure (cert) o no
-             * @return Cert si la partida es guarda correctament.
-             */
-            public boolean guardarPartida(String name, boolean sobreescriure) {
-                hidatos.setTaulerJocInic(tauler);
-                hidatos.setTaulerJocModi(tauler_partida);
-                hidatos.setTaulerJocSolu(solucion);
-                partida.setHidatos(hidatos);
-                partida.setTemps((System.currentTimeMillis() - startTime) + elapsed);
-                partida.setUser(usuari);
-                
-                Object obj = (Object) partida;
-                
-                if(cPers.comprovaPartida(name, usuari.getNom()) && !sobreescriure) {
-                    //Ja existeix una partida amb aquest nom. Sobreescriure?
-                    return false;
-                }
-                else {
-                    return cPers.guardaPartida(obj, name, usuari.getNom());
-                }
-            }
             
             /**
              * Funcio encarregada de Validar un tauler, utilitzant el algoritme
@@ -332,149 +250,6 @@ public class ControladorDomini {
                     return true;
                 }
                 else return false;
-            }
-            
-            /**
-             * Quan la partida finalitza actualitza el ranking amb nom user
-             * + temps nou;
-             */
-            public void actualitzaRanking() {
-                //Envia a ranking l'usuari, dificultat?, temps
-                //CALCUL DE LA PUNTUACIO <>
-                long temps_total = (System.currentTimeMillis() - startTime) + elapsed;
-                //CALCUL DE LA PUNTUACIO </>
-                
-                //rankings.afegeix(usuari.getNom(), punts); 
-                
-                cPers.guardaRanking((Object)rankings, usuari.getNom());
-            }
-            
-            /**
-             * Quan la partida inicia actualitza els camps necessaris de les estadistiques.
-             */
-            public void actualitzaEstadistiquesInici() {
-                estadistiques.afegeixPartida();
-                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
-            }
-            
-            
-            /**
-             * Quan la partida acaba actualitza els camps necessaris de les estadistiques.
-             * @param guanyada Indica si la partida ha acabat amb victoria o no
-             * @param punts Indica la quantitat de punts que ha aconseguit el usuari
-             */
-            public void actualitzaEstadistiquesFinal(boolean guanyada, int punts) {
-                estadistiques.afegeixPartidaGuanyada(guanyada);
-                estadistiques.afegeixPuntuacio(punts);
-                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
-            }
-            
-            
-            /**
-             * Funcio encarregada de fer la crida per a carregar una partida.
-             * @param name Nom de la partida a carregar
-             */
-            public void carregarPartida(String name) {
-                partida = (Partida) cPers.carregaPartida(name, usuari.getNom());
-                
-                hidatos = partida.getHidatos();
-                usuari = partida.getUser();
-                
-                tauler = hidatos.getTaulerJocInic();
-                tauler_partida = hidatos.getTaulerJocModi();
-                solucion = hidatos.getTaulerJocSolu();
-            }
-            
-            /**
-             * Funcio que demana a la BD el llistat de partides a mitges que te el usuari 'user'.
-             * @return Llista de Strings que conte el nom de les partides a mitges
-             */
-            public List<String> llistatPartides() {
-                List<String> list = new ArrayList<String>();
-                list = cPers.llistaPartides(usuari.getNom());
-                return list;
-            }
-            
-            /**
-             * Funcio encarregada de fer la crida a la BD per a que destrueixi una partida.
-             * @param name Nom de la partida ha destruir
-             * @return Cert en cas de exit, false en cas contrari
-             */
-            public boolean esborraPartida(String name) {
-                return cPers.destrueixPartida(name, usuari.getNom());
-            }
-            
-            /**
-             * Funcio encarregada de enviar un tauler a la BD per a que es guardi.
-             * @param name Nom amb que es guardara el tauler
-             * @return Cert en cas de exit, false en cas contrari
-             */
-            public boolean guardarTauler(String name) {
-                hidatos.setTaulerJocInic(tauler.clonar());
-                hidatos.setTaulerJocModi(tauler.clonar());
-                hidatos.setTaulerJocSolu(solucion);
-                Object obj = (Object) hidatos;
-                
-                if(cPers.comprovaTauler(name)) {
-                    return false;
-                }
-                else {
-                    return cPers.guardaTauler(obj, name);
-                }
-            }
-            
-            /**
-             * Funcio encarregada de fer la crida per carregar de la BD un tauler demanat.
-             * @param name Nom del tauler a carregar
-             */
-            public void carregarTauler(String name) {
-                hidatos = (Hidatos) cPers.carregaTauler(name);
-                
-                tauler = hidatos.getTaulerJocInic().clonar();
-                tauler_partida = hidatos.getTaulerJocModi().clonar();
-                solucion = hidatos.getTaulerJocSolu();
-            }
-            
-            /**
-             * Funcio que demana a la BD el llistat de tots els taulers que te el sistema.
-             * @return Llista de Stings que conte el nom dels taulers del sistema
-             */
-            public List<String> llistatTaulers() {
-                List<String> list = new ArrayList<String>();
-                list = cPers.llistaTaulers();
-                return list;
-            }
-            
-            /**
-             * Funcio encarregada de enviar a la BD un ranking per a guardarlo.
-             * @param name Nom del ranking
-             */
-            public void guardaRanking(String name) {
-                Object obj = (Object) rankings; 
-                cPers.guardaRanking(obj, name);
-            }
-            
-            /**
-             * Funcio encarregada de demanar a la BD de carregar un el ranking anomenat name.
-             * @param name Nom del ranking
-             */
-            public void carregarRanking(String name) {
-                rankings = (Rankings) cPers.carregaRanking(name);
-            }
-            
-            /**
-             * Funcio encarregada de enviar a la BD un estadistiques per guardar-la.
-             */
-            public void guardaEstadistiques() {
-                Object obj = (Object) estadistiques;
-                cPers.guardaEstadistica(obj, usuari.getNom());
-            }
-            
-            /**
-             * Funcio encarregada de demanar a la BD de carregar les estadistiques del usuari.
-             */
-            public void carregaEstadistiques() {
-                estadistiques = (Estadistiques) cPers.carregaEstadistica(usuari.getNom());
             }
             
             /**
@@ -558,4 +333,242 @@ public class ControladorDomini {
             public void setPropers(List<Integer> propers) {
                 this.propers = propers;
             }            
+            
+            ////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
+            
+            /**** USUARI ****/
+            
+            /**
+             * Registra un nou usuari a la base de dades.
+             * @param user Nom de usuari
+             * @param pass Password de el usuari
+             * @param codi Codi de recuperacio
+             * @return True si sha creat correctament el usuari
+             */
+            public boolean registrarUsuari(String user,String pass, String codi){
+                if(cPers.comprovaUser(user)) {
+                    return false;
+                }
+                else {
+                    estadistiques = new Estadistiques(0, 0, 0, 0);
+                    cPers.guardaEstadistica((Object)estadistiques, user);   //Inicialitzem unes estadistiques per al usuari
+                    usuari = new Usuari(user,pass,codi);
+                    return cPers.guardaUser((Object)usuari, user);
+                }
+            }
+            
+            /**
+             * Funcio encarregada de comprovar si la relacio user-password existeix
+             * @param user Nom del usuari
+             * @param pass Contrassenya del usuari
+             * @return Retorna true si el usuari existeix i te el password corresponent, false en cas contrari
+             */
+            public boolean logInUsuari(String user,String pass){
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return false;
+                return usuari.getPassword().equals(pass);
+                
+            }
+            
+            /**
+             * Funcio encarregada de recuperar el password de un usuari donat el seu codi de recuperacio.
+             * @param user Nom del usuari
+             * @param codi Codi de recuperacio
+             * @return String que conte el password recuperat en cas de exit, string amb valor null en cas contrari
+             */
+            public String restauraPassword(String user, String codi) {
+                usuari = (Usuari) cPers.carregaUser(user);
+                if (usuari == null) return null;
+                if (usuari.getCodi().equals(codi)) {
+                    String resposta = usuari.getPassword();
+                    return resposta;
+                }
+                return null;
+            }
+            
+            /**
+             * Funcio encarregada de esborrar un usuari i totes les seves dades del sistema.
+             */
+            public void esborraUsuari() {
+                cPers.destrueixTotesPartides(usuari.getNom());
+                cPers.destrueixEstadistica(usuari.getNom());
+                cPers.destrueixUser(usuari.getNom());
+            }
+            
+            /**** RANKING ****/
+            
+            /**
+             * Quan la partida finalitza actualitza el ranking amb nom user
+             * + temps nou;
+             */
+            public void actualitzaRanking() {
+                //Envia a ranking l'usuari, dificultat?, temps
+                //CALCUL DE LA PUNTUACIO <>
+                long temps_total = (System.currentTimeMillis() - startTime) + elapsed;
+                //CALCUL DE LA PUNTUACIO </>
+                
+                //rankings.afegeix(usuari.getNom(), punts); 
+                
+                cPers.guardaRanking((Object)rankings, usuari.getNom());
+            }
+            
+            /**
+             * Funcio encarregada de enviar a la BD un ranking per a guardarlo.
+             * @param name Nom del ranking
+             */
+            public void guardaRanking(String name) {
+                Object obj = (Object) rankings; 
+                cPers.guardaRanking(obj, name);
+            }
+            
+            /**
+             * Funcio encarregada de demanar a la BD de carregar un el ranking anomenat name.
+             * @param name Nom del ranking
+             */
+            public void carregarRanking(String name) {
+                rankings = (Rankings) cPers.carregaRanking(name);
+            }
+            
+            /**** ESTADISTIQUES ****/
+            
+            /**
+             * Quan la partida inicia actualitza els camps necessaris de les estadistiques.
+             */
+            public void actualitzaEstadistiquesInici() {
+                estadistiques.afegeixPartida();
+                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
+            }
+            
+            
+            /**
+             * Quan la partida acaba actualitza els camps necessaris de les estadistiques.
+             * @param guanyada Indica si la partida ha acabat amb victoria o no
+             * @param punts Indica la quantitat de punts que ha aconseguit el usuari
+             */
+            public void actualitzaEstadistiquesFinal(boolean guanyada, int punts) {
+                estadistiques.afegeixPartidaGuanyada(guanyada);
+                estadistiques.afegeixPuntuacio(punts);
+                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
+            }
+            
+            /**
+             * Funcio encarregada de enviar a la BD un estadistiques per guardar-la.
+             */
+            public void guardaEstadistiques() {
+                Object obj = (Object) estadistiques;
+                cPers.guardaEstadistica(obj, usuari.getNom());
+            }
+            
+            /**
+             * Funcio encarregada de demanar a la BD de carregar les estadistiques del usuari.
+             */
+            public void carregaEstadistiques() {
+                estadistiques = (Estadistiques) cPers.carregaEstadistica(usuari.getNom());
+            }
+            
+            /**** PARTIDES ****/
+            
+            /**
+             * Funcio encarregada de fer la crida per guardar una partida a mitges.
+             * @param name Nom de la partida a guardar
+             * @param sobreescriure Indica si la partida es pot sobreescriure (cert) o no
+             * @return Cert si la partida es guarda correctament.
+             */
+            public boolean guardarPartida(String name, boolean sobreescriure) {
+                hidatos.setTaulerJocInic(tauler);
+                hidatos.setTaulerJocModi(tauler_partida);
+                hidatos.setTaulerJocSolu(solucion);
+                partida.setHidatos(hidatos);
+                partida.setTemps((System.currentTimeMillis() - startTime) + elapsed);
+                partida.setUser(usuari);
+                
+                Object obj = (Object) partida;
+                
+                if(cPers.comprovaPartida(name, usuari.getNom()) && !sobreescriure) {
+                    //Ja existeix una partida amb aquest nom. Sobreescriure?
+                    return false;
+                }
+                else {
+                    return cPers.guardaPartida(obj, name, usuari.getNom());
+                }
+            }
+            
+            /**
+             * Funcio encarregada de fer la crida per a carregar una partida.
+             * @param name Nom de la partida a carregar
+             */
+            public void carregarPartida(String name) {
+                partida = (Partida) cPers.carregaPartida(name, usuari.getNom());
+                
+                hidatos = partida.getHidatos();
+                usuari = partida.getUser();
+                
+                tauler = hidatos.getTaulerJocInic();
+                tauler_partida = hidatos.getTaulerJocModi();
+                solucion = hidatos.getTaulerJocSolu();
+            }
+            
+            /**
+             * Funcio que demana a la BD el llistat de partides a mitges que te el usuari 'user'.
+             * @return Llista de Strings que conte el nom de les partides a mitges
+             */
+            public List<String> llistatPartides() {
+                List<String> list = new ArrayList<String>();
+                list = cPers.llistaPartides(usuari.getNom());
+                return list;
+            }
+            
+            /**
+             * Funcio encarregada de fer la crida a la BD per a que destrueixi una partida.
+             * @param name Nom de la partida ha destruir
+             * @return Cert en cas de exit, false en cas contrari
+             */
+            public boolean esborraPartida(String name) {
+                return cPers.destrueixPartida(name, usuari.getNom());
+            }
+            
+            /**** TAULER ****/
+            
+            /**
+             * Funcio encarregada de enviar un tauler a la BD per a que es guardi.
+             * @param name Nom amb que es guardara el tauler
+             * @return Cert en cas de exit, false en cas contrari
+             */
+            public boolean guardarTauler(String name) {
+                hidatos.setTaulerJocInic(tauler.clonar());
+                hidatos.setTaulerJocModi(tauler.clonar());
+                hidatos.setTaulerJocSolu(solucion);
+                Object obj = (Object) hidatos;
+                
+                if(cPers.comprovaTauler(name)) {
+                    return false;
+                }
+                else {
+                    return cPers.guardaTauler(obj, name);
+                }
+            }
+            
+            /**
+             * Funcio encarregada de fer la crida per carregar de la BD un tauler demanat.
+             * @param name Nom del tauler a carregar
+             */
+            public void carregarTauler(String name) {
+                hidatos = (Hidatos) cPers.carregaTauler(name);
+                
+                tauler = hidatos.getTaulerJocInic().clonar();
+                tauler_partida = hidatos.getTaulerJocModi().clonar();
+                solucion = hidatos.getTaulerJocSolu();
+            }
+            
+            /**
+             * Funcio que demana a la BD el llistat de tots els taulers que te el sistema.
+             * @return Llista de Stings que conte el nom dels taulers del sistema
+             */
+            public List<String> llistatTaulers() {
+                List<String> list = new ArrayList<String>();
+                list = cPers.llistaTaulers();
+                return list;
+            }
 }
