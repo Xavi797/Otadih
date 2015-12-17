@@ -45,10 +45,9 @@ public class VistaJugar extends VistaGenerica {
         controladorVistes = contV;
         plataformaCeles = new JPanel();
         
-        Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
         HelpLabel.setBorder(border);
-        HelpLabel.setVisible(false); 
-        HelpLabel.setBackground(Color.white);
+        HelpLabel.setVisible(false);
        
     }
 
@@ -243,6 +242,9 @@ public class VistaJugar extends VistaGenerica {
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
         matriu_aux = controladorDomini.getTaulerPartidaPerVista();
+        if (matriu.length >= 8)
+        jToggleButton1.setVisible(false);
+
     }
     
     
