@@ -22,7 +22,7 @@ public class Partida implements Serializable {
      */
     private Usuari user;
     private Hidatos hidatos;
-    private long temps = 0; //provisional.buscar funcio de clock
+    private long temps = 0;
     private int numChecks;
     private boolean solve;
 

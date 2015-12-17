@@ -236,7 +236,6 @@ public class VistaJugar extends VistaGenerica {
                 if(controladorDomini.bensolucionat()){
                     JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
                     controladorDomini.actualitzaRanking();
-                    //controladorDomini.guardaPuntuacio();
                     surt();
                 }
                 else{

@@ -425,12 +425,10 @@ public class ControladorDomini {
              * + temps nou;
              */
             public void actualitzaRanking() {
-                //Envia a ranking l'usuari, dificultat?, temps
-                //CALCUL DE LA PUNTUACIO <>
-                
-                //CALCUL DE LA PUNTUACIO </>
-                
-                //rankings.afegeix(usuari.getNom(), punts); 
+                int punts = (int) ((System.currentTimeMillis() - startTime) + elapsed);
+                punts = punts/1000;
+               
+                rankings.afegeix(usuari.getNom(), punts); 
                 
                 cPers.guardaRanking((Object)rankings, usuari.getNom());
             }
@@ -459,7 +457,7 @@ public class ControladorDomini {
              */
             public String[] obteRanking(int seleccionat) {
                 //Guardat del ranking NO GUARDEM EL INICIALITZADOR
-                if (rankings.getNivellDificultat() != 0) {
+                if (rankings.getNivellDificultat() > -1) {
                     cPers.guardaRanking((Object)rankings, Integer.toString(rankings.getNivellDificultat()));
                 }
                 
@@ -472,14 +470,11 @@ public class ControladorDomini {
                     rankings = new Rankings(seleccionat);
                 }
                 
-                String[] rankingObtingut = new String[20];
+                String[] rankingObtingut = new String[10];
                 for (int i = 0; i < rankingObtingut.length; ++i) {
-                    if (i % 2 == 0) {
-                        rankingObtingut[i] = rankings.getUsuari(i);
-                    }
-                    else {
-                        rankingObtingut[i] = Integer.toString(rankings.getPunts(i));
-                    }
+                    String aux = rankings.getUsuari(i);
+                    aux = i+1 + ". " + aux + "  -  " + Integer.toString(rankings.getPunts(i)) + " segons";
+                    rankingObtingut[i] = aux;
                 }
                 
                 return rankingObtingut;

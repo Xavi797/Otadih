@@ -12,27 +12,27 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- *
+ * Classe encarregada de gestionar qualsevol dels 3 Rankings i puntuacions del sistema.
  * @author jaume.guell
  */
 
 public class Rankings implements Serializable {
     
     private int nivellDificultat;   /* Indica el nivell de dificultat de la partida i per tant ranking a utilitzar */
-    private List<UsuariPuntuacio> taulaRanking; /* Llista que conte el ranking de una determinada dificultat */
+    private List<String> taulaUsuaris; /* Llista que conte el ranking de noms de usuari de una determinada dificultat */
+    private List<Integer> taulaPuntuacions; /* Llista que conte le ranking de puntuacions de una determinada dificultat */
     
     /**
-     * Constructor que inicialitza totes les primeres posicions amb valors Dummy amb punts ascendents.
+     * Constructor que inicialitza totes les primeres posicions amb valors Dummy amb 0 punts.
      * @param dificultat 
      */
     public Rankings(int dificultat) {
         nivellDificultat = dificultat;
-        taulaRanking = new ArrayList<UsuariPuntuacio>();
+        taulaUsuaris = new ArrayList<String>();
+        taulaPuntuacions = new ArrayList<Integer>();
         for (int i = 0; i < 11; ++i) {
-            UsuariPuntuacio up = new UsuariPuntuacio();
-            up.punts = 0;
-            up.user = "DUMMY";
-            taulaRanking.add(up);
+            taulaUsuaris.add("DUMMY");
+            taulaPuntuacions.add(600);
         }
     }
     
@@ -51,22 +51,6 @@ public class Rankings implements Serializable {
     public void setNivellDificultat(int nivellDificultat) {
         this.nivellDificultat = nivellDificultat;
     }
-
-    /**
-     * Funcio encarregada d'obtenir la llista de UsuariPuntuacio
-     * @return Llista que conte els UsuariPuntuacio ordenats per puntuacio
-     */
-    public List<UsuariPuntuacio> getTaulaRanking() {
-        return taulaRanking;
-    }
-
-    /**
-     * Funcio encarregada de definir la llista de UsuariPuntuacio
-     * @param taulaRanking Llista de UsuariPuntuacio ordenats per puntuacio
-     */
-    public void setTaulaRanking(List<UsuariPuntuacio> taulaRanking) {
-        this.taulaRanking = taulaRanking;
-    }
     
     /**
      * Funcio encarregada de afegir un nou UsuariPuntuacio al ranking i ordenarlo.
@@ -74,10 +58,8 @@ public class Rankings implements Serializable {
      * @param punts Punts que ha fet el usuari
      */
     public void afegeix(String user, int punts) {
-        UsuariPuntuacio up = new UsuariPuntuacio();
-        up.user = user;
-        up.punts = punts;
-        taulaRanking.add(taulaRanking.size()-1, up);
+        taulaUsuaris.add(taulaUsuaris.size()-1, user);
+        taulaPuntuacions.add(taulaPuntuacions.size()-1, punts);
         ordenar();
         retallar();
     }
@@ -86,39 +68,43 @@ public class Rankings implements Serializable {
      * Funcio encarregada d'ordenar una llista de UsuariPuntuacio, si la llista te mida mes gran que 10 elimina els ultims.
      */
     public void ordenar() {
-        ListIterator<UsuariPuntuacio> it = taulaRanking.listIterator(taulaRanking.size()-1);
-        int index = taulaRanking.size() - 1;
+        ListIterator<String> itU = taulaUsuaris.listIterator(taulaUsuaris.size()-1);
+        ListIterator<String> itP = taulaUsuaris.listIterator(taulaUsuaris.size()-1);
+        int index = taulaUsuaris.size() - 1;
         
-        while (it.hasPrevious()) {
-            it.previous();    //retrocedim el index 1 posicio
+        while (itU.hasPrevious() && itP.hasPrevious()) {
+            itU.previous();    //retrocedim el index 1 posicio
+            itP.previous();
             
-            UsuariPuntuacio up1 = taulaRanking.get(index);
-            int i1 = index;
+            int punts1 = taulaPuntuacions.get(index);
+            int ind1 = index;
             --index;
-            UsuariPuntuacio up2 = taulaRanking.get(index);
-            int i2 = index;
+            int punts2 = taulaPuntuacions.get(index);
+            int ind2 = index;
             
-            if (up1.punts> up2.punts) {
-                Collections.swap(taulaRanking, i1, i2);
+            if (punts1 < punts2 || "DUMMY".equals(taulaUsuaris.get(index))) {
+                Collections.swap(taulaPuntuacions, ind1, ind2);
+                Collections.swap(taulaUsuaris, ind1, ind2);
             }
         }
     }
     
     /**
-     * Funcio encarregada de mantenir la llista amb 10 posicions, es queda amb les 10 primeres.
+     * Funcio encarregada de mantenir les llistes amb 10 posicions, es queda amb les 10 primeres posicions.
      */
     public void retallar() {
-        while (taulaRanking.size() > 10) {
-            taulaRanking.remove(taulaRanking.size()-1);
+        while (taulaPuntuacions.size() > 10) {
+            taulaPuntuacions.remove(taulaPuntuacions.size()-1);
+            taulaUsuaris.remove(taulaUsuaris.size()-1);
         }
     }
     
     /**
-     * Funcio encarregada de retornar la mida del ranking.
+     * Funcio encarregada de retornar la mida dels rankings.
      * @return Int amb les posicions del ranking
      */
     public int mida() {
-        return taulaRanking.size();
+        return taulaUsuaris.size();
     }
     
     /**
@@ -127,7 +113,7 @@ public class Rankings implements Serializable {
      * @return String que conte el nom del usuari demanat
      */
     public String getUsuari(int index) {
-        return taulaRanking.get(index).user;
+        return taulaUsuaris.get(index);
     }
     
     /**
@@ -136,6 +122,8 @@ public class Rankings implements Serializable {
      * @return Int que conte els punts del usuari de la posicio demanada
      */
     public int getPunts(int index) {
-        return taulaRanking.get(index).punts;
+        return taulaPuntuacions.get(index);
     }
+    
+    //GETS I SETS DE TAULES SENCERES?
 }

@@ -89,10 +89,10 @@ public class VistaRanking extends VistaGenerica {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotoTornar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,8 +107,12 @@ public class VistaRanking extends VistaGenerica {
 
     private void ListaDificultatValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaDificultatValueChanged
         int seleccionat = ListaDificultat.getSelectedIndex();
-        System.out.println(seleccionat);
+        //System.out.println(seleccionat);
+        //System.out.println("wtf");
         String[] puntuacions = controladorDomini.obteRanking(seleccionat);
+        /*for (int i = 0; i < puntuacions.length; ++i) {
+            System.out.println(puntuacions[i]);
+        }*/
         LlistaPuntuacions.setListData(puntuacions);
     }//GEN-LAST:event_ListaDificultatValueChanged
 
