@@ -34,6 +34,8 @@ public class ControladorDomini {
             private Usuari usuari;
             private Partida partida;
             private Hidatos hidatos;
+            private Rankings rankings;
+            private Estadistiques estadistiques;
 	    
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
 	    private int maxCas; /* numero de la casilla mas grande */
@@ -52,6 +54,8 @@ public class ControladorDomini {
                 usuari = new Usuari();
                 partida = new Partida();
                 hidatos = new Hidatos();
+                rankings = new Rankings();
+                estadistiques = new Estadistiques();
                 solucion = new Tauler();
                 cJuga = new ControladorJuga();
                 cCrea = new ControladorCrea();
@@ -152,6 +156,8 @@ public class ControladorDomini {
                     return false;
                 }
                 else {
+                    estadistiques = new Estadistiques(0, 0, 0, 0);
+                    cPers.guardaEstadistica((Object)estadistiques, user);   //Inicialitzem unes estadistiques per al usuari
                     usuari = new Usuari(user,pass,codi);
                     return cPers.guardaUser((Object)usuari, user);
                 }
@@ -184,6 +190,15 @@ public class ControladorDomini {
                     return resposta;
                 }
                 return null;
+            }
+            
+            /**
+             * Funcio encarregada de esborrar un usuari i totes les seves dades del sistema.
+             */
+            public void esborraUsuari() {
+                cPers.destrueixTotesPartides(usuari.getNom());
+                cPers.destrueixEstadistica(usuari.getNom());
+                cPers.destrueixUser(usuari.getNom());
             }
             
             /**
@@ -277,7 +292,7 @@ public class ControladorDomini {
             }
 
             /**
-             * Funcio encarregada de fer la crida per guardar una partida a mitges
+             * Funcio encarregada de fer la crida per guardar una partida a mitges.
              * @param name Nom de la partida a guardar
              * @param sobreescriure Indica si la partida es pot sobreescriure (cert) o no
              * @return Cert si la partida es guarda correctament.
@@ -325,7 +340,33 @@ public class ControladorDomini {
              */
             public void actualitzaRanking() {
                 //Envia a ranking l'usuari, dificultat?, temps
+                //CALCUL DE LA PUNTUACIO <>
                 long temps_total = (System.currentTimeMillis() - startTime) + elapsed;
+                //CALCUL DE LA PUNTUACIO </>
+                
+                //rankings.afegeix(usuari.getNom(), punts); 
+                
+                cPers.guardaRanking((Object)rankings, usuari.getNom());
+            }
+            
+            /**
+             * Quan la partida inicia actualitza els camps necessaris de les estadistiques.
+             */
+            public void actualitzaEstadistiquesInici() {
+                estadistiques.afegeixPartida();
+                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
+            }
+            
+            
+            /**
+             * Quan la partida acaba actualitza els camps necessaris de les estadistiques.
+             * @param guanyada Indica si la partida ha acabat amb victoria o no
+             * @param punts Indica la quantitat de punts que ha aconseguit el usuari
+             */
+            public void actualitzaEstadistiquesFinal(boolean guanyada, int punts) {
+                estadistiques.afegeixPartidaGuanyada(guanyada);
+                estadistiques.afegeixPuntuacio(punts);
+                cPers.guardaEstadistica((Object)estadistiques, usuari.getNom());
             }
             
             
@@ -352,6 +393,15 @@ public class ControladorDomini {
                 List<String> list = new ArrayList<String>();
                 list = cPers.llistaPartides(usuari.getNom());
                 return list;
+            }
+            
+            /**
+             * Funcio encarregada de fer la crida a la BD per a que destrueixi una partida.
+             * @param name Nom de la partida ha destruir
+             * @return Cert en cas de exit, false en cas contrari
+             */
+            public boolean esborraPartida(String name) {
+                return cPers.destrueixPartida(name, usuari.getNom());
             }
             
             /**
@@ -393,6 +443,38 @@ public class ControladorDomini {
                 List<String> list = new ArrayList<String>();
                 list = cPers.llistaTaulers();
                 return list;
+            }
+            
+            /**
+             * Funcio encarregada de enviar a la BD un ranking per a guardarlo.
+             * @param name Nom del ranking
+             */
+            public void guardaRanking(String name) {
+                Object obj = (Object) rankings; 
+                cPers.guardaRanking(obj, name);
+            }
+            
+            /**
+             * Funcio encarregada de demanar a la BD de carregar un el ranking anomenat name.
+             * @param name Nom del ranking
+             */
+            public void carregarRanking(String name) {
+                rankings = (Rankings) cPers.carregaRanking(name);
+            }
+            
+            /**
+             * Funcio encarregada de enviar a la BD un estadistiques per guardar-la.
+             */
+            public void guardaEstadistiques() {
+                Object obj = (Object) estadistiques;
+                cPers.guardaEstadistica(obj, usuari.getNom());
+            }
+            
+            /**
+             * Funcio encarregada de demanar a la BD de carregar les estadistiques del usuari.
+             */
+            public void carregaEstadistiques() {
+                estadistiques = (Estadistiques) cPers.carregaEstadistica(usuari.getNom());
             }
             
             /**
@@ -475,8 +557,5 @@ public class ControladorDomini {
 
             public void setPropers(List<Integer> propers) {
                 this.propers = propers;
-            }
-
-    
-            
+            }            
 }
