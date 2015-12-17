@@ -91,6 +91,10 @@ public class ControladorPersistencia {
         return SDades.destruir(name, "../Dades/Rankings/");
     }
     
+    public boolean comprovaRanking(String name) {
+        return SDades.existeixObjecte(name, "../Dades/Rankings");
+    }
+    
     /**
      * Funcio encarregada de fer la crida per guardar una Estadistica.
      * @param stat Estadistica en questio

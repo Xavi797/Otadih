@@ -12,8 +12,8 @@ import java.io.Serializable;
  * @author jaume.guell
  */
 public class UsuariPuntuacio implements Serializable {
-    private String user;    /* Nom el usuari */
-    private int punts;      /* Punts que ha fet el usuari en una partida determinada */
+    public String user;    /* Nom el usuari */
+    public int punts;      /* Punts que ha fet el usuari en una partida determinada */
 
     /**
      * Constructora basica.
@@ -64,6 +64,6 @@ public class UsuariPuntuacio implements Serializable {
     public void setPunts(int punts) {
         this.punts = punts;
     }
-    
+
     
 }
