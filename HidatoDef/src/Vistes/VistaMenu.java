@@ -115,7 +115,7 @@ public class VistaMenu extends VistaGenerica {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotoRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoRankingActionPerformed
-        // TODO add your handling code here:
+        controladorVistes.mostraVista("Rankings");
     }//GEN-LAST:event_BotoRankingActionPerformed
 
     /**
