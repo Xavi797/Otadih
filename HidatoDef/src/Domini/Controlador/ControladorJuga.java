@@ -409,4 +409,19 @@ public class ControladorJuga {
             }
             return true;
         }
+        
+        public boolean check(List<Integer> llista, Tauler t, Tauler soluciona) {
+            int tam = t.sizeTauler();
+            llista.clear();
+            for(int i = 0; i < tam; ++i){
+                for(int j = 0; j < tam; ++j){
+                    int num = t.getCela(i, j);
+                    if(num != 0 && num != -1){
+                        if(num != soluciona.getCela(i, j)) llista.add(num);
+                    }
+                }
+            }
+            return llista.isEmpty();
+            
+        }
     }

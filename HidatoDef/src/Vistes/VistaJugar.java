@@ -67,6 +67,7 @@ public class VistaJugar extends VistaGenerica {
         botoSortir = new javax.swing.JButton();
         HelpLabel = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jButton1.setText("Soluciona");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -111,6 +112,13 @@ public class VistaJugar extends VistaGenerica {
             }
         });
 
+        jButton4.setText("Check Caselles");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,17 +128,19 @@ public class VistaJugar extends VistaGenerica {
                 .addComponent(HelpLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 525, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botoSortir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34))))
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botoSortir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(34, 34, 34))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(15, 15, 15)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,9 +149,11 @@ public class VistaJugar extends VistaGenerica {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(botoSortir)
@@ -238,6 +250,33 @@ public class VistaJugar extends VistaGenerica {
         else
             JOptionPane.showMessageDialog(null,"Encara no s'ha completat","Information",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Integer> llista = new ArrayList();
+        if(controladorDomini.checkTauler(llista)){
+            JOptionPane.showMessageDialog(null,"Totes les caselles correctes!!!","Information",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Tens caselles mal colocades!","Information",JOptionPane.INFORMATION_MESSAGE);
+            for(int i = 0; i < tauler.length; ++i){
+                for(int j = 0; j < tauler.length; ++j){
+                    String num = tauler[i][j].getText();
+                    int n;
+                    if (num.isEmpty()){
+                        n = 0;
+
+                    } else {
+                        n=Integer.parseInt(num);
+                    }
+                    if (llista.contains(n) && n!=0) {
+                        tauler[i][j].setBackground(Color.red);
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
    
     public void setMatriu() {
         matriu = controladorDomini.getTaulerPerVista();
@@ -274,23 +313,11 @@ public class VistaJugar extends VistaGenerica {
                 return;
             }
                     
-            for (int i=0; i<dirHorit.length; ++i) {
-                novaPosX = x + dirHorit[i];
-                novaPosY = y + dirVerti[i];
-                if (matriu.length>novaPosX &&  matriu.length > novaPosY && novaPosX>=0 && novaPosY >=0) {
-                    if (matriu[novaPosX][novaPosY] > 0) {
-                        for (int numProper : numsLabel) {
-                            if (matriu[novaPosX][novaPosY] == numProper + 1 || matriu[novaPosX][novaPosY] == numProper - 1) {
-                                if (!numsAjuda.contains(numProper) && numProper >0){
-                                    numsAjuda.add(numProper);
-                                    resultat += numProper + " ";
-                                }
-                            }
-                        }
-                    } 
-                }
-                
+            controladorDomini.numsPosibles(x, y, numsAjuda);
+            for(int aux = 0; aux < numsAjuda.size(); ++aux){
+                resultat += numsAjuda.get(aux) + " ";
             }
+            
             if (resultat.isEmpty()) HelpLabel.setText("Cap nombre possible!");
             else HelpLabel.setText(resultat);
         }
@@ -376,6 +403,7 @@ public class VistaJugar extends VistaGenerica {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
