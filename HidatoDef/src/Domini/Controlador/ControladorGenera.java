@@ -28,7 +28,7 @@ public class ControladorGenera {
 	    private long startTime;
             private long timeout = 8000;                                   
             private long elapsed;
-            private final long [] timeVect = {1000,2000,4000,5000,7000,8000,9000};
+            private final long [] timeVect = {1000,2000,3000,5000,5500,6500,8000};
             
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -174,19 +174,12 @@ public class ControladorGenera {
                  min = numMaxim;
                  startTime = System.currentTimeMillis();
 	         if(!quita_nums(numInicials,num_posar,numMaxim,t,0,0,true)){
-                    t = taulerGeneratAux.clonar();
-                    
-                    quita_nums(min,num_posar,numMaxim,t,0,0,false);
+                    //t = taulerGeneratAux.clonar();
+                    //quita_nums(min,num_posar,numMaxim,t,0,0,false);
                 }
 	         Collections.sort(conjuntGenerat);
-                 /*
-	         numDonats = new int[conjuntGenerat.size()];
-	         for (int i = 0; i < numDonats.length; i++)
-	             numDonats[i] = conjuntGenerat.get(i);
-                 */
-	         tauler = t;
- 
-                 //cTaul.escriuTauler(tauler);
+
+	         //tauler = t;
 	         
 	    }
 	     /* POST: tauler conte el nou tauler generat amb les caselles buides
@@ -280,8 +273,11 @@ public class ControladorGenera {
                     tauler = taulerGenerat;
                     return true;
                 }
-                else if(min > num_posats)
+                else if(min > num_posats){
                     min = num_posats;
+                    tauler = taulerGenerat.clonar();
+                }
+                    
                 
                 while(i<tam){
                     while(j<tam){
