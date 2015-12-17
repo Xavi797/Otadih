@@ -26,8 +26,9 @@ public class ControladorGenera {
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
 	    private long startTime;
-            private final long timeout = 8000;                                   
+            private long timeout = 8000;                                   
             private long elapsed;
+            private final long [] timeVect = {1000,2000,4000,5000,7000,8000,9000};
             
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -39,6 +40,7 @@ public class ControladorGenera {
 
             private int min; /* Minim de caselles posbiles a posar en el tauler */
             private Scanner in = new Scanner(System.in);
+
     
             public Tauler getTauler() {
                 return tauler;
@@ -92,6 +94,8 @@ public class ControladorGenera {
               * PRE: -- 
               */
 	    public void generaTauler(int costat, int numInicials, String topo) {
+                
+                 timeout = timeVect[costat - 3];
 	    	 int numMaxim;
 	    	 Coord posInicialProvisional = new Coord();
 	         Coord coordenadaAux = new Coord();
