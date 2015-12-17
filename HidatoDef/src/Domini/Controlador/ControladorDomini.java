@@ -434,14 +434,15 @@ public class ControladorDomini {
             /**** RANKING ****/
             
             /**
-             * Quan la partida finalitza actualitza el ranking amb nom user
-             * + temps nou;
+             * Quan la partida finalitza actualitza el ranking amb nom user + temps nou.
              */
             public void actualitzaRanking() {
                 int punts = (int) ((System.currentTimeMillis() - startTime) + elapsed);
                 punts = punts/1000;
                 System.out.println(partida.getNumChecks());
                 punts = punts + (20 * partida.getNumChecks());
+                
+                //punts = punts + numforats*3;
                
                 if (rankings.getNivellDificultat() == 0) {
                     punts = punts/(tauler.sizeTauler()-2);  //Dividim temps entre 1 (tauler de 3), 2 (de 4) o 3 (de 5)
@@ -599,11 +600,9 @@ public class ControladorDomini {
             
             /**
              * Funcio encarregada de fer la crida a la BD per a que destrueixi una partida.
-             * @param name Nom de la partida ha destruir
              * @return Cert en cas de exit, false en cas contrari
              */
             public boolean esborraPartida() {
-                
                 return cPers.destrueixPartida(nomPartidaActual, usuari.getNom());
             }
             

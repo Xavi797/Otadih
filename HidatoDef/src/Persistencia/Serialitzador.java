@@ -155,7 +155,7 @@ public class Serialitzador {
         
         if (files != null) {
             for (File fil : files) {
-                if (fil.isDirectory() == false) {
+                if (fil.isDirectory() == false && !fil.isHidden()) {
                     list.add(fil.getName());
                 }
             }
