@@ -161,7 +161,12 @@ public class MenuIntrodueix extends VistaGenerica {
                 for (JTextField t : ts) {
                    num = t.getText();
                    if (num.isEmpty()) num = "0";
-                   conjuntTauler[i][j] = Integer.parseInt(num);
+                   try{
+                        conjuntTauler[i][j] = Integer.parseInt(num);
+                   }
+                   catch(Exception e1){
+                        num = "0";
+                   }
                    ++i;
                 }
                 i = 0;

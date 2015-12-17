@@ -268,9 +268,11 @@ public class ControladorDomini {
              * @param llista llista que contindra els posibles numeros a ficar
              */
             public void numsPosibles(int i, int j,List<Integer> llista){
-                for(int aux = 0; aux < propers.size(); ++ aux)
-                if(cJuga.bencolocat(i, j,propers.get(aux) , tauler, conjuntUsats))
-                    llista.add(propers.get(aux));
+                cJuga.ajudaPropers(tauler_partida, conjuntUsats, propers, maxCas);
+                for(int aux = 0; aux < propers.size(); ++ aux){
+                    if(propers.get(aux) != 0 && cJuga.bencolocat(i, j,propers.get(aux) , tauler_partida, conjuntUsats))
+                        llista.add(propers.get(aux));
+                }
             }
             
             /**
