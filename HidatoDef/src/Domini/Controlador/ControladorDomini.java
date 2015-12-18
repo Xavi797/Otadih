@@ -292,6 +292,29 @@ public class ControladorDomini {
             }
 
             
+            public boolean taulerForats(int costat, int numInicials,int[][] mat){
+                partida = new Partida();
+                Tauler t = controladorTaula.transformarInversa(mat);
+                if(!cGen.generaAmbForats(costat, numInicials, t))return false;
+                tauler = cGen.getTauler();
+                tauler_partida = tauler.clonar();
+                solucion = cGen.getSolucion();
+                maxCas = cGen.getMaxCas();
+                
+                //Iniciem ranking esperat en base la mida del tauler
+                if (tauler.sizeTauler() < 6) { //Tauler facil
+                    rankings = (Rankings) cPers.carregaRanking("0");
+                }
+                else if (tauler.sizeTauler() < 8) { //Tauler intermig
+                    rankings = (Rankings) cPers.carregaRanking("1");
+                }
+                else { //Tauler diuficil
+                    rankings = (Rankings) cPers.carregaRanking("2");
+                }
+                return true;
+            }
+
+            
             /**
               * getSolucio, Retorna el tauler solucionat solucion
               * @return Retorna el tauler solucionat
