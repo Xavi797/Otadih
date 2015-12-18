@@ -240,6 +240,7 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
                 x = 15;
                 for (int j = 0;j <columnes; ++j) {
                     tauler[i][j] = new JTextField();
+                    tauler[i][j].setEditable(false);
                     tauler[i][j].addMouseListener(new AccioClick(i,j,matriu,tauler));
                     vistaForats.add(tauler[i][j]);
                     tauler[i][j].setBounds(x+45, y+45, width, height);                    
