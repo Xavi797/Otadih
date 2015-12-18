@@ -10,7 +10,7 @@ import Persistencia.SerialitzadorPartides;
 import java.util.List;
 
 /**
- *
+ * Controlador encarregat de comunicar la capa de persistencia amb les capa de domini, gestiona les crides que el domini l'hi fa alhora d'accedir a la BD.
  * @author jaume.guell
  */
 public class ControladorPersistencia {

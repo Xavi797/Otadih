@@ -124,6 +124,4 @@ public class Rankings implements Serializable {
     public int getPunts(int index) {
         return taulaPuntuacions.get(index);
     }
-    
-    //GETS I SETS DE TAULES SENCERES?
 }

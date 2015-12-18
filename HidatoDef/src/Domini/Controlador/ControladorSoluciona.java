@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Soluciona un tauler donat
+ * Controlador encarregat de solucionar un tauler donat.
  * @author Carlos
  */
 public class ControladorSoluciona {

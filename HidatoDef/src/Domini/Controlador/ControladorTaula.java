@@ -4,8 +4,7 @@ package Domini.Controlador;
 import Domini.Clases.Tauler;
 
 /**
- * Classe contenidora d'informaciÃ³. Cada celÂ·la pren un valor i Ã©s d'un tipus determinat.
- * 
+ * Controlador encarregat de gestionar la informacio dels taulers, cada cela pren un valor i es d'un tipus determinat.
  * @author Carlos
  */
 public class ControladorTaula {

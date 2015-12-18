@@ -1,10 +1,6 @@
 package Domini.Clases;
 
-import Domini.Clases.Usuari;
-import Persistencia.*;
 import Domini.Controlador.*;
-//import Vistes.vistaJugar;
-import java.util.Scanner;
 import Vistes.ControladorVistes;
 
 /*
@@ -14,8 +10,8 @@ import Vistes.ControladorVistes;
  */
 
 /**
- *
- * @author xavi
+ * Main del programa.
+ * @author jaume.guell
  */
 public class Main {
     public static void main(String args[]) {

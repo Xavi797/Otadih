@@ -9,8 +9,8 @@ import Domini.Clases_compartides.UsuariCompartit;
 import java.io.Serializable;
 
 /**
- *
- * @author xavi
+ * Classe contenidora de la informacio referent al Usuari.
+ * @author jaume.guell
  */
 public class Usuari extends UsuariCompartit implements Serializable {
     

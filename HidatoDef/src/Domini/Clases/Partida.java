@@ -8,7 +8,7 @@ package Domini.Clases;
 import java.io.Serializable;
 
 /**
- *
+ * Classe encarregada de mantenir tota la informacio rellevant per a gestionar una partida dins el sistema.
  * @author jaume.guell
  */
 public class Partida implements Serializable {
@@ -17,15 +17,13 @@ public class Partida implements Serializable {
      * -user es correspon amb el usuari que juga la partida
      * -hidatos conte el tauler de la partida en els seus 3 estats possibles: inicial, a mitges i solucionat
      * -temps es el temps que porta el usuari resolent el problema
-     * -numChecks es el nombre de ajudes que ha utilitzat el usuari
-     * -solve es un boolea que contempla si el usuari a solucionat la partida utilitzant la maquina o no.
+     * -numChecks es el nombre de ajudes que ha utilitzat el usuari.
      */
     private Usuari user;
     private Hidatos hidatos;
     private Rankings ranking;
     private long temps = 0;
     private int numChecks = 0;
-    //private boolean solve;
 
     public Usuari getUser() {
         return user;
@@ -65,17 +63,5 @@ public class Partida implements Serializable {
 
     public void setNumChecks(int numChecks) {
         this.numChecks = numChecks;
-    }
-/*
-    public boolean isSolve() {
-        return solve;
-    }
-
-    public void setSolve(boolean solve) {
-        this.solve = solve;
-    }*/
-
-    
-    
-    
+    }    
 }

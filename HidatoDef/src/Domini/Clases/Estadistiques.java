@@ -8,7 +8,7 @@ package Domini.Clases;
 import java.io.Serializable;
 
 /**
- *
+ * Classe encarregada de mantenir un control i seguiment del progres individual de cada usuari.
  * @author jaume.guell
  */
 public class Estadistiques implements Serializable {

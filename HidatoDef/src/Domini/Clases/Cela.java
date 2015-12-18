@@ -44,6 +44,10 @@ public class Cela extends Cela_Compartida implements Serializable {
       this.valor = valor;
   }
   
+  /**
+   * Setter encarregat de canviar el valor de una cela no forat.
+   * @param valor Valor a posar
+   */
   public void SetValorNoForat(int valor) {
       if(tipus != -1){
         tipus = valor;
@@ -51,6 +55,11 @@ public class Cela extends Cela_Compartida implements Serializable {
       }
   }
   
+  /**
+   * Funcio encarregada de modificar el valor de una cela modificable.
+   * @param valor Valor a posar
+   * @return True en cas de que es fagi el set correctament, false si la cela no es modificable
+   */
   public boolean modificaValor(int valor){
       if(tipus == 0){
           this.valor = valor;

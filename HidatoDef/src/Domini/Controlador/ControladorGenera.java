@@ -16,8 +16,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- *
- * @author Carlo
+ * Controlador encarregat de la generacio dels Hidatos.
+ * @author Carlos
  */
 public class ControladorGenera {
             private ControladorTaula cTaul = new ControladorTaula();

@@ -6,14 +6,11 @@
 package Domini.Clases_compartides;
 
 /**
- *
- * @author xavi
+ * Classe Usuari per compartir
+ * Cluster: 41
+ * Equip: Kenken.
  */
 public class UsuariCompartit {
-    /* Classe Usuari per compartir
- * Cluster: 41
- * Equip: Kenken
- */
     //ATRIBUTS
     //nom de l'usuari instanciat
     private String user;

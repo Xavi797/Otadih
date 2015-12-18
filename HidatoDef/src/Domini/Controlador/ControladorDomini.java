@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Controlador principal que crida a altres controladors i clases
- * @author Carlo
+ * Controlador principal que crida a altres controladors i classes.
+ * @author Carlos
  */
 public class ControladorDomini {
            /*Controla totes les operacions de la taula: Soluciona tauler, genera etc..*/
@@ -588,6 +588,7 @@ public class ControladorDomini {
              */
             public void carregarPartida(String name) {
                 nomPartidaActual = name;
+                punts = 0;
                 partida = new Partida();
                 partida = (Partida) cPers.carregaPartida(name, usuari.getNom());
                 
