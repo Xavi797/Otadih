@@ -67,6 +67,8 @@ public class MenuIntrodueix extends VistaGenerica {
         jLabel1 = new javax.swing.JLabel();
         BotoValidar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        EntradaImport = new javax.swing.JTextField();
+        Importa = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -96,20 +98,40 @@ public class MenuIntrodueix extends VistaGenerica {
             }
         });
 
+        EntradaImport.setName("Entrada"); // NOI18N
+        EntradaImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EntradaImportActionPerformed(evt);
+            }
+        });
+
+        Importa.setText("Importa");
+        Importa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel1)
-                .addGap(37, 37, 37)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotoValidar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Importa, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel1)
+                        .addGap(37, 37, 37)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotoValidar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EntradaImport))))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +141,13 @@ public class MenuIntrodueix extends VistaGenerica {
                     .addComponent(jLabel1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotoValidar))
-                .addGap(28, 28, 28)
+                .addGap(46, 46, 46)
+                .addComponent(EntradaImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Importa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,12 +185,20 @@ public class MenuIntrodueix extends VistaGenerica {
             int j= 0;
             for (JTextField[] ts : tauler) {
                 for (JTextField t : ts) {
-                   num = t.getText();
-                   if (num.isEmpty()) num = "0";
-                   try{
-                        conjuntTauler[i][j] = Integer.parseInt(num);
+                   if (!("Entrada".equals(t.getName()))) {
+                        num = t.getText();
+                        if (num.isEmpty()) num = "0";
+                        try{
+                             conjuntTauler[i][j] = Integer.parseInt(num);
+                        }
+                        catch(Exception e1){
+                             tauler[j][i].setText(""); //AL REVES NO SE PORQUE WTF
+                             num = "0";
+                        }
                    }
-                   catch(Exception e1){
+                   if(conjuntTauler[i][j] > tauler.length * tauler.length){
+                        conjuntTauler[i][j] = 0;
+                        tauler[j][i].setText(""); //AL REVES NO SE PORQUE WTF
                         num = "0";
                    }
                    ++i;
@@ -210,6 +244,27 @@ public class MenuIntrodueix extends VistaGenerica {
         controladorVistes.mostraVista("Menu");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void ImportaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportaActionPerformed
+        String text = EntradaImport.getText();
+        String[] textUtil = text.split("\\s+");
+        
+        int midaSeleccionada = parseInt(jComboBox1.getSelectedItem().toString());
+        if (!text.isEmpty() && textUtil.length == midaSeleccionada*midaSeleccionada) {
+            int i = 0;
+            for (JTextField[] ts : tauler) {
+                for (JTextField t : ts) {
+                    t.setText(textUtil[i]);
+                    ++i;
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_ImportaActionPerformed
+
+    private void EntradaImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntradaImportActionPerformed
+
+    }//GEN-LAST:event_EntradaImportActionPerformed
+
     /**
      * Crea la taula a la vista per a que el usuari pugui posar els numeros
      * @param tamany 
@@ -242,6 +297,8 @@ public class MenuIntrodueix extends VistaGenerica {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotoValidar;
+    private javax.swing.JTextField EntradaImport;
+    private javax.swing.JButton Importa;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;

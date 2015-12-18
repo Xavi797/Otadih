@@ -175,6 +175,15 @@ public class ControladorPersistencia {
     }
     
     /**
+     * Funcio encarregada de fer la crida per carregar el fitxer importable
+     * @param name Nom del importable
+     * @return String amb les dades del importable
+     */
+    /*public String carregaImportable(String name) {
+        return SDades.carregarString("import");
+    }*/
+    
+    /**
      * Funcio encarregada de fer la crida per guardar una Partida.
      * @param part Partida en questio
      * @param name Nom de la partida

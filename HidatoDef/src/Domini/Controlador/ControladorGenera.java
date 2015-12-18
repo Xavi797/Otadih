@@ -25,9 +25,10 @@ public class ControladorGenera {
             private Tauler tauler_partida;
 	    private int[] numDonats, posInicial;/* dos vectors que utilitzara soluciona_aux sapiguer on começa i quins estan posats */
             
-	    private long startTime;
-            private long timeout = 8000;                                   
-            private long elapsed;
+	    private long startTime, startTime2;
+            private long timeout = 8000;      
+            private long timeout2 = 2000;
+            private long elapsed, elapsed2;
             private final long [] timeVect = {1000,2000,3000,5000,5500,6500,8000};
             
 	    private Tauler tablero; /* tablero sobre el que buscaremos la solucion */
@@ -83,6 +84,27 @@ public class ControladorGenera {
             }
             
 
+            public boolean generaSenseForats(int costat, int numInicials, String topo){
+                Tauler taulerGenerat = new Tauler(costat);
+                
+                 if(topo.equals("Trival")){
+                     topTrival(taulerGenerat);
+                 }
+                 
+                 else if(topo.equals("Piramide")){
+                     topPira(taulerGenerat);
+                 }
+                 
+                 else if(topo.equals("Creu")){
+                     topCreu(taulerGenerat);
+                 }    
+                 return generaTauler(costat,numInicials, taulerGenerat);
+            }
+            
+            public boolean generaAmbForats(int costat, int numInicials, Tauler t){
+                
+                return generaTauler(costat,numInicials, t);
+            }
             
             /**
               * Genera un Tauler, utilitzant el metode de "kings path", consisteix en partir desde una posicio a l'atzar i
@@ -93,7 +115,7 @@ public class ControladorGenera {
               * @param topo Tipus de forats que el usuari vol
               * PRE: -- 
               */
-	    public void generaTauler(int costat, int numInicials, String topo) {
+	    public boolean generaTauler(int costat, int numInicials, Tauler taulerGenerat) {
                 
                  timeout = timeVect[costat - 3];
 	    	 int numMaxim;
@@ -101,34 +123,17 @@ public class ControladorGenera {
 	         Coord coordenadaAux = new Coord();
 	         List<Coord> conjuntGeneratPos = new ArrayList<Coord>();
 	         List<Integer> conjuntGenerat = new ArrayList<Integer>();
-	         Tauler taulerGenerat = new Tauler(costat);
+	         
 	         Tauler taulerGeneratAux = new Tauler(costat);
 	        
 	         Random rand = new Random();
 	         int veins[][] = new int [costat][costat];
-	         int num_posar = 0;
-
-                 if("Forats manuals".equals(topo)){
-                     //llama vista con matriz de ints y pone forats
-                     
-                 }
-                 
-                 else if(topo.equals("Trival")){
-                     topTrival(taulerGenerat);
-                 }
-                 
-                 else if(topo.equals("Piramide")){
-                     topPira(taulerGenerat);
-                 }
-                 
-                 else if(topo.equals("Creu")){
-                     topCreu(taulerGenerat);
-                 }                
-                     
+	         int num_posar = 0;          
                  
                  numMaxim = cTaul.getMaxPossible(taulerGenerat);
 	         
 	         boolean tauler_correcte = false;
+                 startTime = System.currentTimeMillis();
 	         while(!tauler_correcte){
 		         //do while....
 	        	 taulerGeneratAux = taulerGenerat.clonar();
@@ -151,6 +156,8 @@ public class ControladorGenera {
 		         boolean pathing = true;
 		         
 		         while(pathing){
+                              elapsed = System.currentTimeMillis()-startTime;
+                              if (elapsed>timeout) return false;
 		        	 taulerGeneratAux.setCelaNoforat(coordenadaAux.x, coordenadaAux.y, num_posar);
 		        	 conjuntGenerat.add(num_posar);
 		        	 if(veins_accesibles(coordenadaAux.x,coordenadaAux.y,taulerGeneratAux) || num_posar == numMaxim) pathing = false;
@@ -167,9 +174,6 @@ public class ControladorGenera {
 		         
 	         }//fi while
 	         posInicial = new int[]{posInicialProvisional.x, posInicialProvisional.y};
-	         //TREURE NUMEROS fins NUMINICIALS SI ES POT O FINS QUE TROBEN MES DE 1 SOLUCIO*/
-	         
-	         //quita_nums2(numInicials, num_posar, numMaxim,taulerGeneratAux);
                  Tauler t = taulerGeneratAux.clonar();
                  min = numMaxim;
                  startTime = System.currentTimeMillis();
@@ -178,7 +182,7 @@ public class ControladorGenera {
                     //quita_nums(min,num_posar,numMaxim,t,0,0,false);
                 }
 	         Collections.sort(conjuntGenerat);
-
+                 return true;
 	         //tauler = t;
 	         
 	    }
