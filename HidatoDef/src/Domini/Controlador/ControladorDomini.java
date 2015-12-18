@@ -269,9 +269,9 @@ public class ControladorDomini {
                 }
             }
             
-            public boolean taulerForats(int[][] mat){
+            public boolean taulerForats(int costat, int numInicials,int[][] mat){
                 Tauler t = controladorTaula.transformarInversa(mat);
-                if(!cGen.generaAmbForats(maxCas, maxCas, nomPartidaActual, t))return false;
+                if(!cGen.generaAmbForats(costat, numInicials, t))return false;
                 tauler = cGen.getTauler();
                 tauler_partida = tauler.clonar();
                 solucion = cGen.getSolucion();

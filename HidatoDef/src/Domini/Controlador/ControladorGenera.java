@@ -101,7 +101,7 @@ public class ControladorGenera {
                  return generaTauler(costat,numInicials, taulerGenerat);
             }
             
-            public boolean generaAmbForats(int costat, int numInicials, String topo, Tauler t){
+            public boolean generaAmbForats(int costat, int numInicials, Tauler t){
                 
                 return generaTauler(costat,numInicials, t);
             }
