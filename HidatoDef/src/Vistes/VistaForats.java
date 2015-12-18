@@ -70,7 +70,7 @@ public class VistaForats extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotoGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoGeneraActionPerformed
-        boolean resultat = controladorDomini.taulerForats(matriu.length ,matriu, numIni);
+        boolean resultat = controladorDomini.taulerForats(matriu.length, numIni, matriu);
         if (resultat){
             jframe.setVisible(false);
             controladorVistes.mostraVista("vistaJugar");
