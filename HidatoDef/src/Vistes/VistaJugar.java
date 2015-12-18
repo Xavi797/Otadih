@@ -153,11 +153,11 @@ public class VistaJugar extends VistaGenerica {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(jButton3)
                 .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botoSortir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HelpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -287,6 +287,7 @@ public class VistaJugar extends VistaGenerica {
         matriu_aux = controladorDomini.getTaulerPartidaPerVista();
         if (matriu.length >= 8)
         jToggleButton1.setVisible(false);
+        else jToggleButton1.setVisible(true);
 
     }
     
@@ -391,7 +392,7 @@ public class VistaJugar extends VistaGenerica {
             y += 45;
         }
 
-        this.setPreferredSize(new Dimension(files*45 + 220, files*45 + 80));
+        this.setPreferredSize(new Dimension(files*45 + 220, files*45 + 130));
         controladorVistes.pack();
         
     }

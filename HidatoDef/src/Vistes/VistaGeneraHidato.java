@@ -5,6 +5,15 @@
  */
 package Vistes;
 import  Domini.Controlador.ControladorDomini;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -43,11 +52,11 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         boxDificultat.setSelectedItem("Fácil");
         
         boxTopologia.removeAllItems();
-        boxTopologia.addItem("Amb forats");
         boxTopologia.addItem("Trival");
         boxTopologia.addItem("Piramide");
         boxTopologia.addItem("Creu");
-        boxTopologia.addItem("Sense Forats");     
+        boxTopologia.addItem("Sense Forats");
+        boxTopologia.addItem("Amb forats");
     }
 
     /**
@@ -68,6 +77,7 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         boxDificultat = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         numInicials = new javax.swing.JTextField();
+        BotoTornar = new javax.swing.JButton();
 
         jLabel1.setText("Tamany");
 
@@ -106,6 +116,13 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
             }
         });
 
+        BotoTornar.setText("Tornar");
+        BotoTornar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotoTornarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,7 +144,8 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
                             .addComponent(boxDificultat, 0, 91, Short.MAX_VALUE)
                             .addComponent(boxTamany, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(boxTopologia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(botoGenera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botoGenera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotoTornar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -149,9 +167,11 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(numInicials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(botoGenera)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BotoTornar)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -195,10 +215,91 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         if (num == "") num = "0";
         int numIni = Integer.parseInt(num);
         String topologia = (String)boxTopologia.getSelectedItem();
-        controladorDomini.generaTauler(Integer.parseInt(costat), numIni, topologia);
-        controladorVistes.mostraVista("vistaJugar");
+        if (topologia == "Amb forats") {
+            
+            int tamany = Integer.parseInt(costat);
+            int[][] matriu = new int[tamany][tamany];
+            JFrame frame = new JFrame();
+            VistaForats vistaForats = new VistaForats(matriu, numIni, controladorDomini, controladorVistes, frame);
+        
+            int width  = 40;
+            int height = 40;
+            int x   = 15;
+            int y   = 15;
+            int files  = matriu.length;
+            int columnes = matriu[0].length;
+            vistaForats.setPreferredSize(new Dimension(files*45 + 150, files*45 + 100));
+            frame.setPreferredSize(new Dimension(files*45 + 150, files*45 + 100));
+            frame.setContentPane(vistaForats);
+            frame.pack();
+            frame.setVisible(true);
+
+
+            JTextField[][] tauler = new JTextField[files][columnes];
+            for (int i = 0;i < files; ++i) {
+                x = 15;
+                for (int j = 0;j <columnes; ++j) {
+                    tauler[i][j] = new JTextField();
+                    tauler[i][j].addMouseListener(new AccioClick(i,j,matriu,tauler));
+                    vistaForats.add(tauler[i][j]);
+                    tauler[i][j].setBounds(x+45, y+45, width, height);                    
+                    x +=45;
+                }
+                y += 45;
+            }
+            JButton botoGeneraForats = new JButton();
+            botoGeneraForats.setText("Genera Hidato");
+            vistaForats.add(botoGeneraForats);
+
+
+        } else {
+            controladorDomini.generaTauler(Integer.parseInt(costat), numIni, topologia);
+            controladorVistes.mostraVista("vistaJugar");
+        }
     }//GEN-LAST:event_botoGeneraActionPerformed
 
+    private class AccioClick implements MouseListener {
+        
+        int x;
+        int y;
+        int[][] matriu;
+        JTextField[][] tauler;
+        
+        public AccioClick(int i, int j, int[][] mat, JTextField[][] tau) {
+            x = i;
+            y = j;
+            matriu = mat;
+            tauler = tau;
+        }
+        
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (matriu[x][y] == 0) {
+                matriu[x][y] = -1;
+                tauler[x][y].setBackground(Color.black);
+            }
+            else{
+                matriu[x][y] = 0;
+                tauler[x][y].setBackground(Color.white);
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    }
     private void numInicialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numInicialsActionPerformed
         // TODO add your handling code here:
         try{
@@ -209,8 +310,13 @@ public class VistaGeneraHidato extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_numInicialsActionPerformed
 
+    private void BotoTornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoTornarActionPerformed
+       controladorVistes.mostraVista("Menu");
+    }//GEN-LAST:event_BotoTornarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotoTornar;
     private javax.swing.JButton botoGenera;
     private javax.swing.JComboBox boxDificultat;
     private javax.swing.JComboBox boxTamany;
