@@ -108,7 +108,7 @@ public class VistaRanking extends VistaGenerica {
 
     private void ListaDificultatValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaDificultatValueChanged
         int seleccionat = ListaDificultat.getSelectedIndex();
-        System.out.println(seleccionat);
+        //System.out.println(seleccionat);
         //System.out.println("wtf");
         String[] puntuacions = controladorDomini.obteRanking(seleccionat);
         /*for (int i = 0; i < puntuacions.length; ++i) {

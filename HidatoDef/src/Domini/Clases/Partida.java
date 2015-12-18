@@ -24,7 +24,7 @@ public class Partida implements Serializable {
     private Hidatos hidatos;
     private Rankings ranking;
     private long temps = 0;
-    private int numChecks;
+    private int numChecks = 0;
     //private boolean solve;
 
     public Usuari getUser() {
