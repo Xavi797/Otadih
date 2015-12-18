@@ -612,7 +612,6 @@ public class ControladorDomini {
              */
             public void augmentaChecks() {
                 partida.setNumChecks(partida.getNumChecks() + 1);
-                System.out.println(partida.getNumChecks());
             }
             
             /**** TAULER ****/
@@ -668,4 +667,16 @@ public class ControladorDomini {
                 list = cPers.llistaTaulers();
                 return list;
             }
+            
+            /* IMPORT */
+            
+            /**
+             * Funcio encarregada de fer la crida per demanar a la BD que carregui un importable.
+             * @return String amb les dades del importable
+             */
+            /*public String carregaImportat() {
+                String entrada;
+                entrada = cPers.carregaImportable();
+                return entrada;
+            }*/
 }
