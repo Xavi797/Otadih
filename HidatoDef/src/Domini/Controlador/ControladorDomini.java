@@ -12,19 +12,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * Controlador principal que crida a altres controladors i clases
  * @author Carlo
  */
 public class ControladorDomini {
            /*Controla totes les operacions de la taula: Soluciona tauler, genera etc..*/
             private final ControladorJuga cJuga;
-            private final ControladorCrea cCrea;
             private final ControladorSoluciona cSol;
             private final ControladorGenera cGen;
             private final ControladorPersistencia cPers;
             
-            private long startTime;//variables de temps per fer els corresponents timeouts
-            private final long timeout = 8000;                                   
+            private long startTime;//variables de temps per fer els corresponents timeouts                                  
             private long elapsed;
             
 	    private Tauler tauler;/* Contindra el tauler sense solucionar */
@@ -59,29 +57,13 @@ public class ControladorDomini {
                 estadistiques = new Estadistiques();
                 solucion = new Tauler();
                 cJuga = new ControladorJuga();
-                cCrea = new ControladorCrea();
                 cSol = new ControladorSoluciona();
                 cGen = new ControladorGenera();
                 cPers = new ControladorPersistencia();
                 controladorTaula = new ControladorTaula();
             }
             
-            /**
-             * Funcio que cridara al controlador TaulerCreat per a crear al tauler. 
-             * Despres fara els sets y getters per tenir aqui el tauler.
-             */
-            public void creaTauler(){
-                cCrea.crea();
-                tauler = cCrea.getTaulerCreat();
-                if(cSol.soluciona(tauler)){
-                    numDonats = cCrea.getNumDonats();
-                    posInicial = cCrea.getPosInicial();
-                    solucion = cSol.getSolucio().clonar();
-                }
-                else{
-                    tauler = null;
-                }
-            }
+
             
              /**
              * Funcio que cridara al controlador Controladorjuga per a jugar al tauler. 
@@ -101,7 +83,7 @@ public class ControladorDomini {
              */
             public void generaTauler(int costat, int numInicials, String topo){
                 partida = new Partida();
-                cGen.generaTauler(costat, numInicials ,topo);
+                cGen.generaSenseForats(costat, numInicials ,topo);
                 tauler = cGen.getTauler();
                 tauler_partida = tauler.clonar();
                 solucion = cGen.getSolucion();
@@ -143,7 +125,7 @@ public class ControladorDomini {
              * @return Retorna el tauler solucionat en matriu de ints
              */
             public int[][] getTaulerSolucionatPerVista() {
-                soluciona();
+                //soluciona();
                 return controladorTaula.transformar(solucion);
             }
             
@@ -286,6 +268,29 @@ public class ControladorDomini {
                         llista.add(propers.get(aux));
                 }
             }
+            
+            public boolean taulerForats(int costat, int numInicials,int[][] mat){
+                partida = new Partida();
+                Tauler t = controladorTaula.transformarInversa(mat);
+                if(!cGen.generaAmbForats(costat, numInicials, t))return false;
+                tauler = cGen.getTauler();
+                tauler_partida = tauler.clonar();
+                solucion = cGen.getSolucion();
+                maxCas = cGen.getMaxCas();
+                
+                //Iniciem ranking esperat en base la mida del tauler
+                if (tauler.sizeTauler() < 6) { //Tauler facil
+                    rankings = (Rankings) cPers.carregaRanking("0");
+                }
+                else if (tauler.sizeTauler() < 8) { //Tauler intermig
+                    rankings = (Rankings) cPers.carregaRanking("1");
+                }
+                else { //Tauler diuficil
+                    rankings = (Rankings) cPers.carregaRanking("2");
+                }
+                return true;
+            }
+
             
             /**
               * getSolucio, Retorna el tauler solucionat solucion

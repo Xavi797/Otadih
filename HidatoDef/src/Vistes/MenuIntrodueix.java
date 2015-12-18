@@ -192,10 +192,16 @@ public class MenuIntrodueix extends VistaGenerica {
                              conjuntTauler[i][j] = Integer.parseInt(num);
                         }
                         catch(Exception e1){
+                             tauler[j][i].setText(""); //AL REVES NO SE PORQUE WTF
                              num = "0";
                         }
-                        ++i;
                    }
+                   if(conjuntTauler[i][j] > tauler.length * tauler.length){
+                        conjuntTauler[i][j] = 0;
+                        tauler[j][i].setText(""); //AL REVES NO SE PORQUE WTF
+                        num = "0";
+                   }
+                   ++i;
                 }
                 i = 0;
                 ++j;
