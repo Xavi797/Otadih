@@ -236,8 +236,10 @@ public class VistaJugar extends VistaGenerica {
         // TODO add your handling code here:
         if(controladorDomini.acabat()){
                 if(controladorDomini.bensolucionat()){
-                    JOptionPane.showMessageDialog(null,"Hidato resolt correctament!!!","Information",JOptionPane.INFORMATION_MESSAGE);
                     controladorDomini.actualitzaRanking();
+                    int punts = controladorDomini.getPunts();
+                    
+                    JOptionPane.showMessageDialog(null,"Hidato resolt correctament!! La teva puntuacio es de " + punts + " segons!","Information",JOptionPane.INFORMATION_MESSAGE);
                     controladorDomini.esborraPartida();
                     surt();
                 }
@@ -246,7 +248,6 @@ public class VistaJugar extends VistaGenerica {
                     controladorDomini.esborraPartida();
                     surt();
                     //Pop up de mal solucionat!!!!
-                    
                 }
                 
             }

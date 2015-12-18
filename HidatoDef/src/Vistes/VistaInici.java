@@ -240,10 +240,17 @@ public class VistaInici extends VistaGenerica {
         String nomUserRegister = userRegistrar.getText();
         String passUserRegister= contrasenyaRegistrar.getText();
         String paraula = paraulaClau.getText();
-        boolean resposta = controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
-        if (!resposta) JOptionPane.showMessageDialog(null, "Usuari ja registrat", "Atenció", JOptionPane.ERROR_MESSAGE);
-        else controladorVistes.mostraVista("Menu");
-        controladorVistes.mostraVista("Menu"); // s'ha de borrar;
+        
+        if (nomUserRegister.isEmpty() || passUserRegister.isEmpty() || paraula.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Acces denegat, falten parametres", "Atenció", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            boolean resposta = controladorDomini.registrarUsuari(nomUserRegister, passUserRegister, paraula);
+            if (!resposta) JOptionPane.showMessageDialog(null, "Usuari ja registrat", "Atenció", JOptionPane.ERROR_MESSAGE);
+            else controladorVistes.mostraVista("Menu");
+        }
+        
+        //controladorVistes.mostraVista("Menu");    //Permet avançar sense user
     }//GEN-LAST:event_botoRegistrarActionPerformed
 
     private void userRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRegistrarActionPerformed

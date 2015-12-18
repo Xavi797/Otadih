@@ -34,6 +34,7 @@ public class ControladorDomini {
             private String nomPartidaActual;
             private Hidatos hidatos;
             private Rankings rankings;
+            private int punts;
             private Estadistiques estadistiques;
 	    
 	    private Tauler solucion; /* tablero donde guardaremos la solucion */
@@ -83,6 +84,7 @@ public class ControladorDomini {
              */
             public void generaTauler(int costat, int numInicials, String topo){
                 partida = new Partida();
+                punts = 0;
                 cGen.generaSenseForats(costat, numInicials ,topo);
                 tauler = cGen.getTauler();
                 tauler_partida = tauler.clonar();
@@ -371,7 +373,11 @@ public class ControladorDomini {
 
             public void setPropers(List<Integer> propers) {
                 this.propers = propers;
-            }            
+            }
+            
+            public int getPunts() {
+                return punts;
+            }
             
             ////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////
@@ -442,13 +448,14 @@ public class ControladorDomini {
              * Quan la partida finalitza actualitza el ranking amb nom user + temps nou.
              */
             public void actualitzaRanking() {
-                int punts = (int) ((System.currentTimeMillis() - startTime) + elapsed);
+                punts = (int) ((System.currentTimeMillis() - startTime) + elapsed);
                 punts = punts/1000;
-                System.out.println(partida.getNumChecks());
+                
                 punts = punts + (20 * partida.getNumChecks());
                 
-                //punts = punts + numforats*3;
-               
+                int numPosades = tauler.getNumPosades();
+                punts = punts + (numPosades*3);
+
                 if (rankings.getNivellDificultat() == 0) {
                     punts = punts/(tauler.sizeTauler()-2);  //Dividim temps entre 1 (tauler de 3), 2 (de 4) o 3 (de 5)
                 }

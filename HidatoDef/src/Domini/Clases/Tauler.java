@@ -53,33 +53,33 @@ public class Tauler extends Tauler_Compartit implements Serializable {
     taulerJoc[i][j].SetValorNoForat(valor);
   }
   
-   public boolean ModificaCela (int i, int j, int valor) {
+    public boolean ModificaCela (int i, int j, int valor) {
         return taulerJoc[i][j].modificaValor(valor);
-  }
+    }
   
-  /**
-   * Getter encarregat d'obtenir una cela determinada del tauler.
-   * @param i Indica la fila a accedir
-   * @param j Indica la columna a accedir
-   * @return Retorna un objecte de tipus Cela
-   */
-  public int getCela (int i, int j) {
-    return taulerJoc[i][j].getValor();
-  }
+    /**
+    * Getter encarregat d'obtenir una cela determinada del tauler.
+    * @param i Indica la fila a accedir
+    * @param j Indica la columna a accedir
+    * @return Retorna un objecte de tipus Cela
+    */
+    public int getCela (int i, int j) {
+        return taulerJoc[i][j].getValor();
+    }
   
-  public int getTipus (int i, int j) {
-    return taulerJoc[i][j].getTipus();
-  }
+    public int getTipus (int i, int j) {
+        return taulerJoc[i][j].getTipus();
+    }
 
-  /**
-   * getTauler() retorna el propi tauler.
-   * @return Retorna el tauler (i les seves celes) sobre el que s'ha fet la crida a la funcio
-   */
-  public Cela[][] getTauler() {
-    return taulerJoc;
-  }
+     /**
+      * getTauler() retorna el propi tauler.
+      * @return Retorna el tauler (i les seves celes) sobre el que s'ha fet la crida a la funcio
+      */
+    public Cela[][] getTauler() {
+        return taulerJoc;
+    }
   
-  public Tauler clonar(){
+    public Tauler clonar(){
 	Tauler t = new Tauler(taulerJoc.length);
 	for(int i = 0; i <taulerJoc.length; ++i)
 		for(int j = 0; j <taulerJoc.length; ++j)
@@ -88,8 +88,20 @@ public class Tauler extends Tauler_Compartit implements Serializable {
 	return t;
 	  
 	  
-  }
-	 
-	  
+    }
+    
+    /**
+     * Funcio que retorna la quantitat de celes de tipus no fixes o forats del tauler
+     * @return 
+     */
+    public int getNumPosades(){
+        int num = 0;
+        for (int i = 0; i < taulerJoc.length; ++i) {
+                    for (int j = 0; j < taulerJoc.length; ++j) {
+                        if (taulerJoc[i][j].getTipus() != 0) ++num;
+                    }
+        }
+        return num;
+    }
   
-  }
+}
